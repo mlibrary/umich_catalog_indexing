@@ -279,10 +279,10 @@ to_field 'place_of_publication' do |r, acc|
   obs_map     = Traject::TranslationMap.new('umich/obsolete_cop')
 
   if r['008']
-    code = r['008'].value[15..17].gsub(/[^a-z]/, ' ')
+    code = r['008'].value[15..17].to_s.gsub(/[^a-z]/, ' ')
 
     # Bail if we've got an explicit "undetermined"
-    unless code == 'xx '
+    unless code == 'xx ' or code.length < 3
       possible_single_letter_country_code = code[2]
       if possible_single_letter_country_code == ' '
         container = nil
