@@ -11,6 +11,8 @@ then
 else
   export JRUBY=jruby
 fi
+
+echo "JRUBY IS $JRUBY"
   
 
 host=`hostname -s`

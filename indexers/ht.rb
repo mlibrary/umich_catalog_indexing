@@ -55,22 +55,23 @@ to_field 'language008_full', marc_languages("008[35-37]") do |record, acc|
   acc.map! {|x| x.gsub(/\|/, '')}
 end
 
-# HLB
+### High Level Browse ###
+require 'high_level_browse'
 
-# Load up the .json file already downloaded from
-# https://mirlyn.lib.umich.edu/static/hlb3/hlb3.json
+hlb = HighLevelBrowse.load(dir: '/l/solr-vufind/apps/ht_traject/lib/translation_maps')
 
-require 'hlb3_load'
-HLB.initialize(File.join(File.dirname(__FILE__), '../lib/translation_maps', 'hlb3.json'))
-
-
-to_field 'hlb3Delimited', extract_marc('050ab:082a:090ab:099a:086a:086z:852hij') do |rec, acc, context|
-  acc.map! {|c| HLB.categories(c)}
+to_field 'hlb3Delimited', extract_marc('050ab:082a:090ab:099|*0|a:086a:086z:852|0*|hij') do |rec, acc, context|
+  acc.map! {|c| hlb[c] }
   acc.compact!
   acc.uniq!
   acc.flatten!(1)
+
+  # Get the individual conmponents and stash them
+  components = acc.flatten.to_a.uniq
+  context.output_hash['hlb3'] = components unless components.empty?
+  
   # Turn them into pipe-delimited strings
-  acc.map! {|c| c.join(' | ')}
-end 
+  acc.map! {|c| c.to_a.join(' | ')}
+end
 
 
