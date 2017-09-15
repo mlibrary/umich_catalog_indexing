@@ -14,8 +14,8 @@ module Traject
       m[/^HATCH AMIC/]  = "Hatcher Graduate Asia Library"
       m[/^HATCH CL.*/]  = "Hatcher Graduate Clark Library"
       m[/^HATCH.*/]     = "Hatcher Graduate"
-      m[/^HSRS.*/]      = "Health Sciences Remote Shelving"
-      m[/^UMTRI.*/]     = "Transportation Research Institute Library (UMTRI)"
+      m[/^HSRS.*/]      = "- Offsite Shelving -"
+#      m[/^UMTRI.*/]     = "Transportation Research Institute Library (UMTRI)"
       m[/^UGL.*/]       = "Shapiro Undergraduate"
       m[/^TAUB.*/]      = "Taubman Medical"
       m[/^SPEC.*/]      = "Special Collections"
@@ -35,7 +35,7 @@ module Traject
       m[/^DHCL.*/]      = "Donald Hall Collection"
       m[/^PUB.*/]       = "Public Health"
       m[/^UNION.*/]     = "Michigan Union"
-      m[/^MUSM.*/]      = "Museums"
+      m[/^MUSM.*/]      = "Research Museums Center"
       m[/^HATCH MSOFT/] = "Hatcher Graduate Map Library"
       m[/^MUSIC.*/]     = "Music"
       m[/^HATCH MSHLV/] = "Hatcher Graduate Map Library"
@@ -60,6 +60,9 @@ module Traject
       m[/^HATCH DOCS/]  = "Hatcher Graduate Documents Center"
       m[/^HATCH DMIC/]  = "Hatcher Graduate Documents Center"
       m[/^HATCH DFILE/] = "Hatcher Graduate Documents Center"
+      m[/^ELLS.*/]      = "Offsite Shelving"
+      m[/^OFFS.*/]      = "Offsite Shelving"
+      m[/^STATE.*/]     = "Offsite Shelving"
       
       return m
     end
