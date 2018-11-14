@@ -14,7 +14,7 @@ module Traject
       m[/^HATCH AMIC/]  = "Hatcher Graduate Asia Library"
       m[/^HATCH CL.*/]  = "Hatcher Graduate Clark Library"
       m[/^HATCH.*/]     = "Hatcher Graduate"
-      m[/^HSRS.*/]      = "- Offsite Shelving -"
+      m[/^HSRS.*/]      = "Offsite Shelving H"
 #      m[/^UMTRI.*/]     = "Transportation Research Institute Library (UMTRI)"
       m[/^UGL.*/]       = "Shapiro Undergraduate"
       m[/^TAUB.*/]      = "Taubman Medical"
