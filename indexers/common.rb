@@ -357,13 +357,15 @@ to_field "display_date" do |rec, acc, context|
     acc << rd
   else
     if rd =~ /(\d\d\d)u/
-      acc << "in the #{$1}0s"
+      #acc << "in the #{$1}0s"
+      acc << "#{$1}0s (exact date unknown)"
     elsif rd =~ /(\d\d)u+/
-      acc << 'in the ' + ordinalize_incomplete_year($1.to_i + 1) + " century"
+      #acc << 'in the ' + ordinalize_incomplete_year($1.to_i + 1) + " century"
+      acc << ordinalize_incomplete_year($1.to_i + 1) + " century (exact date unknown)"
     elsif rd == '1uuu'
-      acc << 'between 1000 and 1999'
+      acc << 'Between 1000 and 1999 (exact date unknown)'
     elsif rd == '2uuu'
-      acc << 'between 2000 and 2999'
+      acc << 'Between 2000 and 2999 (exact date unknown)'
     end
   end
 end
