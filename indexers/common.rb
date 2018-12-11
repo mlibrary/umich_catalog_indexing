@@ -158,7 +158,7 @@ to_field "titleSort", marc_sortable_title
 to_field "title_top", extract_marc("240adfghklmnoprs0:245abfgknps:247abfgknps:111acdefgjklnpqtu04:130adfgklmnoprst0")
 to_field "title_rest", extract_marc("210ab:222ab:242abnpy:243adfgklmnoprs:246abdenp:247abdenp:700fgjklmnoprstx03:710fgklmnoprstx03:711acdefgjklnpqstux034:730adfgklmnoprstx03:740anp:765st:767st:770st:772st:773st:775st:776st:777st:780st:785st:786st:787st:830adfgklmnoprstv:440anpvx:490avx:505t")
 to_field "series", extract_marc("440ap:800abcdfpqt:830ap")
-to_field "series2", extract_marc("490a")
+to_field "series2", extract_marc("490avx")
 
 # Serial titles count on the format alreayd being set and having the string 'Serial' in it.
 
