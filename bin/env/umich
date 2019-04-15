@@ -2,8 +2,10 @@
 
 # Where are we working?
 
-export TDIR=/l/solr-vufind/apps/ht_traject
+#export TDIR=/l/solr-vufind/apps/ht_traject
 export DDIR=/l/solr-vufind/data
+export TDIR=/l/solr-vufind/apps/ht_traject
+# export TDIR=/Users/dueberb/devel/search/ht_traject
 
 export DEFAULT_WRITER=localhost
 
@@ -42,23 +44,26 @@ function find_del_file_for_date() {
   find_data_file "$delfilebase"
 }
 
-if [ -z $SOLR_PORT ]
-then
-  echo
-  echo "Need to call with the solr port defined"
-  echo "e.g.,"
-  echo "   SOLR_PORT=8026 catchup_today umich"
-  echo
-  exit 1
-fi
 
-if [ -z $SOLR_CORE ]
-then
+if [ -z $SOLR_URL ]; then
+  if [ -z $SOLR_PORT ] && [ -z $SOLR_URL ]
+  then
+    echo
+    echo "Need to call with the solr port defined"
+    echo "e.g.,"
+    echo "   SOLR_PORT=8026 catchup_today umich"
+    echo
+    exit 1
+  fi
+
+  if [ -z $SOLR_CORE ]
+  then
     echo "SOLR_CORE not defined; defaulting to 'biblio'"
     SOLR_CORE=biblio
-fi    
+  fi    
+  export SOLR_URL="http://localhost:${SOLR_PORT}/solr/${SOLR_CORE}"
+fi
 
-export SOLR_URL="http://localhost:${SOLR_PORT}/solr/${SOLR_CORE}"
 
 
 # If we're seeing the old version of jruby , ignore it
