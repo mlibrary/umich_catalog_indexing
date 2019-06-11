@@ -55,7 +55,7 @@ end
 ### High Level Browse ###
 require 'high_level_browse'
 
-hlb = HighLevelBrowse.load(dir: '/l/solr-vufind/apps/ht_traject/lib/translation_maps')
+hlb = HighLevelBrowse.load(dir: Pathname.new(__dir__) + "../lib/translation_maps")
 
 #to_field 'hlb3Delimited', extract_marc('050ab:082a:090ab:099|*0|a:086a:086z:852|0*|hij') do |rec, acc, context|
 to_field 'hlb3Delimited', extract_marc('050ab:082a:090ab:099a:086a:086z:852|0*|hij') do |rec, acc, context|
