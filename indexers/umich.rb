@@ -16,6 +16,13 @@ to_field 'callnoletters', extract_marc('852hij:050ab:090ab', :first=>true) do |r
   end
 end
 
+to_field 'callnosort' do |record, acc, context|
+  if context.output_hash['callnumber']
+    acc << Array(context.output_hash['callnumber']).first
+  end
+end
+
+
 
 ### Last time the record was changed ####
 # cat_date -- the maximum value in a 972c
@@ -24,7 +31,7 @@ to_field 'cat_date', extract_marc('972c') do |rec, acc, context|
   acc << '00000000'
   acc.replace [acc.max]
 end
-  
+
 
 #### Fund that was used to pay for it ####
 
@@ -67,7 +74,7 @@ to_field 'hlb3Delimited', extract_marc('050ab:082a:090ab:099a:086a:086z:852|0*|h
   # Get the individual conmponents and stash them
   components = acc.flatten.to_a.uniq
   context.output_hash['hlb3'] = components unless components.empty?
-  
+
   # Turn them into pipe-delimited strings
   acc.map! {|c| c.to_a.join(' | ')}
 end
@@ -90,15 +97,15 @@ F852b = Traject::MarcExtractor.cached('852b')
 
 each_record do |rec, context|
   has_non_ht_holding = false
-  
+
   F973b.extract(rec).each do |val|
     has_non_ht_holding = true if ['avail_online', 'avail_circ'].include? val
   end
-  
+
   F852b.extract(rec).each do |val|
     has_non_ht_holding = true unless val == 'SDR'
   end
-  
+
   context.clipboard[:ht][:has_non_ht_holding] = has_non_ht_holding
 end
 
@@ -113,7 +120,7 @@ to_field 'ht_searchonly' do |record, acc, context|
 end
 
 to_field 'ht_searchonly_intl' do |record, acc, context|
-  has_ht_fulltext = context.clipboard[:ht][:items].intl_fulltext? 
+  has_ht_fulltext = context.clipboard[:ht][:items].intl_fulltext?
   if has_ht_fulltext or context.clipboard[:ht][:has_non_ht_holding]
     acc << false
   else
