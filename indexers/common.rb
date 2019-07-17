@@ -94,7 +94,7 @@ to_field 'isn_related', extract_marc("400x:410x:411x:440x:490x:500x:510x:534xz:5
 
 to_field 'sudoc', extract_marc('086az')
 
-# UC started sending me leading spaces, so I need to do something 
+# UC started sending me leading spaces, so I need to do something
 # about it.
 to_field "lccn", extract_marc('010a') do |rec, acc|
   acc.map! {|x| x.strip }
@@ -190,7 +190,28 @@ to_field('serialTitle_rest') do |r, acc, context|
   end
 end
 
+################################
+######## TITLE AND AUTHOR  #####
+################################
+#
+# Who can say "combinatorial explosion"?
+#
 
+SPACERUN=/\s+/
+to_field('title_author') do |r, acc, context|
+  mainauthors = Array(context.output_hash['mainauthor']).compact
+  titles = Array(context.output_hash['title']).compact
+
+#  logger.info "Authors: #{mainauthors}"
+#  logger.info "Titles: #{titles}"
+
+  mainauthors.each do |a|
+    titles.each do |t|
+      acc << "#{a} #{t}"
+ #     logger.info "Added #{phrase}"
+    end
+  end
+end
 
 ################################
 ######## SUBJECT / TOPIC  ######

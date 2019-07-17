@@ -20,4 +20,6 @@ gem 'marc-fastxmlwriter'
 gem 'jdbc-mysql'
 gem 'high_level_browse'
 
+gem 'pry'
+
 gem 'traject-solrj_writer'
