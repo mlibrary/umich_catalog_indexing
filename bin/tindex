@@ -44,9 +44,6 @@ logfile=$3
 # Pull in functions to find marc/del files
 source $SCRIPTDIR/utils.sh
 
-# Put jruby in the path
-PATH=/htsolr/catalog/bin/jruby/bin:$PATH
-
 TDIR=`realpath $SCRIPTDIR/..`
 if [ ! -f $TDIR/writers/$WRITER.rb ]
 then

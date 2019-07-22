@@ -44,7 +44,6 @@ log "Working on $HOSTNAME in $SCRIPTDIR to index $marcfile" $logfile
 if [ -f "$marcfile" ] 
 then
     export -f log
-    cd $TDIR
     $SCRIPTDIR/bundle exec $SCRIPTDIR/tindex $DEFAULT_WRITER $marcfile | tee -a $logfile | grep 'ERROR\|FATAL\|Exc' | xargs -Ierr bash -c 'log "$@"' _ err
 
 else
