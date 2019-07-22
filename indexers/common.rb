@@ -199,13 +199,19 @@ end
 
 SPACERUN=/\s+/
 to_field('title_author') do |r, acc, context|
-  mainauthors = Array(context.output_hash['mainauthor']).compact
+  authors = Array(context.output_hash['mainauthor']).compact
+  authors = if authors.empty?
+              Array(context.output_hash['author']).compact
+            else
+              authors
+            end
+
   titles = Array(context.output_hash['title']).compact
 
-#  logger.info "Authors: #{mainauthors}"
+#  logger.info "Authors: #{authors}"
 #  logger.info "Titles: #{titles}"
 
-  mainauthors.each do |a|
+  authors.each do |a|
     titles.each do |t|
       acc << "#{a} #{t}"
  #     logger.info "Added #{phrase}"
