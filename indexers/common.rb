@@ -51,7 +51,7 @@ each_record HathiTrust::Traject::Macros.setup
 ################################
 
 to_field "id", extract_marc("001", :first => true)
-to_field "allfields", extract_all_marc_values do |r, acc|
+to_field "allfields", extract_all_marc_values(to: '850') do |r, acc|
   acc.replace [acc.join(' ')] # turn it into a single string
 end
 
