@@ -67,9 +67,12 @@ module HathiTrust::Traject::Macros
     extractor.skipif = skipif
 
     # Now return a normal marc extractor-type lambda
-    lambda do |record, accumulator, context|
+    lambda do |record, accumulator, context, &blk|
       accumulator.concat extractor.extract(record)
       Traject::Macros::Marc21.apply_extraction_options(accumulator, options, translation_map)
+      if blk
+        blk.call(record, accumulator, context)
+      end
     end
 
 
