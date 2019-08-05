@@ -141,8 +141,16 @@ to_field 'title',     extract_marc_filing_version('245abdefgknp', :include_origi
 to_field 'title_a',   extract_marc_filing_version('245a', :include_original => true)
 to_field 'title_ab',  extract_marc_filing_version('245ab', :include_original => true)
 to_field 'title_c',   extract_marc('245c')
+to_field 'title_common', extract_marc_filing_version('245abp', include_original: true)
 
 to_field 'vtitle',    extract_marc('245abdefghknp', :alternate_script=>:only, :trim_punctuation => true, :first=>true)
+
+# Messy, but let's take anyting in title_ab or title_common out of title_a, so we don't double-dip
+
+each_record do |record, context|
+  oh = context.output_hash
+  oh['title_a']  = oh['title_a'] - oh['title_ab'] - oh['title_common']
+end
 
 
 # Sortable title
@@ -206,15 +214,11 @@ to_field('title_author') do |r, acc, context|
               authors
             end
 
-  titles = Array(context.output_hash['title']).compact
-
-#  logger.info "Authors: #{authors}"
-#  logger.info "Titles: #{titles}"
+  titles = Array(context.output_hash['title_common']).compact
 
   authors.each do |a|
     titles.each do |t|
       acc << "#{a} #{t}"
- #     logger.info "Added #{phrase}"
     end
   end
 end
