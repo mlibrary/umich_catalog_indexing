@@ -149,7 +149,9 @@ to_field 'vtitle',    extract_marc('245abdefghknp', :alternate_script=>:only, :t
 
 each_record do |record, context|
   oh = context.output_hash
-  oh['title_a']  = oh['title_a'] - oh['title_ab'] - oh['title_common']
+  if (oh['title_a'])
+    oh['title_a']  = oh['title_a'] - Array(oh['title_ab']) - Array(oh['title_common'])
+  end
 end
 
 
@@ -208,17 +210,17 @@ end
 SPACERUN=/\s+/
 to_field('title_author') do |r, acc, context|
   authors = Array(context.output_hash['mainauthor']).compact
-  authors = if authors.empty?
-              Array(context.output_hash['author']).compact
-            else
-              authors
-            end
+#  authors = if authors.empty?
+#              Array(context.output_hash['author']).compact
+#            else
+#              authors
+#            end
 
   titles = Array(context.output_hash['title_common']).compact
 
   authors.each do |a|
     titles.each do |t|
-      acc << "#{a} #{t}"
+      acc << "#{a} #{t}".split(/\s+/).uniq.compact.join(" ")
     end
   end
 end
