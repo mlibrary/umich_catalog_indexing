@@ -3,7 +3,6 @@ require 'traject/marc4j_reader'
 require 'zlib'
 
 
-
 class Traject::GZipXMLReader < Traject::Marc4JReader
   def create_marc_reader!
     case input_type
@@ -15,11 +14,11 @@ class Traject::GZipXMLReader < Traject::Marc4JReader
       MarcPermissiveStreamReader.new(input_stream.to_inputstream, permissive, true, settings["marc4j_reader.source_encoding"])
     when "xml"
       if @settings['command_line.filename'] =~ /\.gz$/
-        @input_stream =  Java::java.util.zip.GZIPInputStream.new(@input_stream.to_inputstream)
+        @input_stream = Java::java.util.zip.GZIPInputStream.new(@input_stream.to_inputstream)
       else
         @input_stream = @input_stream.to_inputstream
       end
-      
+
       MarcXmlReader.new(@input_stream)
     else
       raise IllegalArgument.new("Unrecgonized marc_source.type: #{input_type}")

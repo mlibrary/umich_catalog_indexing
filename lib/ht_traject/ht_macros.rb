@@ -15,13 +15,13 @@ module HathiTrust::Traject::Macros
   #
   # All record/field combinations that return true from that func will be skipped.
   #
-  def extract_marc_unless(spec, skipif, options={})
+  def extract_marc_unless(spec, skipif, options = {})
     unless (options.keys - Traject::Macros::Marc21::EXTRACT_MARC_VALID_OPTIONS).empty?
       raise RuntimeError.new("Illegal/Unknown argument '#{(options.keys - EXTRACT_MARC_VALID_OPTIONS).join(', ')}' in extract_marc at #{Traject::Util.extract_caller_location(caller.first)}")
     end
 
 
-    if translation_map_arg  = options.delete(:translation_map)
+    if translation_map_arg = options.delete(:translation_map)
       translation_map = Traject::TranslationMap.new(translation_map_arg)
     else
       translation_map = nil
@@ -79,10 +79,6 @@ module HathiTrust::Traject::Macros
   end
 
 
-
-
-
-
   # Get a namespaced place to put all the ht stuff
   def self.setup
     lambda do |record, context|
@@ -125,26 +121,23 @@ module HathiTrust::Traject::Macros
   end
 
 
-
   # Stick some dates into the context object for later use
   def extract_date_into_context
 
     lambda do |r, context|
       context.clipboard[:ht][:rawdate] = HTMacros.get_raw_date(r)
-      context.clipboard[:ht][:date]    = HTMacros.convert_raw_date(context.clipboard[:ht][:rawdate])
+      context.clipboard[:ht][:date] = HTMacros.convert_raw_date(context.clipboard[:ht][:rawdate])
     end
   end
-
-
 
 
   class HTMacros
 
     # Some dates we're not going to bother with
     BAD_DATE_TYPES = {
-      'n' => true,
-      #'u' => true,
-      'b' => true
+        'n' => true,
+        #'u' => true,
+        'b' => true
     }
 
     CONTAINS_FOUR_DIGITS = /(\d{4})/
@@ -191,8 +184,6 @@ module HathiTrust::Traject::Macros
     end
 
 
-
-
     # Get a date range for easier faceting. 1800+ goes to the decade,
     # before that goes to the century, pre-1500 gets the string
     # "Pre-1500"
@@ -203,9 +194,9 @@ module HathiTrust::Traject::Macros
 
       date = date.to_s
 
-        if date.to_i < 1500
-          return "Pre-1500"
-        end
+      if date.to_i < 1500
+        return "Pre-1500"
+      end
 
 
       case date.to_i
@@ -219,7 +210,6 @@ module HathiTrust::Traject::Macros
       return nil # default
 
     end
-
 
 
   end

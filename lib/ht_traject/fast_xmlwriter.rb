@@ -6,50 +6,50 @@ module MARC
     @xml_header = '<?xml version="1.0" encoding="UTF-8"?>'
     @open_record = "<record>" # or "<marc:record">
     @open_record_namespace = "<marc:record>"
-    
+
     @open_leader = "<leader>"
 
-    
-    def initialize(file, opts={})
+
+    def initialize(file, opts = {})
       super
-    end     
-    
+    end
+
     def write(record)
       @fh.write(self.class.encode(record))
       # @fh.write("\n")
     end
-    
+
     class << self
-      
-      
-      def single_record_document(r, opts={})
+
+
+      def single_record_document(r, opts = {})
         xml = @xml_header.dup
         xml << '<collection>'
         xml << encode(r, opts)
         xml << '</collection>'
         xml
       end
-      
+
       def open_datafield(tag, ind1, ind2)
         # return "\n  <datafield tag=\"#{tag}\" ind1=\"#{ind1}\" ind2=\"#{ind2}\">"
         return "<datafield tag=\"#{tag}\" ind1=\"#{ind1}\" ind2=\"#{ind2}\">"
       end
-  
+
       def open_subfield(code)
         # return "\n    <subfield code=\"#{code}\">"
         return "<subfield code=\"#{code}\">"
       end
-  
+
       def open_controlfield(tag)
         # return "\n<controlfield tag=\"#{tag}\">"
         return "<controlfield tag=\"#{tag}\">"
       end
-    
-      def encode(r, opts={})
+
+      def encode(r, opts = {})
         xml = (opts[:include_namespace] ? @open_record_namespace.dup : @open_record.dup)
-      
+
         # MARCXML only allows alphanumerics or spaces in the leader
-        lead = r.leader.gsub(/[^\w|^\s]/, 'Z').encode(:xml=>:text)
+        lead = r.leader.gsub(/[^\w|^\s]/, 'Z').encode(:xml => :text)
 
         # MARCXML is particular about last four characters; ILSes aren't
         lead.ljust(23, ' ')[20..23] = "4500"
@@ -58,7 +58,7 @@ module MARC
         if (lead[6..6] == " ")
           lead[6..6] = "Z"
         end
-      
+
         xml << @open_leader << lead.encode(:xml => :text) << '</leader>'
         r.each do |f|
           if f.class == MARC::DataField
@@ -68,7 +68,7 @@ module MARC
             end
             xml << '</datafield>'
           elsif f.class == MARC::ControlField
-            xml << open_controlfield(f.tag) << f.value.encode(:xml=>:text) << '</controlfield>'
+            xml << open_controlfield(f.tag) << f.value.encode(:xml => :text) << '</controlfield>'
           end
         end
         xml << '</record>'

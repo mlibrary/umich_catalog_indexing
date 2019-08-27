@@ -7,26 +7,24 @@
 # holdings along the way with #fill_print_holdings!
 
 each_record do |r, context|
-  
+
   itemset = HathiTrust::Traject::ItemSet.new
-  
+
   r.each_by_tag('974') do |f|
     itemset.add HathiTrust::Traject::Item.new_from_974(f) if f['u']
   end
-  
+
   context.clipboard[:ht][:has_items] = (itemset.size > 0)
   context.clipboard[:ht][:items] = itemset
-    
+
 end
 
 # make use of the HathiTrust::ItemSet object stuffed into
 # [:ht][:items] to pull out all the other stuff we need.
 
 
-
-
 to_field 'ht_availability' do |record, acc, context|
-  acc.concat context.clipboard[:ht][:items].us_availability  if context.clipboard[:ht][:has_items]
+  acc.concat context.clipboard[:ht][:items].us_availability if context.clipboard[:ht][:has_items]
 end
 
 to_field 'ht_availability_intl' do |record, acc, context|
@@ -53,7 +51,7 @@ end
 
 to_field 'ht_id_update' do |record, acc, context|
   acc.concat context.clipboard[:ht][:items].last_update_dates if context.clipboard[:ht][:has_items]
-  acc.delete_if {|x| x.empty?}
+  acc.delete_if { |x| x.empty? }
 end
 
 
@@ -64,6 +62,6 @@ end
 
 to_field 'htsource' do |record, acc, context|
   cc_to_of = Traject::TranslationMap.new('ht/collection_code_to_original_from')
-  acc.concat context.clipboard[:ht][:items].collection_codes.map{|x| cc_to_of[x]} if context.clipboard[:ht][:has_items]
+  acc.concat context.clipboard[:ht][:items].collection_codes.map { |x| cc_to_of[x] } if context.clipboard[:ht][:has_items]
 end
 

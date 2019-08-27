@@ -24,13 +24,13 @@ module HathiTrust
       class << self
         attr_accessor :ht_ns, :ht_avail_us, :ht_avail_intl
       end
-      self.ht_ns         = ::Traject::TranslationMap.new('ht/ht_namespace_map')
-      self.ht_avail_us   = ::Traject::TranslationMap.new('ht/availability_map_ht')
+      self.ht_ns = ::Traject::TranslationMap.new('ht/ht_namespace_map')
+      self.ht_avail_us = ::Traject::TranslationMap.new('ht/availability_map_ht')
       self.ht_avail_intl = ::Traject::TranslationMap.new('ht/availability_map_ht_intl')
 
 
-
       attr_reader :items
+
       def initialize
         @items = []
         @ph = {}
@@ -60,7 +60,7 @@ module HathiTrust
       # Some aggregate data
       def ht_ids
         unless @ids
-          @ids = self.map {|i| i.htid.downcase }
+          @ids = self.map { |i| i.htid.downcase }
         end
         @ids
       end
@@ -132,13 +132,13 @@ module HathiTrust
         needs_sorting = false
         self.each do |item|
           jsonrec = {
-            'htid' => item.htid,
-            'ingest' => item.last_update_date,
-            'rights'  => item.rights,
-            'heldby'   => item.print_holdings,
-            'collection_code' => item.collection_code,
+              'htid' => item.htid,
+              'ingest' => item.last_update_date,
+              'rights' => item.rights,
+              'heldby' => item.print_holdings,
+              'collection_code' => item.collection_code,
           }
-          
+
           if item.enum_chron
             jsonrec['enumcron'] = item.enum_chron
             needs_sorting = true
@@ -148,8 +148,8 @@ module HathiTrust
             jsonrec['enum_pubdate'] = item.enum_pubdate
             jsonrec['enum_pubdate_range'] = HathiTrust::Traject::Macros::HTMacros.compute_date_range(item.enum_pubdate.to_i)
           end
-          
-          
+
+
           if platform == :ht
             jsonrec['dig_source'] = item.dig_source if item.dig_source
           end
@@ -165,7 +165,7 @@ module HathiTrust
       end
 
 
-      def enumcronSort a,b
+      def enumcronSort a, b
         matcha = /(\d{4})/.match a['enumcron']
         matchb = /(\d{4})/.match b['enumcron']
         if matcha and matchb and (matcha[1] != matchb[1])
@@ -186,8 +186,6 @@ module HathiTrust
       end
 
 
-
-
       def sortHathiJSON arr
         # Only one? Never mind
         return arr if arr.size == 1
@@ -202,7 +200,7 @@ module HathiTrust
         end
 
         # Then sort it
-        arr.sort! {|a,b| self.enumcronSort(a, b)}
+        arr.sort! { |a, b| self.enumcronSort(a, b) }
 
         # Then remove the sortstrings
         arr.each do |h|
@@ -216,11 +214,11 @@ module HathiTrust
       # least one item whose status is fulltext
 
       def us_fulltext?
-        self.any? {|item| item.us_availability == HathiTrust::Constants::FT}
+        self.any? { |item| item.us_availability == HathiTrust::Constants::FT }
       end
 
       def intl_fulltext?
-        self.any?  {|item| item.intl_availability == HathiTrust::Constants::FT}
+        self.any? { |item| item.intl_availability == HathiTrust::Constants::FT }
       end
 
 
@@ -242,7 +240,7 @@ module HathiTrust
       def self.new_from_974(f)
         inst = self.new
         inst.rights = f['r']
-        inst.htid   = f['u']
+        inst.htid = f['u']
         inst.last_update_date = f['d'] || DEFAULT_DATE
         inst.enum_chron = f['z']
         inst.enum_pubdate = f['y']
@@ -300,12 +298,10 @@ module HathiTrust
       end
 
       def display_string
-        [htid, last_update_date, enum_chron, enum_pubdate, enum_pubdate_range ].join("|")
+        [htid, last_update_date, enum_chron, enum_pubdate, enum_pubdate_range].join("|")
       end
 
     end # end of Item
-
-
 
 
   end # end of Modules

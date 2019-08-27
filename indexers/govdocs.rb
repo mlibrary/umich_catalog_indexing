@@ -21,16 +21,16 @@ if aint
     context.output_hash['id'] = [aint.getAndIncrement]
   end
 end
-    
+
 
 # Get the source based on the filename
 if filename =~ /umich/
-  to_field 'source' do |r,a|
+  to_field 'source' do |r, a|
     a << 'UMICH'
   end
 end
 
-if filename =~ /minn/ 
+if filename =~ /minn/
   to_field 'source' do |r, a|
     a << 'MINNESOTA'
   end
@@ -41,14 +41,14 @@ if filename =~ /cic/i
     a << 'CIC'
   end
 
-  to_field 'oclc', extract_marc('001') do |r,a, c|
-    a.map!{|x| x.gsub! /\D/, ''}
+  to_field 'oclc', extract_marc('001') do |r, a, c|
+    a.map! { |x| x.gsub! /\D/, '' }
   end
 end
 
 agencySubs = {}
 agency_normalization_filename = "#{File.dirname(__FILE__)}/../lib/translation_maps/govdocs/agency_normalization.yaml"
-YAML.load_file(agency_normalization_filename).each_pair do |k, v| 
+YAML.load_file(agency_normalization_filename).each_pair do |k, v|
   depunct = k.gsub /[\p{Punct}\p{Blank}]+$/, ''
   agencySubs[Regexp.new('\b' + Regexp.escape(depunct) + '\p{Punct}*(?=\b| |\Z)', Regexp::IGNORECASE)] = v
 end
@@ -59,12 +59,11 @@ normalizeAgency = ->(a) do
   agencySubs.each_pair do |re, v|
     curr.gsub!(re, v)
   end
-  curr.gsub!  /[\p{Punct}\p{Blank}]+\Z/, ''
+  curr.gsub! /[\p{Punct}\p{Blank}]+\Z/, ''
   curr
 end
-  
 
-  
+
 to_field 'agency', extract_marc('260b:533c:110ab') do |rec, acc|
   values = []
   acc.each do |a|

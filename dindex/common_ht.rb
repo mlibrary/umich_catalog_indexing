@@ -33,7 +33,7 @@ end
 
 
 to_field 'ht_availability_f_stored' do |record, acc, context|
-  acc.concat context.clipboard[:ht][:items].us_availability  if context.clipboard[:ht][:has_items]
+  acc.concat context.clipboard[:ht][:items].us_availability if context.clipboard[:ht][:has_items]
 end
 
 to_field 'ht_availability_intl_f_stored' do |record, acc, context|
@@ -60,7 +60,7 @@ end
 
 to_field 'ht_id_update_i_stored' do |record, acc, context|
   acc.concat context.clipboard[:ht][:items].last_update_dates if context.clipboard[:ht][:has_items]
-  acc.delete_if {|x| x.empty?}
+  acc.delete_if { |x| x.empty? }
 end
 
 to_field 'ht_rightscode_f_stored' do |record, acc, context|
@@ -70,5 +70,5 @@ end
 
 to_field 'ht_source_z' do |record, acc, context|
   cc_to_of = Traject::TranslationMap.new('ht/collection_code_to_original_from')
-  acc.concat context.clipboard[:ht][:items].collection_codes.map{|x| cc_to_of[x]} if context.clipboard[:ht][:has_items]
+  acc.concat context.clipboard[:ht][:items].collection_codes.map { |x| cc_to_of[x] } if context.clipboard[:ht][:has_items]
 end

@@ -9,7 +9,7 @@ end
 
 # callnumber from the items
 to_field 'callnumber', extract_marc('852hij')
-to_field 'callnoletters', extract_marc('852hij:050ab:090ab', :first=>true) do |rec, acc|
+to_field 'callnoletters', extract_marc('852hij:050ab:090ab', :first => true) do |rec, acc|
   unless acc.empty?
     m = /\A([A-Za-z]+)/.match(acc[0])
     acc[0] = m[1] if m
@@ -21,7 +21,6 @@ to_field 'callnosort' do |record, acc, context|
     acc << Array(context.output_hash['callnumber']).first
   end
 end
-
 
 
 ### Last time the record was changed ####
@@ -37,24 +36,24 @@ end
 
 to_field 'fund', extract_marc('975a')
 to_field 'fund_display' do |rec, acc|
-  acc.concat Traject::MarcExtractor.cached('975ad', :separator=>' - ').extract(rec)
+  acc.concat Traject::MarcExtractor.cached('975ad', :separator => ' - ').extract(rec)
 end
 
 
 ##### Location ####
 
-to_field 'institution', extract_marc('971a', :translation_map=>'umich/institution_map')
+to_field 'institution', extract_marc('971a', :translation_map => 'umich/institution_map')
 
 building_map = Traject::UMich.building_map
 to_field 'building', extract_marc('852bc:971a') do |rec, acc|
-  acc.map!{|code| building_map[code.strip]}
+  acc.map! { |code| building_map[code.strip] }
   acc.flatten!
   acc.uniq!
 end
 
 location_map = Traject::UMich.location_map
 to_field 'location', extract_marc('971a:852b:852bc:974b:974bc') do |rec, acc|
-  acc.map!{|code| location_map[code.strip]}
+  acc.map! { |code| location_map[code.strip] }
   acc.flatten!
   acc.uniq!
 end
@@ -66,7 +65,7 @@ hlb = HighLevelBrowse.load(dir: Pathname.new(__dir__) + "../lib/translation_maps
 
 #to_field 'hlb3Delimited', extract_marc('050ab:082a:090ab:099|*0|a:086a:086z:852|0*|hij') do |rec, acc, context|
 to_field 'hlb3Delimited', extract_marc('050ab:082a:090ab:099a:086a:086z:852|0*|hij') do |rec, acc, context|
-  acc.map! {|c| hlb[c] }
+  acc.map! { |c| hlb[c] }
   acc.compact!
   acc.uniq!
   acc.flatten!(1)
@@ -76,7 +75,7 @@ to_field 'hlb3Delimited', extract_marc('050ab:082a:090ab:099a:086a:086z:852|0*|h
   context.output_hash['hlb3'] = components unless components.empty?
 
   # Turn them into pipe-delimited strings
-  acc.map! {|c| c.to_a.join(' | ')}
+  acc.map! { |c| c.to_a.join(' | ') }
 end
 
 

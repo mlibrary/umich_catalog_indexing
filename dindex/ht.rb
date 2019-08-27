@@ -1,5 +1,3 @@
-
-
 #####################################
 ############ HATHITRUST STUFF #######
 #####################################
@@ -7,7 +5,7 @@
 
 # callnumber from the bib, instead of the item
 to_field 'callnumber_str_stored', extract_marc('050ab:090ab')
-to_field 'callnoletters_f_stored', extract_marc('050ab:090ab', :first=>true) do |rec, acc|
+to_field 'callnoletters_f_stored', extract_marc('050ab:090ab', :first => true) do |rec, acc|
   unless acc.empty?
     m = /\A([A-Za-z]+)/.match(acc[0])
     acc[0] = m[1] if m

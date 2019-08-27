@@ -3,6 +3,6 @@ module HathiTrust
 
     SO = "Search only"
     FT = "Full text"
-    
+
   end
 end

@@ -11,5 +11,5 @@ db[sql].order(:collection).each do |h|
 end
 
 tmap_dir = File.expand_path(File.join("..", 'lib', 'translation_maps', 'ht'), File.dirname(__FILE__))
-File.open(File.join(tmap_dir, 'collection_code_to_original_from.yaml'), 'w:utf-8') {|f| f.puts ccof.to_yaml}
+File.open(File.join(tmap_dir, 'collection_code_to_original_from.yaml'), 'w:utf-8') { |f| f.puts ccof.to_yaml }
 
