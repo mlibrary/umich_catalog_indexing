@@ -15,7 +15,6 @@ require 'ht_traject'
 extend HathiTrust::Traject::Macros
 extend Traject::UMichFormat::Macros
 
-require 'naconormalizer'
 require 'marc/fastxmlwriter'
 
 require 'marc_record_speed_monkeypatch'
@@ -115,10 +114,20 @@ to_field "author_top", extract_marc_unless("100abcdefgjklnpqtu0:110abcdefgklnptu
 to_field "author_rest", extract_marc("505r")
 
 
-# Naconormalizer for author
-author_normalizer = NacoNormalizer.new
+# Naconormalizer for author, only under jruby
+
+if defined? JRUBY_VERSION
+  require 'naconormalizer'
+  author_normalizer = NacoNormalizer.new
+else
+  author_normalizer = nil
+end
+
+
 to_field "authorSort", extract_marc_unless("100abcd:110abcd:111abc:110ab:700abcd:710ab:711ab", skipWaSeSS, :first => true) do |rec, acc, context|
-  acc.map! { |a| author_normalizer.normalize(a) }
+  if author_normalizer
+    acc.map! { |a| author_normalizer.normalize(a) }
+  end
   acc.compact!
 end
 
@@ -127,7 +136,7 @@ end
 ########## TITLES ##############
 ################################
 
-# For titles, we want with and without
+# For titles, we want with and without filing characters
 
 to_field 'title', extract_marc_filing_version('245abdefgknp', :include_original => true)
 to_field 'title_a', extract_marc_filing_version('245a', :include_original => true)
@@ -137,24 +146,54 @@ to_field 'title_common', extract_marc_filing_version('245abp', include_original:
 
 to_field 'vtitle', extract_marc('245abdefghknp', :alternate_script => :only, :trim_punctuation => true, :first => true)
 
-# Messy, but let's take anyting in title_ab or title_common out of title_a, so we don't double-dip
+######################################
+# title_equiv
+######################################
+#
+# Based on communication primarily with Leigh Billings, we need to treat a whole lot
+# of stuff as equivalent to title_common.
+#
+# 245 $abp
+# 130 $apt
+# 240 $ap
+# 246 $abp - indicators are irrelevant (usage has changed over time)
+# 247 $abp
+# 505 $t - the $t should only appear if second indicator is coded 0
+# 700 $t - ONLY if the second indicator is 2
+# 710 $t - ONLY if the second indicator is 2
+# 711 $t - ONLY if the second indicator is 2
+# 730 $apt  - ONLY if the second indicator is 2
+# 740 $ap
+#
+# Of these, the following will respond correctly to extract_marc_filing_version
+#   * 130
+#   * 245
+#   * 240
+#   * 247
 
-each_record do |record, context|
+
+to_field 'title_equiv', extract_marc_filing_version('245abp:240ap:130apt:247abp', include_original: true)
+to_field 'title_equiv', extract_marc('246abp:505|*0|t:700|*2|t:710|*2|t:711|*2|t:730|*2|apt:740ap')
+
+# The initital tests with title_equiv were a disaster -- the data are messy and a lot of weird records got
+# elevated. Ignoring title_equiv in the title_a double-dip code below is a second
+# attempt. I'm hoping to just replace title_top with title_equiv and get slightly better results.
+
+
+# Messy, but let's take anything in title_ab or title_equiv out of title_a, so
+# we don't double-dip and screw up relevance
+
+each_record do |_r, context|
   oh = context.output_hash
   if (oh['title_a'])
-    oh['title_a'] = oh['title_a'] - Array(oh['title_ab']) - Array(oh['title_common'])
+    oh['title_a'] = oh['title_a'] - Array(oh['title_ab'])
   end
 end
 
 
 # Sortable title
 to_field "titleSort", marc_sortable_title
-#title_normalizer  = NacoNormalizer.new(:keep_first_comma => false)
-#to_field "titleSort", extract_marc_filing_version('245abk') do |rec, acc, context|
-#  acc.replace [acc[0]] # get only the first one
-#  acc.map!{|a| title_normalizer.normalize(a)}
-#  acc.compact!
-#end
+
 
 
 to_field "title_top", extract_marc("240adfghklmnoprs0:245abfgknps:247abfgknps:111acdefgjklnpqtu04:130adfgklmnoprst0")
@@ -200,19 +239,24 @@ end
 #
 
 SPACERUN = /\s+/
+
+# Getting some stupid `org.jruby.RubyNil cannot be cast to org.jruby.RubyMatchData`
+# errors which MRI seems uninterested in fixing. See https://bugs.ruby-lang.org/issues/12689
+#
+# "solution" is to put a level of method/proc/lamba indirection around the thing
+# that's using the regexp, so here I just extracted into a method.
+
+def uniqify_string(str)
+  str.split(SPACERUN).uniq.compact.join(" ")
+end
+
 to_field('title_author') do |r, acc, context|
   authors = Array(context.output_hash['mainauthor']).compact
-#  authors = if authors.empty?
-#              Array(context.output_hash['author']).compact
-#            else
-#              authors
-#            end
-
   titles = Array(context.output_hash['title_common']).compact
 
   authors.each do |a|
     titles.each do |t|
-      acc << "#{a} #{t}".split(/\s+/).uniq.compact.join(" ")
+      acc << uniqify_string("#{a} #{t}")
     end
   end
 end

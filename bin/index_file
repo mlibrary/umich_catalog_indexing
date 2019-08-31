@@ -24,7 +24,7 @@ fi
 
 # Make sure we're using a valid java
 # and get the utility scripts
-source $SCRIPTDIR/set_java_home.sh
+#source $SCRIPTDIR/set_java_home.sh
 source $SCRIPTDIR/utils.sh
 
 # Put jruby in the path
@@ -44,7 +44,7 @@ log "Working on $HOSTNAME in $SCRIPTDIR to index $marcfile" $logfile
 if [ -f "$marcfile" ] 
 then
     export -f log
-    $SCRIPTDIR/bundle exec $SCRIPTDIR/tindex $DEFAULT_WRITER $marcfile | tee -a $logfile | grep 'ERROR\|FATAL\|Exc' | xargs -Ierr bash -c 'log "$@"' _ err
+    $SCRIPTDIR/bundle exec $SCRIPTDIR/tindex $DEFAULT_WRITER $marcfile | tee -a $logfile | grep 'ERROR\|FATAL\|Exc' | xargs -Ierr bash -c 'log "$@"' _ err 
 
 else
   log  "No indexing: Could not find marcfile '$marcfile'" $logfile
