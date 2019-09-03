@@ -225,6 +225,12 @@ to_field('serialTitle_common') do |r, acc, context|
   end
 end
 
+to_field('serialTitle_equiv') do |r, acc, context|
+  if context.clipboard[:ht][:journal]
+    acc.replace Array(context.output_hash['title_equiv'])
+  end
+end
+
 to_field('serialTitle_a') do |r, acc, context|
   if context.clipboard[:ht][:journal]
     acc.replace Array(context.output_hash['title_a'])
