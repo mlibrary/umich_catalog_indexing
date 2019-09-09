@@ -1,10 +1,58 @@
 #################################
-# COMMON HT STUFF 
+# COMMON HT STUFF
 #################################
 
 # Start off by building up a data structure representing all the 974s
 # and stick it in ht_fields. Also, query the database for the print
 # holdings along the way with #fill_print_holdings!
+#
+#
+#
+#
+###################
+# Which ht_ fields are actually used in mirlyn?
+#
+# Summary of below, ignoring stuff in the mock
+# spectrum-json:spec/spectrum/bib_record.yml
+#   * ht_id
+#   * ht_searchonly
+#
+#  Command and output
+# > for i in pride spectrum-deploy/upload/production search spectrum spectrum-config spectrum-json www.lib-solr-config; do cd /Users/dueberb/devel/search/$i; echo "$i"; git grep '\bht_'; echo -e "\n"; done
+# pride
+#
+#
+# spectrum-deploy/upload/production
+# config/foci/mirlyn.yml:33:  f.search_isn.pf: issn isbn barcode lccn oclc sdrnum ctrlnum ht_id isn_related rptnum id id_int
+# config/foci/mirlyn.yml:34:  f.search_isn.qf: issn isbn barcode lccn oclc sdrnum ctrlnum ht_id isn_related rptnum id id_int
+# config/foci/mirlyn.yml:94:      ht_id^1
+#
+#
+# search
+#
+#
+# spectrum
+#
+#
+# spectrum-config
+# lib/spectrum/config/source.rb:116:        new_params[:fq] << 'ht_searchonly:false' if request.search_only?
+#
+#
+# spectrum-json
+# spec/spectrum/bib_record.yml:114:      ht_availability:
+#   spec/spectrum/bib_record.yml:116:      ht_availability_intl:
+#   spec/spectrum/bib_record.yml:118:      ht_count: 1
+# spec/spectrum/bib_record.yml:119:      ht_id:
+#   spec/spectrum/bib_record.yml:121:      ht_id_display:
+#   spec/spectrum/bib_record.yml:123:      ht_id_update:
+#   spec/spectrum/bib_record.yml:125:      ht_rightscode:
+#   spec/spectrum/bib_record.yml:127:      ht_json: '[{"htid":"mdp.39015021080281","ingest":"20161130","rights":"ic","heldby":[],"collection_code":"aael"}]'
+# spec/spectrum/bib_record.yml:153:      ht_searchonly: false
+# spec/spectrum/bib_record.yml:154:      ht_searchonly_intl: false
+#
+#
+# www.lib-solr-config
+
 
 each_record do |r, context|
 
