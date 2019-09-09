@@ -2,9 +2,9 @@ require 'traject'
 require 'match_map'
 require 'ht_traject/ht_constants'
 
-unless ENV['SKIP_PH']
-  require 'ht_traject/ht_print_holdings'
-end
+# unless ENV['SKIP_PH']
+#   require 'ht_traject/ht_print_holdings'
+# end
 
 require 'ht_traject/ht_macros'
 require 'json'
@@ -111,17 +111,19 @@ module HathiTrust
         @intl
       end
 
-      def fill_print_holdings!
-        ids = self.ht_ids.flatten
-        @ph = HathiTrust::PrintHoldings.get_print_holdings_hash(ids)
-#        self.each do |item|
-#           item.print_holdings = @ph[item.htid]
-#        end
-      end
-
-      def print_holdings
-        return @ph.values.flatten.uniq
-      end
+#       def fill_print_holdings!
+#         ids = self.ht_ids.flatten
+#         @ph = HathiTrust::PrintHoldings.get_print_holdings_hash(ids)
+# #        self.each do |item|
+# #           item.print_holdings = @ph[item.htid]
+# #        end
+# #       end
+#
+#       # Let's skip out on print holdings for library catalog
+#       def print_holdings
+#         return []
+#         # return @ph.values.flatten.uniq
+#       end
 
 
       # Turn this item into the sort of json object
@@ -135,7 +137,7 @@ module HathiTrust
               'htid' => item.htid,
               'ingest' => item.last_update_date,
               'rights' => item.rights,
-              'heldby' => item.print_holdings,
+              'heldby' => [] # not needed, TODO: remove print holdings
               'collection_code' => item.collection_code,
           }
 
@@ -169,7 +171,7 @@ module HathiTrust
         matcha = /(\d{4})/.match a['enumcron']
         matchb = /(\d{4})/.match b['enumcron']
         if matcha and matchb and (matcha[1] != matchb[1])
-#          return matcha[1].to_i <=> matchb[1].to_i 
+#          return matcha[1].to_i <=> matchb[1].to_i
         end
         return a[:sortstring] <=> b[:sortstring]
       end

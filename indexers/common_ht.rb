@@ -70,6 +70,10 @@ end
 # make use of the HathiTrust::ItemSet object stuffed into
 # [:ht][:items] to pull out all the other stuff we need.
 
+# Mirlyn doesn't need heldby!!!
+# to_field 'ht_heldby' do |record, acc, context|
+#   acc.concat context.clipboard[:ht][:items].print_holdings if context.clipboard[:ht][:has_items]
+# end
 
 to_field 'ht_availability' do |record, acc, context|
   acc.concat context.clipboard[:ht][:items].us_availability if context.clipboard[:ht][:has_items]
@@ -83,9 +87,7 @@ to_field 'ht_count' do |record, acc, context|
   acc << context.clipboard[:ht][:items].size if context.clipboard[:ht][:has_items]
 end
 
-to_field 'ht_heldby' do |record, acc, context|
-  acc.concat context.clipboard[:ht][:items].print_holdings if context.clipboard[:ht][:has_items]
-end
+
 
 to_field 'ht_id' do |record, acc, context|
   acc.concat context.clipboard[:ht][:items].ht_ids if context.clipboard[:ht][:has_items]
