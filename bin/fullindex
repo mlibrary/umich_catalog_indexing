@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo Not yet functional for umich indexing
+exit 1
+
 if [ $# -gt 1 ] 
 then
   echo
@@ -22,10 +25,14 @@ source $SCRIPTDIR/utils.sh
 
 export SOLR_URL=`solr_url`
 
-PATH=/htsolr/catalog/bin/jruby/bin:$PATH
+
+# Put jruby in the path
+jruby_path=`realpath ../../jruby/bin`
+export PATH=$jruby_path:$PATH
 
 # where do we keep the data?
-DDIR=/htsolr/catalog/prep
+
+DDIR=`data_dir`
 
 # Full indexes are dated the last day of the month
 # Let's find it
@@ -34,7 +41,7 @@ DDIR=/htsolr/catalog/prep
 first="$(date +"%Y%m")01"
 # Last day of last month
 last_day_of_last_month=`date -d "$first - 1 day" +"%Y%m%d"`
-marcfile="${DDIR}/zephir_full_${last_day_of_last_month}_vufind.json.gz"
+marcfile="${DDIR}/vufind_full_${last_day_of_last_month}.seq.gz"
 
 log "Targeting $SOLR_URL" $logfile
 echo "5 second delay if you need it..."

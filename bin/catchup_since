@@ -3,7 +3,7 @@
 if [ $# -ne 1 ]  && [ $# -ne 2 ]
 then
   echo
-  echo "catchup_since: run all deletes/includes in order since the given date"
+  echo "catchup_since: run all deletes/updates in order since the given date"
   echo
   echo "USAGE:"
   echo "    catchup_since  YYYYMMDD  <optional logfile> "
@@ -17,6 +17,9 @@ SCRIPTDIR=`realpath $HERE`
 TDIR=`realpath $SCRIPTDIR/..`
 
 RAWDATE=$1
+TODAY=`date -d "now" +"%Y%m%d"`
+STARTDATE=`date -d  "$RAWDATE" +"%Y%m%d"`
+
 
 if [ ! -z "$2" ]
 then
@@ -25,16 +28,6 @@ fi
 
 
 source $SCRIPTDIR/utils.sh
-
-
-# Hathitrust uses yesterday's date as the last day
-
-log "Keep in mind that the files are dated one day back" $logfile
-
-TODAY=`date -d "now - 1 day" +"%Y%m%d"`
-
-STARTDATE=`date -d  "$RAWDATE - 1 day" +"%Y%m%d"`
-
 
 
 fulldate=`date -d $STARTDATE`

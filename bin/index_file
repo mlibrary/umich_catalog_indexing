@@ -26,17 +26,10 @@ fi
 # and get the utility scripts
 #source $SCRIPTDIR/set_java_home.sh
 source $SCRIPTDIR/utils.sh
-
-# Put jruby in the path
-export PATH=/htsolr/catalog/bin/jruby/bin:$PATH
-
-
-HOSTNAME=`hostname -s`
-DDIR=/htsolr/catalog/prep
-
 export SOLR_URL=`solr_url`
 
-log "Working on $HOSTNAME in $SCRIPTDIR to index $marcfile" $logfile
+
+log "Working on $HOSTNAME in $SCRIPTDIR to index $marcfile into $SOLR_URL" $logfile
 
 # The whole ridiculous `tee` pipeline is in service of trying to output errors to STDOUT as well as the logfile, so
 # they show up in cron jobs. This might not be the place to do it, though...
@@ -44,13 +37,13 @@ log "Working on $HOSTNAME in $SCRIPTDIR to index $marcfile" $logfile
 if [ -f "$marcfile" ] 
 then
     export -f log
-    $SCRIPTDIR/bundle exec $SCRIPTDIR/tindex $DEFAULT_WRITER $marcfile | tee -a $logfile | grep 'ERROR\|FATAL\|Exc' | xargs -Ierr bash -c 'log "$@"' _ err 
+    $SCRIPTDIR/tindex $DEFAULT_WRITER $marcfile | tee -a $logfile | grep 'ERROR\|FATAL\|Exc' | xargs -Ierr bash -c 'log "$@"' _ err
 
 else
   log  "No indexing: Could not find marcfile '$marcfile'" $logfile
 fi
 
-if [ ! -z $logfile ]; then
-    log "$(tail -1 $logfile)"
-fi
+# if [ ! -z $logfile ]; then
+#    log "$(tail -1 $logfile)"
+# fi
 

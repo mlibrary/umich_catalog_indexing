@@ -11,24 +11,25 @@ then
   exit
 fi
 
-if [ -z $SOLR_URL ]; then
-    export SOLR_URL="http://localhost:9033/catalog"
-fi
-
 
 HERE=`dirname $0`
 SCRIPTDIR=`realpath $HERE`
+ROOTDIR=`realpath $SCRIPTDIR/..`
 DATE=$1
 [[ ! -z "$2" ]] && logfile=`realpath "$2"`
 
-source $SCRIPTDIR/set_java_home.sh
-source $SCRIPTDIR/utils.sh
+cd $SCRIPTDIR
 
-# Put jruby in the path
-PATH=/htsolr/catalog/bin/jruby/bin:$PATH
+#source $SCRIPTDIR/set_java_home.sh
+source $SCRIPTDIR/utils.sh
+export SOLR_URL=`solr_url`
 
 # where do we keep the data?
-DDIR=/htsolr/catalog/prep
+DDIR=`data_dir`
+
+jruby_path=`jruby_bin_dir`
+export PATH=$jruby_path:$PATH
+JRUBY="${jruby_path}/jruby"
 
 delfile=`find_del_file_for_date $DATE $DDIR`
 marcfile=`find_marc_file_for_date $DATE $DDIR`
@@ -36,19 +37,18 @@ marcfile=`find_marc_file_for_date $DATE $DDIR`
 if [ -f "$delfile" ] 
 then
   log  "Deleting from $delfile, targeting $SOLR_URL" $logfile
-  cd $TDIR
-  delout=`$SCRIPTDIR/bundle exec jruby $SCRIPTDIR/delete_ids $delfile`
+  cd $ROOTDIR
+  delout=`bundle exec jruby $SCRIPTDIR/delete_ids $delfile`
   log "$delout" "$logfile"
 else
   log  "No Deletes: Could not find delfile '$delfile'" $logfile
 fi
 
-log " ---- " $logfile
 
 if [ -f "$marcfile" ] 
 then
     cd $TDIR
-    $SCRIPTDIR/bundle exec $SCRIPTDIR/index_file $marcfile $logfile
+    $SCRIPTDIR/index_file $marcfile $logfile
 else
   log  "No indexing: Could not find marcfile '$marcfile'" $logfile
 fi

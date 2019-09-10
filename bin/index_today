@@ -1,0 +1,30 @@
+#!/bin/bash
+
+
+if [ $# -gt 1 ]
+then
+  echo
+  echo "catchup_today: run the catchup (delete and index) for last night's files"
+  echo
+  echo "USAGE:"
+  echo "    catchup_today <optional1_logfile>"
+  echo
+  exit
+fi
+
+HERE=`dirname $0`
+SCRIPTDIR=`realpath $HERE`
+LOGFILE=$1
+
+TODAY=`/bin/date +"%Y%m%d"`
+
+if [ -z $LOGFILE ]; then
+  LOGFILE=`realpath "$SCRIPTDIR/../logs/daily/daily_${TODAY}.txt"`
+fi
+  
+
+$SCRIPTDIR/index_date $TODAY $LOGFILE 2> /l/solr-vufind/apps/umich_catalog_indexing/ERR
+tail -10 $LOGFILE
+grep ERR $LOGFILE
+
+

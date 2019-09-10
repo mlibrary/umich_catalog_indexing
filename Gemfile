@@ -6,8 +6,9 @@ group :development do
   gem 'minitest'
 end
 
+gem 'yell'
 
-gem 'traject', '~>2.0'
+gem 'traject', '~>3.0'
 gem 'traject_umich_format'
 gem 'match_map'
 gem 'traject_alephsequential_reader'
@@ -18,6 +19,7 @@ gem 'library_stdnums'
 if defined? JRUBY_VERSION
   gem 'naconormalizer'
   gem 'jdbc-mysql'
+  gem 'psych'
 else
   gem 'mysql2'
 end

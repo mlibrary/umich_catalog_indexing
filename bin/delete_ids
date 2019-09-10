@@ -12,8 +12,6 @@ end
 
 
 
-
-
 client = HTTPClient.new
 
 total = 0

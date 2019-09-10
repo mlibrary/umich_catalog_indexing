@@ -137,7 +137,7 @@ module HathiTrust
               'htid' => item.htid,
               'ingest' => item.last_update_date,
               'rights' => item.rights,
-              'heldby' => [] # not needed, TODO: remove print holdings
+              'heldby' => [], # not needed, TODO: remove print holdings
               'collection_code' => item.collection_code,
           }
 

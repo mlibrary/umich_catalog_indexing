@@ -1,0 +1,9 @@
+#!/bin/bash
+
+HERE=`dirname $0`
+SCRIPTDIR=`realpath $HERE`
+source $SCRIPTDIR/utils.sh
+export SOLR_URL=`solr_url`
+
+commit
+
