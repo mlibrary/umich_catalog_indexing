@@ -1,12 +1,25 @@
 #!/bin/bash
 
-if [ $# -lt 1 -o $# -gt 2 ]
+if [ $# -lt 1 -o $# -gt 3 ] || [[ "$1" -eq "-h" ]]
 then
   echo
   echo "index_date: run the catchup (delete and index) for a particular date"
+  echo "into http://localhost:$PORT/solr/biblio"
+  echo
+  echo "[\$SOLR_URL will override default core and port ] "
+  echo
   echo
   echo "USAGE:"
-  echo "    index_date YYYYMMDD <optional1_logfile>"
+  echo "    index_date YYYYMMDD <optional_port> <optional1_logfile>"
+  echo
+  echo "DEFAULT VALUES"
+  echo "   port: 8025"
+  echo "   logfile: stdout"
+  echo
+  echo "EXAMPLES"
+  echo "    index_date 20190909"
+  echo "    index_date 20190909 8026"
+  echo "    index_date 2090909  8025 /path/to/logfile"
   echo
   exit
 fi
@@ -16,13 +29,20 @@ HERE=`dirname $0`
 SCRIPTDIR=`realpath $HERE`
 ROOTDIR=`realpath $SCRIPTDIR/..`
 DATE=$1
-[[ ! -z "$2" ]] && logfile=`realpath "$2"`
+
 
 cd $SCRIPTDIR
 
-#source $SCRIPTDIR/set_java_home.sh
 source $SCRIPTDIR/utils.sh
-export SOLR_URL=`solr_url`
+
+port=$2
+[[ -z "$port" ]] && port=8025
+
+logfile=$3
+[[ ! -z "$logfile" ]] && logfile=`realpath "$3"`
+
+
+export target_url=`solr_url $port`
 
 # where do we keep the data?
 DDIR=`data_dir`
@@ -34,24 +54,27 @@ JRUBY="${jruby_path}/jruby"
 delfile=`find_del_file_for_date $DATE $DDIR`
 marcfile=`find_marc_file_for_date $DATE $DDIR`
 
-if [ -f "$delfile" ] 
-then
-  log  "Deleting from $delfile, targeting $SOLR_URL" $logfile
+if [ ! -f "$marcfile" ]; then
+    log  "Could not find marc file $marcfile. Exiting" $logfile
+    exit 1
+fi
+
+
+log "Targeting $target_url"
+
+
+log "Sleeping for 5s" $logfile
+sleep 5
+
+if [ -f "$delfile" ]; then
+  log  "Deleting from $delfile" $logfile
   cd $ROOTDIR
-  delout=`bundle exec jruby $SCRIPTDIR/delete_ids $delfile`
+  delout=`bundle exec jruby $SCRIPTDIR/delete_ids "$delfile" "$target_url"`
   log "$delout" "$logfile"
 else
-  log  "No Deletes: Could not find delfile '$delfile'" $logfile
+  log  "Could not find delfile '$delfile'" $logfile
+  log "Assuming no deletes for date $DATE" $logfile
 fi
 
-
-if [ -f "$marcfile" ] 
-then
-    cd $TDIR
-    $SCRIPTDIR/index_file $marcfile $logfile
-else
-  log  "No indexing: Could not find marcfile '$marcfile'" $logfile
-fi
-
-
-commit
+cd $TDIR
+$SCRIPTDIR/index_file $marcfile $port $logfile
