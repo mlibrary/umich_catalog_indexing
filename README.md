@@ -3,57 +3,55 @@
 ## Most common usages for the scripts in /bin
 
 ```
-export SOLR_URL="http://localhost:8025/solr/biblio" # this is the default
+# default SOLR_URL="http://localhost:8025/solr/biblio"
+# default port is 8025
+#
+# If present, $SOLR_URL trumps everything else
 
-bin/index_today # logfile automatically created in logs/daily/
-bin/index_date 20190901 <optional_logfile>
-bin/catchup_since 20190901 # run all the dailies including that date
+bin/index_today <port> # logfile automatically created in logs/daily/
+bin/index_date 20190901 <optional port>  <optional_logfile>
+bin/catchup_since 20190901 <optional port> # run all the dailies including that date
 
-bin/index_file /path/to/file.seq.gz <optional_logfile>
+bin/index_file /path/to/file.seq.gz <optional port> <optional_logfile>
 
 bin/update_tmaps # re-derive HLB file and HT collection codes
 
 ```
 
-### index_today
+### index_today <optional port> <optional logfile>
 
-* Will take solr url from $SOLR_URL
+* Like everything else, presumes port 8025 unless a port number is passed
+* Again like everything else, if $SOLR_URL is set that trumps all
 * Automatically figures out the date
-* Just runs index_date on the right date
-* Puts a logfile in logs/daily/daily/daily_yyyymmdd.txt
+* Just runs `bin/index_date` on the right date
+* Puts a logfile in logs/daily/daily/daily_yyyymmdd.txt by default
 
 
-### catchup_since YYYYMMDD
+### catchup_since YYYYMMDD <optional port> <optional logfile>
 
 * Figures out the start date and today's date
 * ...and calls index_date repeatedly
 
-### index_date YYYYMMDD <opt logfile>
+### index_date YYYYMMDD <optional port> <optional logfile>
 
-* Just delete/index that date
+* Runs `bin/delete_ids`
+  * Assumes there are no deletes if the file isn't found
+* Runs `bin/index_file` for the marc file
+  * ...but errors out if the marc file isn't found
 
-### index_file /path/to/file.seq[.gz]
+### index_file /path/to/file.seq[.gz] <optional port> <optional logfile>
 
 * Index that file, but doesn't do the deletes
 
 ## Where are all the important variables / locations / etc. set?
 
-`bin/utils.sh`. This is called by just about everything else.
+`bin/utils.sh`. This is called by just about everything else. It sets the default port, sets up bash logging,
+figures out the solr url, etc.
 
-## What scripts are available?
+## What other scripts are available?
 
-Where appropriate, all scripts will respect the SOLR_URL enivronment variable, which
-defaults to "http://localhost:8025/solr/biblio" (the dev instance). The `index_*` commands
-also take an explicit logfile path as the final argument
-
-The useful scripts are as follows, all in the `bin` directory
-
-* `index_today` -- figure out today's date and find/index today's files, putting the log in `logs/daily`
-* `index_date` -- same as above, but pass the date as YYYYMMDD 
-* `index_file` -- Index only (no deletes) the given alephsequential file (.seq or .seq.gz)
-* `catchup_since` -- index all the daily updates starting at the date given as YYYYMMDD
-* `update_tmaps` -- update the translation maps. Right now, only updates HLB (as `lib/translation_maps/hlb.json.gz`)
-* `commit` -- just send a commit
+* `update_tmaps` -- update HLB and  the translation maps.
+* `commit <optional port>` -- just send a commit
 
 The following are not yet functional in a useful way
 * `delete_all`
