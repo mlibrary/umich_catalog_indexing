@@ -4,11 +4,22 @@ function jruby_bin_dir()  {
     echo `realpath "${SCRIPTDIR}/../../jruby/bin"`
 }
 
+function port() {
+    if [[ -z $PORT ]]; then
+	echo 8025
+    else
+	echo $PORT
+    fi
+}
+
 function solr_url() {
     if [[ -z $SOLR_URL ]]; then
-	SOLR_URL="http://localhost:8025/solr/biblio"
+      port=$1
+      [[ -z $port ]] && port=`port`
+      echo "http://localhost:${port}/solr/biblio"
+    else
+      echo $SOLR_URL
     fi
-    echo $SOLR_URL
 }
 
 function find_marc_file_for_date() {
@@ -20,7 +31,7 @@ function find_marc_file_for_date() {
 function find_del_file_for_date() {
     local datestr=$1
     local datadir=$2
-    echo "${datadir}/vufind_upd_${datestr}_delete.log"
+    echo -e "${datadir}/vufind_upd_${datestr}_delete.log"
 }
 
 function data_dir() {
@@ -39,12 +50,12 @@ function log() {
     fi
 
     if [ -z $file ] || [ ! -z $TERM ]; then
-	echo $msg
+	echo -e $msg
     fi
 
     if [ ! -z $file ]; then
 	
-	echo $msg >> $file 2>&1
+	echo -e $msg >> $file 2>&1
     fi
 }
 

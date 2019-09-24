@@ -1,5 +1,5 @@
 #!/bin/bash
- 
+
 # Need at least three arguments:
 #  - the environment (ht or umich)
 #  - the name of the writer (ht_localhost, debug, etc.)
@@ -9,8 +9,7 @@
 # Turn off invokedynamic 
 
 #
-
-if [ $# -lt 2 -o $# -gt 3 ]
+if [[ $# -lt 2 ]] || [[ $# -gt 3 ]]
 then
   echo
   echo "tindex: Use traject to index"
@@ -37,13 +36,13 @@ export JRUBY_OPTS="--server -J-Xmx2048m -Xcompile.invokedynamic=true -J-Djava.io
 export TMPDIR="${HERE}/logs"
 
 READER=alephsequential
-
 WRITER=$1
 
 filename=$2
 filebase=`basename "$filename"`
 
 logfile=$3
+[[ ! -z "$logfile" ]] && logfile=`realpath "$logfile"`
 
 # Pull in functions to find marc/del files
 source $SCRIPTDIR/utils.sh
@@ -74,7 +73,7 @@ cd $TDIR
 
 # Update the tmaps
 log "Getting collection map" $logfile
-log  $JRUBY -S bundle exec $SCRIPTDIR/get_collection_map.rb
+# $JRUBY -S bundle exec $SCRIPTDIR/get_collection_map.rb
 
 log "Indexing from $filename into $WRITER ($SOLR_URL)" $logfile
 
