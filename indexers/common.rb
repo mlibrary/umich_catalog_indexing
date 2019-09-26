@@ -1,4 +1,4 @@
-$:.unshift  "#{File.dirname(__FILE__)}/../lib"
+$:.unshift "#{File.dirname(__FILE__)}/../lib"
 
 
 require 'set'
@@ -6,7 +6,7 @@ require 'set'
 require 'library_stdnums'
 
 require 'traject/macros/marc21_semantics'
-extend  Traject::Macros::Marc21Semantics
+extend Traject::Macros::Marc21Semantics
 
 require 'traject/macros/marc_format_classifier'
 extend Traject::Macros::MarcFormats
@@ -15,18 +15,14 @@ require 'ht_traject'
 extend HathiTrust::Traject::Macros
 extend Traject::UMichFormat::Macros
 
-require 'naconormalizer'
 require 'marc/fastxmlwriter'
 
 require 'marc_record_speed_monkeypatch'
 
 
-
 settings do
   store "log.batch_progress", 10_000
 end
-
-
 
 
 logger.info RUBY_DESCRIPTION
@@ -39,11 +35,8 @@ logger.info RUBY_DESCRIPTION
 each_record HathiTrust::Traject::Macros.setup
 
 
-
 #######  COMMON STUFF BETWEEN UMICH AND HT ########
 #######  INDEXING                          ########
-
-
 
 
 ################################
@@ -51,7 +44,7 @@ each_record HathiTrust::Traject::Macros.setup
 ################################
 
 to_field "id", extract_marc("001", :first => true)
-to_field "allfields", extract_all_marc_values do |r, acc|
+to_field "allfields", extract_all_marc_values(to: '850') do |r, acc|
   acc.replace [acc.join(' ')] # turn it into a single string
 end
 
@@ -62,7 +55,6 @@ to_field 'fullrecord' do |rec, acc|
 end
 
 to_field 'format', umich_format_and_types
-
 
 
 ################################
@@ -78,12 +70,12 @@ to_field 'sdrnum' do |record, acc|
 end
 
 
-to_field 'isbn', extract_marc('020az', :separator=>nil) do |rec, acc|
-     orig = acc.dup
-     acc.map!{|x| StdNum::ISBN.allNormalizedValues(x)}
-     acc << orig
-     acc.flatten!
-     acc.uniq!
+to_field 'isbn', extract_marc('020az', :separator => nil) do |rec, acc|
+  orig = acc.dup
+  acc.map! { |x| StdNum::ISBN.allNormalizedValues(x) }
+  acc << orig
+  acc.flatten!
+  acc.uniq!
 end
 
 
@@ -91,13 +83,12 @@ to_field 'issn', extract_marc('022a:022l:022m:022y:022z:247x')
 to_field 'isn_related', extract_marc("400x:410x:411x:440x:490x:500x:510x:534xz:556z:581z:700x:710x:711x:730x:760x:762x:765xz:767xz:770xz:772x:773xz:774xz:775xz:776xz:777x:780xz:785xz:786xz:787xz")
 
 
-
 to_field 'sudoc', extract_marc('086az')
 
-# UC started sending me leading spaces, so I need to do something 
+# UC started sending me leading spaces, so I need to do something
 # about it.
 to_field "lccn", extract_marc('010a') do |rec, acc|
-  acc.map! {|x| x.strip }
+  acc.map! { |x| x.strip }
 end
 
 to_field 'rptnum', extract_marc('088a')
@@ -110,23 +101,33 @@ to_field 'barcode', extract_marc('974a')
 
 # We need to skip all the 710 with a $9 == 'WaSeSS'
 
-skipWaSeSS = ->(rec,field) { field.tag == '710' and field['9'] =~ /WaSeSS/ }
+skipWaSeSS = ->(rec, field) { field.tag == '710' and field['9'] =~ /WaSeSS/ }
 
 to_field 'mainauthor', extract_marc('100abcd:110abcd:111abc')
 to_field 'mainauthor_role', extract_marc('100e:110e:111e', :trim_punctuation => true)
 to_field 'mainauthor_role', extract_marc('1004:1104:1114', :translation_map => "ht/relators")
 
 
-to_field 'author', extract_marc_unless("100abcdq:110abcd:111abc:700abcdq:710abcd:711abc",skipWaSeSS )
-to_field 'author2', extract_marc_unless("110ab:111ab:700abcd:710ab:711ab",skipWaSeSS)
-to_field "author_top", extract_marc_unless("100abcdefgjklnpqtu0:110abcdefgklnptu04:111acdefgjklnpqtu04:700abcdejqux034:710abcdeux034:711acdegjnqux034:720a:765a:767a:770a:772a:774a:775a:776a:777a:780a:785a:786a:787a:245c",skipWaSeSS)
+to_field 'author', extract_marc_unless("100abcdq:110abcd:111abc:700abcdq:710abcd:711abc", skipWaSeSS)
+to_field 'author2', extract_marc_unless("110ab:111ab:700abcd:710ab:711ab", skipWaSeSS)
+to_field "author_top", extract_marc_unless("100abcdefgjklnpqtu0:110abcdefgklnptu04:111acdefgjklnpqtu04:700abcdejqux034:710abcdeux034:711acdegjnqux034:720a:765a:767a:770a:772a:774a:775a:776a:777a:780a:785a:786a:787a:245c", skipWaSeSS)
 to_field "author_rest", extract_marc("505r")
 
 
-# Naconormalizer for author
-author_normalizer = NacoNormalizer.new
-to_field "authorSort", extract_marc_unless("100abcd:110abcd:111abc:110ab:700abcd:710ab:711ab",skipWaSeSS, :first=>true) do |rec, acc, context|
-  acc.map!{|a| author_normalizer.normalize(a)}
+# Naconormalizer for author, only under jruby
+
+if defined? JRUBY_VERSION
+  require 'naconormalizer'
+  author_normalizer = NacoNormalizer.new
+else
+  author_normalizer = nil
+end
+
+
+to_field "authorSort", extract_marc_unless("100abcd:110abcd:111abc:110ab:700abcd:710ab:711ab", skipWaSeSS, :first => true) do |rec, acc, context|
+  if author_normalizer
+    acc.map! { |a| author_normalizer.normalize(a) }
+  end
   acc.compact!
 end
 
@@ -135,24 +136,64 @@ end
 ########## TITLES ##############
 ################################
 
-# For titles, we want with and without
+# For titles, we want with and without filing characters
 
-to_field 'title',     extract_marc_filing_version('245abdefgknp', :include_original => true)
-to_field 'title_a',   extract_marc_filing_version('245a', :include_original => true)
-to_field 'title_ab',  extract_marc_filing_version('245ab', :include_original => true)
-to_field 'title_c',   extract_marc('245c')
+to_field 'title', extract_marc_filing_version('245abdefgknp', :include_original => true)
+to_field 'title_a', extract_marc_filing_version('245a', :include_original => true)
+to_field 'title_ab', extract_marc_filing_version('245ab', :include_original => true)
+to_field 'title_c', extract_marc('245c')
+to_field 'title_common', extract_marc_filing_version('245abp', include_original: true)
 
-to_field 'vtitle',    extract_marc('245abdefghknp', :alternate_script=>:only, :trim_punctuation => true, :first=>true)
+to_field 'vtitle', extract_marc('245abdefghknp', :alternate_script => :only, :trim_punctuation => true, :first => true)
+
+######################################
+# title_equiv
+######################################
+#
+# Based on communication primarily with Leigh Billings, we need to treat a whole lot
+# of stuff as equivalent to title_common.
+#
+# 245 $abp
+# 130 $apt
+# 240 $ap
+# 246 $abp - indicators are irrelevant (usage has changed over time)
+# 247 $abp
+# 505 $t - the $t should only appear if second indicator is coded 0
+# 700 $t - ONLY if the second indicator is 2
+# 710 $t - ONLY if the second indicator is 2
+# 711 $t - ONLY if the second indicator is 2
+# 730 $apt  - ONLY if the second indicator is 2
+# 740 $ap
+#
+# Of these, the following will respond correctly to extract_marc_filing_version
+#   * 130
+#   * 245
+#   * 240
+#   * 247
+
+
+to_field 'title_equiv', extract_marc_filing_version('245abp:240ap:130apt:247abp', include_original: true)
+to_field 'title_equiv', extract_marc('246abp:505|*0|t:700|*2|t:710|*2|t:711|*2|t:730|*2|apt:740ap')
+
+# The initital tests with title_equiv were a disaster -- the data are messy and a lot of weird records got
+# elevated. Ignoring title_equiv in the title_a double-dip code below is a second
+# attempt. I'm hoping to just replace title_top with title_equiv and get slightly better results.
+
+
+# Messy, but let's take anything in title_ab or title_equiv out of title_a, so
+# we don't double-dip and screw up relevance
+
+each_record do |_r, context|
+  oh = context.output_hash
+  if (oh['title_a'])
+    oh['title_a'] = oh['title_a'] - Array(oh['title_ab'])
+  end
+end
 
 
 # Sortable title
 to_field "titleSort", marc_sortable_title
-#title_normalizer  = NacoNormalizer.new(:keep_first_comma => false)
-#to_field "titleSort", extract_marc_filing_version('245abk') do |rec, acc, context|
-#  acc.replace [acc[0]] # get only the first one
-#  acc.map!{|a| title_normalizer.normalize(a)}
-#  acc.compact!
-#end
+
 
 
 to_field "title_top", extract_marc("240adfghklmnoprs0:245abfgknps:247abfgknps:111acdefgjklnpqtu04:130adfgklmnoprst0")
@@ -167,7 +208,7 @@ each_record do |rec, context|
 end
 
 to_field "serialTitle" do |r, acc, context|
- if context.clipboard[:ht][:journal]
+  if context.clipboard[:ht][:journal]
     acc.replace Array(context.output_hash['title'])
   end
 end
@@ -175,6 +216,18 @@ end
 to_field('serialTitle_ab') do |r, acc, context|
   if context.clipboard[:ht][:journal]
     acc.replace Array(context.output_hash['title_ab'])
+  end
+end
+
+to_field('serialTitle_common') do |r, acc, context|
+  if context.clipboard[:ht][:journal]
+    acc.replace Array(context.output_hash['title_common'])
+  end
+end
+
+to_field('serialTitle_equiv') do |r, acc, context|
+  if context.clipboard[:ht][:journal]
+    acc.replace Array(context.output_hash['title_equiv'])
   end
 end
 
@@ -190,7 +243,35 @@ to_field('serialTitle_rest') do |r, acc, context|
   end
 end
 
+################################
+######## TITLE AND AUTHOR  #####
+################################
+#
+# Who can say "combinatorial explosion"?
+#
 
+SPACERUN = /\s+/
+
+# Getting some stupid `org.jruby.RubyNil cannot be cast to org.jruby.RubyMatchData`
+# errors which MRI seems uninterested in fixing. See https://bugs.ruby-lang.org/issues/12689
+#
+# "solution" is to put a level of method/proc/lamba indirection around the thing
+# that's using the regexp, so here I just extracted into a method.
+
+def uniqify_string(str)
+  str.split(SPACERUN).uniq.compact.join(" ")
+end
+
+to_field('title_author') do |r, acc, context|
+  authors = Array(context.output_hash['mainauthor']).compact
+  titles = Array(context.output_hash['title_common']).compact
+
+  authors.each do |a|
+    titles.each do |t|
+      acc << uniqify_string("#{a} #{t}")
+    end
+  end
+end
 
 ################################
 ######## SUBJECT / TOPIC  ######
@@ -200,7 +281,7 @@ end
 # entries that are FAST entries (those having second-indicator == 7)
 
 
-skip_FAST = ->(rec,field) do
+skip_FAST = ->(rec, field) do
   field.indicator2 == '7' and field['2'] =~ /fast/
 end
 
@@ -221,7 +302,7 @@ to_field "topic", extract_marc_unless(%w(
   662a  662abcdefgh
   690a   690abcdevxyz
 
-  ), skip_FAST, :trim_punctuation=>true)
+  ), skip_FAST, :trim_punctuation => true)
 
 
 ###############################
@@ -234,12 +315,12 @@ to_field "genre", extract_marc('655ab')
 # Look into using Traject default geo field
 to_field "geographic" do |record, acc|
   marc_geo_map = Traject::TranslationMap.new("marc_geographic")
-  extractor_043a  = MarcExtractor.cached("043a", :separator => nil)
+  extractor_043a = MarcExtractor.cached("043a", :separator => nil)
   acc.concat(
-    extractor_043a.extract(record).collect do |code|
-      # remove any trailing hyphens, then map
-      marc_geo_map[code.gsub(/\-+\Z/, '')]
-    end.compact
+      extractor_043a.extract(record).collect do |code|
+        # remove any trailing hyphens, then map
+        marc_geo_map[code.gsub(/\-+\Z/, '')]
+      end.compact
   )
 end
 
@@ -282,7 +363,7 @@ to_field "country_of_pub", extract_marc('752ab')
 
 to_field 'place_of_publication' do |r, acc|
   current_map = Traject::TranslationMap.new('umich/current_cop')
-  obs_map     = Traject::TranslationMap.new('umich/obsolete_cop')
+  obs_map = Traject::TranslationMap.new('umich/obsolete_cop')
 
   if r['008'] and r['008'].value.size > 17
     code = r['008'].value[15..17].gsub(/[^a-z]/, ' ')
@@ -304,7 +385,7 @@ to_field 'place_of_publication' do |r, acc|
         container = "Soviet Union"
         non_ussr_country = current_map[code[0..1] << ' ']
         if non_ussr_country
-          acc <<  non_ussr_country
+          acc << non_ussr_country
         end
       end
 
@@ -320,8 +401,6 @@ to_field 'place_of_publication' do |r, acc|
 
   end
 end
-
-
 
 
 # Deal with the dates
@@ -349,11 +428,10 @@ def ordinalize_incomplete_year(s)
 end
 
 
-
 to_field "display_date" do |rec, acc, context|
   next unless context.output_hash['publishDate']
   rd = context.clipboard[:ht][:rawdate]
-  if context.output_hash['publishDate'].first  ==  rd
+  if context.output_hash['publishDate'].first == rd
     acc << rd
   else
     if rd =~ /(\d\d\d)u/
@@ -371,10 +449,9 @@ to_field "display_date" do |rec, acc, context|
 end
 
 
-
 to_field 'publishDateRange' do |rec, acc, context|
   if context.output_hash['publishDate']
-    d =  context.output_hash['publishDate'].first
+    d = context.output_hash['publishDate'].first
     dr = HathiTrust::Traject::Macros::HTMacros.compute_date_range(d)
     acc << dr if dr
   else
@@ -397,8 +474,8 @@ to_field "edition", extract_marc('250a')
 
 to_field 'language', marc_languages("008[35-37]:041a:041d:041e:041j")
 
-to_field 'language008', extract_marc('008[35-37]', :first=>true) do |r, acc|
-  acc.reject! {|x| x !~ /\S/} # ditch only spaces
+to_field 'language008', extract_marc('008[35-37]', :first => true) do |r, acc|
+  acc.reject! { |x| x !~ /\S/ } # ditch only spaces
   acc.uniq!
 end
 

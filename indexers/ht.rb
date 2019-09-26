@@ -1,5 +1,3 @@
-
-
 #####################################
 ############ HATHITRUST STUFF #######
 #####################################
@@ -25,11 +23,11 @@ end
 # callnumber from the bib, instead of the item
 LC_MAYBE = /\A\s*[A-Z]+\s*\d+/
 to_field 'callnumber', extract_marc('050ab:090ab') do |rec, acc|
-  acc.delete_if{|x| !(LC_MAYBE.match(x))}
+  acc.delete_if { |x| !(LC_MAYBE.match(x)) }
 end
 
 
-to_field 'callnoletters', extract_marc('050ab:090ab', :first=>true) do |rec, acc|
+to_field 'callnoletters', extract_marc('050ab:090ab', :first => true) do |rec, acc|
   unless acc.empty?
     m = /\A([A-Za-z]+)/.match(acc[0])
     acc[0] = m[1] if m
@@ -46,13 +44,13 @@ to_field 'ht_searchonly' do |record, acc, context|
 end
 
 to_field 'ht_searchonly_intl' do |record, acc, context|
-  acc << !context.clipboard[:ht][:items].intl_fulltext? 
+  acc << !context.clipboard[:ht][:items].intl_fulltext?
 end
 
 # Language 008 as string
 
 to_field 'language008_full', marc_languages("008[35-37]") do |record, acc|
-  acc.map! {|x| x.gsub(/\|/, '')}
+  acc.map! { |x| x.gsub(/\|/, '') }
 end
 
 ### High Level Browse ###
@@ -64,7 +62,7 @@ hlb = HighLevelBrowse.load(dir: tmapsdir)
 
 
 to_field 'hlb3Delimited', extract_marc('050ab:082a:090ab:099|*0|a:086a:086z:852|0*|hij') do |rec, acc, context|
-  acc.map! {|c| hlb[c] }
+  acc.map! { |c| hlb[c] }
   acc.compact!
   acc.uniq!
   acc.flatten!(1)
@@ -72,9 +70,9 @@ to_field 'hlb3Delimited', extract_marc('050ab:082a:090ab:099|*0|a:086a:086z:852|
   # Get the individual conmponents and stash them
   components = acc.flatten.to_a.uniq
   context.output_hash['hlb3'] = components unless components.empty?
-  
+
   # Turn them into pipe-delimited strings
-  acc.map! {|c| c.to_a.join(' | ')}
+  acc.map! { |c| c.to_a.join(' | ') }
 end
 
 

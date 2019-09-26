@@ -2,13 +2,13 @@ require 'httpclient'
 require 'zlib'
 
 filename = ARGV[0]
-base_url = ARGV[1] || ENV['SOLR_URL']
 
-unless base_url
-  raise "No url passed and SOLR_URL environment variable not defined"
+url = ENV['SOLR_URL'] + '/update'
+
+unless url
+  raise "SOLR_URL environment variable not defined"
 end
 
-url = base_url + '/update'
 client = HTTPClient.new
 
 total = 0
