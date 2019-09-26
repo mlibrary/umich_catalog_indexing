@@ -45,15 +45,16 @@ if [ -f "$marcfile" ]
 then
     export SOLR_URL=$target_url
     if [[ ! -z $logfile ]]; then
-	$SCRIPTDIR/tindex $DEFAULT_WRITER $marcfile | tee -a $logfile | grep 'ERROR\|FATAL\|Exc' | xargs -Ierr bash -c 'log "$@"' _ err
+	$SCRIPTDIR/tindex $DEFAULT_WRITER $marcfile | tee -a $logfile
     else
 	$SCRIPTDIR/tindex $DEFAULT_WRITER $marcfile 
-    fi
-    
-
+    fi  
 else
   log  "No indexing: Could not find marcfile '$marcfile'" $logfile
 fi
 
+traject_exit_value=$?
+
 commit
 
+exit $traject_exit_value

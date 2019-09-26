@@ -26,24 +26,43 @@ fi
 HERE=`dirname $0`
 SCRIPTDIR=`realpath $HERE`
 
-
-port=$1
-
-LOGFILE=$2
+mailto=${MAIL_INDEX_TODAY_RESULTS_TO}
 
 TODAY=`/bin/date +"%Y%m%d"`
 
+port=$1
+[[ -z "$port" ]] && port=8025
 
+LOGFILE=$2
 if [ -z $LOGFILE ]; then
-    LOGFILE=`realpath "$SCRIPTDIR/../logs/daily/daily_${TODAY}.txt"`
+    logfiledir=`realpath "$SCRIPTDIR/../logs/daily/$port"`
+    mkdir -p $logfiledir
+    LOGFILE="$logfiledir/daily_${TODAY}.txt"
 else
     LOGFILE=`realpath "$LOGFILE"`
 fi
 
 
+$SCRIPTDIR/index_date $TODAY $port $LOGFILE
 
-$SCRIPTDIR/index_date $TODAY $port $LOGFILE 
-tail -10 $LOGFILE
-grep ERR $LOGFILE
+traject_exit_value=$?
+hostname=`hostname -s`
+
+tally=`grep finished ${LOGFILE} | tail -1 | cut -f7 -d':' | cut -f1 -d';'`
+
+if grep -q "returning 'false'" $LOGFILE; then
+    subject="FAILURES. ${hostname} catalog, port ${port} did ${tally}"
+    errors=`grep ERROR ${LOGFILE}  | grep "not add"`
+    newlines=$'\n\n'
+    body=$(printf "See ${LOGFILE} for specifics.$newlines${errors}")
+else
+    subject="SUCCESS. ${hostname} catalog, port ${port} did ${tally}"
+fi
+
+
+if [[ ! -z $mailto ]]; then 
+    echo -e "$body" | mail -s "$subject" "$mailto"
+fi
+
 
 

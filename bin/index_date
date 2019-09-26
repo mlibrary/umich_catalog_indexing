@@ -62,7 +62,6 @@ fi
 
 log "Targeting $target_url"
 
-
 log "Sleeping for 5s" $logfile
 sleep 5
 
@@ -72,9 +71,11 @@ if [ -f "$delfile" ]; then
   delout=`bundle exec jruby $SCRIPTDIR/delete_ids "$delfile" "$target_url"`
   log "$delout" "$logfile"
 else
-  log  "Could not find delfile '$delfile'" $logfile
+  log "Could not find delfile '$delfile'" $logfile
   log "Assuming no deletes for date $DATE" $logfile
 fi
 
 cd $TDIR
 $SCRIPTDIR/index_file $marcfile $port $logfile
+
+exit $?
