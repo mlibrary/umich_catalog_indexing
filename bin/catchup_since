@@ -1,6 +1,7 @@
 #!/bin/bash
 
-if [ $# -ne 1 ]  && [ $# -ne 2 ]
+#if [ $# -ne 1 ]  && [ $# -ne 2 ]
+if [ $# -lt 1 -o $# -gt 3 ]
 then
   echo
   echo "catchup_since: run all deletes/updates in order since the given date"
