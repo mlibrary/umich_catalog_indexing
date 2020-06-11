@@ -25,13 +25,19 @@ function solr_url() {
 function find_marc_file_for_date() {
     local datestr=$1
     local datadir=$2
-    echo "${datadir}/vufind_upd_${datestr}.seq"
+    if [[ -z $MARCFILEBASE ]]; then
+	MARCFILEBASE="vufind_upd"
+    fi
+    echo "${datadir}/${MARCFILEBASE}_${datestr}.seq"
 }
 
 function find_del_file_for_date() {
     local datestr=$1
     local datadir=$2
-    echo -e "${datadir}/vufind_upd_${datestr}_delete.log"
+    if [[ -z $MARCFILEBASE ]]; then
+	MARCFILEBASE="vufind_upd"
+    fi
+    echo -e "${datadir}/${MARCFILEBASE}_${datestr}_delete.log"
 }
 
 function data_dir() {
