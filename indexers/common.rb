@@ -192,7 +192,7 @@ end
 
 
 # Sortable title
-to_field "titleSort", marc_sortable_title
+to_field 'titleSort', extract_marc_filing_version('245abfknp', include_original: false), first_only
 
 
 
