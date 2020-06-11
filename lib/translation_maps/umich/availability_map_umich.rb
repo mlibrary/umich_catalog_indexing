@@ -5,6 +5,6 @@
     "avail_online"=>"Available online",
     "avail_recall"=>"Checked out (Available for recall)",
     "avail_ht"=>"HathiTrust",
-    "avail_ebm_pod" => "Available for Print on Demand"
+    "avail_ht_etas" => "Full text available (HathiTrust log in required)"
 
 }
