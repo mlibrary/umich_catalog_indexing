@@ -431,7 +431,9 @@ end
 to_field "display_date" do |rec, acc, context|
   next unless context.output_hash['publishDate']
   rd = context.clipboard[:ht][:rawdate]
-  if context.output_hash['publishDate'].first == rd
+  if context.clipboard[:ht][:display_date]
+    acc << context.clipboard[:ht][:display_date]
+  elsif context.output_hash['publishDate'].first == rd
     acc << rd
   else
     if rd =~ /(\d\d\d)u/

@@ -127,6 +127,7 @@ module HathiTrust::Traject::Macros
     lambda do |r, context|
       context.clipboard[:ht][:rawdate] = HTMacros.get_raw_date(r)
       context.clipboard[:ht][:date] = HTMacros.convert_raw_date(context.clipboard[:ht][:rawdate])
+      context.clipboard[:ht][:display_date] = HTMacros.get_display_date(r)
     end
   end
 
@@ -141,6 +142,7 @@ module HathiTrust::Traject::Macros
     }
 
     CONTAINS_FOUR_DIGITS = /(\d{4})/
+    DATE_RANGE = /(\d{4}-\d{4})/
 
     # Get a date from a record, as best you can
     # Try to get it from the 008; if not, the 260
@@ -148,6 +150,10 @@ module HathiTrust::Traject::Macros
       get_008_date(r) or get_260_date(r)
     end
 
+
+    def self.get_display_date(r)
+      get_display_date_008(r) or get_display_date_26x(r)
+    end
 
     def self.get_date(r)
       raw = self.get_raw_date(r)
@@ -177,12 +183,53 @@ module HathiTrust::Traject::Macros
       return date
     end
 
+    def self.get_display_date_008(r)
+      return nil unless r['008'] and r['008'].value.size > 10
+
+      ohoh8 = r['008'].value
+
+      date_type = ohoh8[6].downcase
+      date1 = ohoh8[7..10].downcase
+      date2 = ohoh8[11..14].downcase
+      return nil if date_type =~ /[beinprst|]/ 		# all of these types use a single date in date1
+      return nil if date1 == '0000' or date1 =~ /\|/ or date2 == '0000' or date2 =~ /\|/ 	# nothing in date2
+      #return nil if date1 == '9999' or date2 == '9999'
+      return nil if date1 == '9999'
+      if date_type == 'q'
+        # Let's go with the "Possibly between 1880-1880" pattern
+        if date1 =~ /\d{4}/ and date2 =~ /\d{4}/ and date1 < date2 
+          return "Possibly between " + [date1, date2].join("-")
+        end
+      end
+
+      if date1 =~ /\d{4}/ and date2 =~ /(9999|uuuu)/ 
+        return date1.concat("-")
+      end
+      return nil unless date1 =~ /\d{4}/ and date2 =~ /\d{4}/
+      return nil unless date1 < date2			# sanity check
+      return [date1, date2].join("-")
+    end
+
     def self.get_260_date(r)
       return nil unless r['260'] and r['260']['c']
       m = CONTAINS_FOUR_DIGITS.match(r['260']['c'])
       return m && m[1]
     end
 
+    def self.get_display_date_26x(r)
+      date_26x = get_26x_sub_c(r)
+      date_range = DATE_RANGE.match(date_26x)
+      return nil unless date_range
+      return date_range
+    end 
+    
+    def self.get_26x_sub_c(r)
+      #r['260'] and return r['260']['c']
+      $subc = Traject::MarcExtractor.cached("260c").extract(r).first
+      $subc and return $subc
+      $subc = Traject::MarcExtractor.cached("264|*1|c").extract(r).first
+      $subc and return $subc
+    end
 
     # Get a date range for easier faceting. 1800+ goes to the decade,
     # before that goes to the century, pre-1500 gets the string
