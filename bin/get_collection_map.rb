@@ -13,5 +13,3 @@ end
 
 tmap_dir = File.expand_path(File.join("..", 'lib', 'translation_maps', 'ht'), File.dirname(__FILE__))
 File.open(File.join(tmap_dir, 'collection_code_to_original_from.yaml'), 'w:utf-8') { |f| f.puts ccof.to_yaml }
-
-/l/solr-vufind/apps/jruby-9.1.10.0/bin/jruby

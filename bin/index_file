@@ -23,9 +23,7 @@ HERE=`dirname $0`
 SCRIPTDIR=`realpath $HERE`
 marcfile=`realpath $1`
 
-# Make sure we're using a valid java
-# and get the utility scripts
-#source $SCRIPTDIR/set_java_home.sh
+# Get the utility scripts
 
 source $SCRIPTDIR/utils.sh
 

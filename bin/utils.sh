@@ -1,9 +1,3 @@
-function jruby_bin_dir()  {
-    HERE=`dirname $0`
-    SCRIPTDIR=`realpath $HERE`
-    echo `realpath "${SCRIPTDIR}/../../jruby/bin"`
-}
-
 function port() {
     if [[ -z $PORT ]]; then
 	echo 8025

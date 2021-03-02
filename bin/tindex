@@ -49,11 +49,6 @@ source $SCRIPTDIR/utils.sh
 
 export SOLR_URL=`solr_url`
 
-jruby_path=`jruby_bin_dir`
-export PATH=$jruby_path:$PATH
-JRUBY="${jruby_path}/jruby"
-
-
 
 TDIR=`realpath $SCRIPTDIR/..`
 if [ ! -f $TDIR/writers/$WRITER.rb ]
@@ -70,10 +65,6 @@ then
 fi
 
 cd $TDIR
-
-# Update the tmaps
-log "Getting collection map" $logfile
-# $JRUBY -S bundle exec $SCRIPTDIR/get_collection_map.rb
 
 log "Indexing from $filename into $WRITER ($SOLR_URL)" $logfile
 

@@ -47,10 +47,6 @@ export target_url=`solr_url $port`
 # where do we keep the data?
 DDIR=`data_dir`
 
-jruby_path=`jruby_bin_dir`
-export PATH=$jruby_path:$PATH
-JRUBY="${jruby_path}/jruby"
-
 delfile=`find_del_file_for_date $DATE $DDIR`
 marcfile=`find_marc_file_for_date $DATE $DDIR`
 
