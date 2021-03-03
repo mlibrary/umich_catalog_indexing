@@ -85,10 +85,12 @@ to_field 'isn_related', extract_marc("400x:410x:411x:440x:490x:500x:510x:534xz:5
 
 to_field 'sudoc', extract_marc('086az')
 
-# UC started sending me leading spaces, so I need to do something
-# about it.
+# Aleph will s/\s/^/ in the 010 the same way they do in the control fields
+# The fix *should* be in the alephsequential reader, but since ^ isn't a valid
+# character in an lccn anyway, let's do it here.
 to_field "lccn", extract_marc('010a') do |rec, acc|
   acc.map! { |x| x.strip }
+  acc.map! { |x| x.gsub('^', ' ');
 end
 
 to_field 'rptnum', extract_marc('088a')
