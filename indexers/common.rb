@@ -90,7 +90,7 @@ to_field 'sudoc', extract_marc('086az')
 # character in an lccn anyway, let's do it here.
 to_field "lccn", extract_marc('010a') do |rec, acc|
   acc.map! { |x| x.strip }
-  acc.map! { |x| x.gsub('^', ' ');
+  acc.map! { |x| x.gsub('^', ' ')};
 end
 
 to_field 'rptnum', extract_marc('088a')
