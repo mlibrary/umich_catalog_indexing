@@ -15,6 +15,7 @@ gem 'traject_alephsequential_reader'
 gem 'sequel'
 gem 'httpclient'
 gem 'library_stdnums'
+gem "traject-marc4j_reader", "~> 1.0"
 
 if defined? JRUBY_VERSION
   gem 'naconormalizer'
