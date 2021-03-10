@@ -17,14 +17,21 @@ each_record do |r, context|
   bib_nums << context.output_hash['aleph_id']  
   bib_nums << context.output_hash['id']  
   oclc_nums = Array(context.output_hash['oclc'])
-  #context.clipboard[:ht][:hfdata] = Hathitrust::Hathifiles.get_hf_info(oclc_nums)
   context.clipboard[:ht][:hf_item_list] = HathiTrust::Hathifiles.get_hf_info(oclc_nums, bib_nums)
 
 end
 
 each_record do |r, context|
 
+  locations = Array.new()
+  availability = Array.new()
   sh = Hash.new()
+
+  # "OWN" field 
+  r.each_by_tag(['958','OWN']) do |f|
+    locations << f['a'].upcase if f['a']
+  end
+
   r.each_by_tag('866') do |f|
     hol_mmsid = f['8']
     next if hol_mmsid == nil
@@ -46,6 +53,10 @@ each_record do |r, context|
     item['item_id'] = f['7']
     items[hol_mmsid] = Array.new() if items[hol_mmsid] == nil 
     items[hol_mmsid] << item
+    # (not sure if this is right--still investigating in the alma publish job
+    availability << 'avail_circ' if f['f'] == '1'
+    locations << item['library'] if item['library'] 
+    locations << [item['library'], item['location']].join(' ') if item['location']
   end
 
   hol_list = Array.new()
@@ -61,17 +72,29 @@ each_record do |r, context|
     hol['items'] = items[hol_mmsid]
     hol['summary_holdings'] = sh[hol_mmsid]
     hol_list << hol
+    locations << f['a'] if f['a']
+    locations << hol['library'] if hol['library']
+    locations << [hol['library'], hol['location']].join(' ') if hol['location']
   end
-  
+
   # add hol for HT volumes
   if context.clipboard[:ht][:hf_item_list].any? 
     hol = Hash.new()
     hol['library'] = 'HathiTrust Digital Library' 
     hol['items'] = Array(context.clipboard[:ht][:hf_item_list])
     hol_list << hol
+
+    # get ht-related availability values
+    # still need to get etas availability, by reading the umich overlap file
+    availability << 'avail_ht'
+    hol['items'].each do |item|
+      availability << 'avail_ht_fulltext' if item[:access]
+    end
   end
 
   context.clipboard[:ht][:hol_list] = hol_list
+  context.clipboard[:ht][:availability] = availability.uniq
+  context.clipboard[:ht][:locations] = locations.uniq
 
 end
 
@@ -79,8 +102,20 @@ to_field 'hol' do |record, acc, context|
   acc << context.clipboard[:ht][:hol_list].to_json
 end
 
-#to_field 'hf_items' do |record, acc, context|
-#  acc << context.clipboard[:ht][:hf_item_list].to_json
-#end
+to_field 'availability' do |record, acc, context|
+  avail_map = Traject::TranslationMap.new('umich/availability_map_umich')
+  acc.replace Array(context.clipboard[:ht][:availability].map { |code| avail_map[code] })
+end
 
-  #  acc.concat aleph_spec.extract(record).grep(aleph_pattern).value[5,9]
+location_map = Traject::UMich.location_map
+to_field 'location' do |record, acc, context|
+  locations = Array(context.clipboard[:ht][:locations])
+  #acc.replace locations.map { |code| location_map[code] }
+  acc.replace locations
+  acc.map! { |code| location_map[code.strip] }
+  acc.flatten!
+  acc.uniq!
+end
+#  acc.map! { |code| location_map[code.strip] }
+#  acc.flatten!
+#  acc.uniq!

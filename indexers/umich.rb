@@ -51,12 +51,14 @@ to_field 'building', extract_marc('852bc:971a') do |rec, acc|
   acc.uniq!
 end
 
-location_map = Traject::UMich.location_map
-to_field 'location', extract_marc('971a:852b:852bc:974b:974bc') do |rec, acc|
-  acc.map! { |code| location_map[code.strip] }
-  acc.flatten!
-  acc.uniq!
-end
+# location has been moved to umich_alma, getting data from hol structure
+# done for efficiency but also because alma publishing doesn't write 974 subfields in alpha order, so can't rely on subfields b and c in order
+#location_map = Traject::UMich.location_map
+#to_field 'location', extract_marc('971a:852b:852bc:974b:974bc') do |rec, acc|
+#  acc.map! { |code| location_map[code.strip] }
+#  acc.flatten!
+#  acc.uniq!
+#end
 
 ### High Level Browse ###
 require 'high_level_browse'
