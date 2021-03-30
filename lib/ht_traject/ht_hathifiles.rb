@@ -6,7 +6,7 @@ module HathiTrust
 
   class Hathifiles
     extend HathiTrust::SecureData
-    DB = Sequel.connect("jdbc:mysql://#{db_machine}/#{db_db}?user=#{db_user}&password=#{db_password}")
+    DB = Sequel.connect("jdbc:mysql://#{db_machine}/#{db_db}?user=#{db_user}&password=#{db_password}&useTimezone=true&serverTimezone=UTC")
     HF_oclc_query = DB[:hf].join(:hf_oclc, htid: :htid).select(Sequel[:hf][:htid].as(:id), Sequel[:rights_code].as(:rights), :description, :collection_code, :access, )
     HF_source_bib_num_query = DB[:hf].join(:hf_source_bib, htid: :htid).select(Sequel[:hf][:htid].as(:id), Sequel[:rights_code].as(:rights), :description, :collection_code, :access, )
 

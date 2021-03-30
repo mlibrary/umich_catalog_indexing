@@ -3,6 +3,19 @@ require 'ht_traject'
 require 'ht_traject/ht_hathifiles.rb'
 require 'json'
 
+# skip course reserve records 
+
+each_record do |r, context|
+  cr_pattern = /CR_RESTRICTED/
+  r.each_by_tag('999') do |f|
+    if f['a'] and f['a'] =~ /CR_RESTRICTED/
+      id = context.output_hash['id']
+      context.skip!("#{id} : Course reserve record skipped")
+      logger.info "#{id} : Course reserve record skipped"
+    end
+  end
+end
+
 # 035    $a (MiU)003113534MIU01
 aleph_pattern = /^\(MiU\)\d{9}MIU01$/
 to_field 'aleph_id' do |record, acc|
@@ -60,6 +73,26 @@ each_record do |r, context|
   end
 
   hol_list = Array.new()
+
+  # get elec links for E56 fields
+  r.each_by_tag('E56') do |f|
+    next unless f['u']
+    hol = Hash.new()
+    hol['link'] = URI.escape(f['u'])
+    hol['library'] = 'ELEC'
+    hol['status'] = 'Available online'
+    hol['description'] = f['3'] if f['3']
+    hol['note'] = f['z'] if f['z']
+    hol_list << hol
+    availability << 'avail_online'
+  end
+ 
+  # check 856 fields:
+  #   -finding aids
+  #   -passwordkeeper records
+  #   -other electronic resources not in alma as portfolio???
+
+  # copy-level(one for each 852)
   r.each_by_tag('852') do |f|
     hol_mmsid = f['8']
     next if hol_mmsid == nil
@@ -89,6 +122,7 @@ each_record do |r, context|
     availability << 'avail_ht'
     hol['items'].each do |item|
       availability << 'avail_ht_fulltext' if item[:access]
+      availability << 'avail_online' if item[:access]
     end
   end
 
