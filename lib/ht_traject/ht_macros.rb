@@ -131,6 +131,28 @@ module HathiTrust::Traject::Macros
     end
   end
 
+  # get the title field for display, remove bracketed subfield h data, leaving any trailing punctuation
+  def extract_display_title(spec='245abdefghknp', opts={})
+    extractor = Traject::MarcExtractor.cached(spec, opts)
+
+    lambda do |record, accumulator, context|
+      extractor.collect_matching_lines(record) do |field, spec|
+        str = extractor.collect_subfields(field, spec).first
+        #str = HTMacros.remove_gmd(field, str.first)
+        subh = nil     
+        field.subfields.collect do |subfield|
+          subh = subfield.value if subfield.code == 'h'
+        end
+        #return str unless subh
+        if subh 
+          subh.gsub!(/(\[.*?\]).*/, '\1') 
+          str.gsub!(/#{Regexp.escape(subh)}/, '') 
+        end
+        accumulator << str if str
+      end
+    end
+  end
+
 
   class HTMacros
 
@@ -258,6 +280,29 @@ module HathiTrust::Traject::Macros
 
     end
 
+    # Take in a field, a string extracted from that field, and a spec and
+    # return the filing version (i.e., the string without the
+    # non-filing characters)
+
+    def self.remove_gmd(field, str)
+#      # Control fields don't have non-filing characters
+#      return str if field.kind_of? MARC::ControlField
+  
+#      # 2nd indicator must be > 0
+#      ind2 = field.indicator2.to_i
+#      return str unless ind2 > 0
+
+      # The spechash must either (a) have no subfields specified, or
+      # (b) include the first subfield in the record
+
+      subh = nil     
+      field.subfields.collect do |subfield|
+        subh = subfield.value if subfield.code == 'h'
+      end
+      return str unless subh
+      subh.gsub!(/(\[.*?\]).*/, '\1') 
+      return str.gsub(/#{Regexp.escape(subh)}/, '') 
+    end
 
   end
 

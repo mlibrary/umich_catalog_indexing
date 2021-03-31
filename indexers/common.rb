@@ -483,3 +483,6 @@ to_field 'language008', extract_marc('008[35-37]', :first => true) do |r, acc|
   acc.uniq!
 end
 
+# extract_display_title will remove subfield h bracketed info, leaving the trailing punctuation
+to_field "title_display", extract_display_title('245abcdefghijklmnopqrstuvwxyz')
+
