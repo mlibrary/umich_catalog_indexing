@@ -42,7 +42,8 @@ end
 
 ##### Location ####
 
-to_field 'institution', extract_marc('971a', :translation_map => 'umich/institution_map')
+#to_field 'institution', extract_marc('971a', :translation_map => 'umich/institution_map')
+to_field 'institution', extract_marc('958a', :translation_map => 'umich/institution_map')
 
 building_map = Traject::UMich.building_map
 to_field 'building', extract_marc('852bc:971a') do |rec, acc|
