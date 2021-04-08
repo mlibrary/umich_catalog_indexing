@@ -48,8 +48,10 @@ each_record do |r, context|
   r.each_by_tag('866') do |f|
     hol_mmsid = f['8']
     next if hol_mmsid == nil
-    sh[hol_mmsid] = Hash.new()
-    sh[hol_mmsid]['summary_holdings'] = f['a']
+    #sh[hol_mmsid] = Array.new() unless sh.key?(hol_mmsid)
+    sh[hol_mmsid] = Array.new() unless sh[hol_mmsid]
+    #sh[hol_mmsid]['summary_holdings'] = f['a']
+    sh[hol_mmsid] << f['a']
   end
 
   items = Hash.new()
@@ -103,7 +105,7 @@ each_record do |r, context|
     hol['callnumber'] = f['h']
     hol['public_note'] = f['z'] 
     hol['items'] = items[hol_mmsid]
-    hol['summary_holdings'] = sh[hol_mmsid]
+    hol['summary_holdings'] = sh[hol_mmsid].join(' : ') if sh[hol_mmsid]
     hol_list << hol
     locations << f['a'] if f['a']
     locations << hol['library'] if hol['library']
