@@ -39,6 +39,7 @@ each_record do |r, context|
   locations = Array.new()
   availability = Array.new()
   sh = Hash.new()
+  has_e56 = false
 
   # "OWN" field 
   r.each_by_tag(['958','OWN']) do |f|
@@ -82,17 +83,42 @@ each_record do |r, context|
     hol = Hash.new()
     hol['link'] = URI.escape(f['u'])
     hol['library'] = 'ELEC'
-    hol['status'] = 'Available online'
+    #hol['status'] = 'Available online'
+    hol['status'] = f['s'] if f['s']
+    hol['link_text'] = 'Available online'
+    hol['link_text'] = f['y'] if f['y']
     hol['description'] = f['3'] if f['3']
     hol['note'] = f['z'] if f['z']
+    hol['interface_name'] = f['m'] if f['m']
+    hol['collection_name'] = f['n'] if f['n']
     hol_list << hol
     availability << 'avail_online'
+    has_e56 = true
   end
  
   # check 856 fields:
   #   -finding aids
   #   -passwordkeeper records
   #   -other electronic resources not in alma as portfolio???
+  r.each_by_tag('856') do |f|
+    next unless f['u']
+    link_text = f['y'] if f['y']
+    if ( link_text =~ /finding aid/i ) or !has_e56 
+      hol = Hash.new()
+      hol['link'] = URI.escape(f['u'])
+      hol['library'] = 'ELEC'
+      hol['status'] = f['s'] if f['s']
+      hol['link_text'] = 'Available online'
+      hol['link_text'] = f['y'] if f['y']
+      hol['description'] = f['3'] if f['3']
+      hol['note'] = f['z'] if f['z']
+      availability << 'avail_online'
+      hol_list << hol
+
+      id = context.output_hash['id']
+      logger.info "#{id} : 856 elec hol #{f}"
+    end
+  end
 
   # copy-level(one for each 852)
   r.each_by_tag('852') do |f|
@@ -107,7 +133,7 @@ each_record do |r, context|
     hol['items'] = items[hol_mmsid]
     hol['summary_holdings'] = sh[hol_mmsid].join(' : ') if sh[hol_mmsid]
     hol_list << hol
-    locations << f['a'] if f['a']
+    locations << f['a'].upcase if f['a']
     locations << hol['library'] if hol['library']
     locations << [hol['library'], hol['location']].join(' ') if hol['location']
   end
