@@ -4,7 +4,7 @@ require 'sequel'
 module HathiTrust
   module DBH
     extend HathiTrust::SecureData
-    DB = Sequel.connect("jdbc:mysql://#{db_machine}/#{db_db}?user=#{db_user}&password=#{db_password}")
+    DB = Sequel.connect("jdbc:mysql://#{db_machine}/#{db_db}?user=#{db_user}&password=#{db_password}&useTimezone=true&serverTimezone=UTC")
   end
 end
 
