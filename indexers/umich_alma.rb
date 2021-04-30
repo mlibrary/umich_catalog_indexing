@@ -63,6 +63,7 @@ each_record do |r, context|
     item['barcode'] = f['a']
     item['library'] = f['b']
     item['location'] = f['c']
+    item['callnumber'] = f['h']
     item['public_note'] = f['n']
     item['process_type'] = f['t']
     item['description'] = f['z']
