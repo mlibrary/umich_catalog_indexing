@@ -1,34 +1,55 @@
 require 'traject'
-require_relative '../ht_secure_data'
+require_relative 'ht_dbh'
 require 'sequel'
 
 module HathiTrust
 
   class Hathifiles
-    extend HathiTrust::SecureData
-    DB = Sequel.connect("jdbc:mysql://#{db_machine}/#{db_db}?user=#{db_user}&password=#{db_password}&useTimezone=true&serverTimezone=UTC")
-    HF_oclc_query = DB[:hf].join(:hf_oclc, htid: :htid).select(Sequel[:hf][:htid].as(:id), Sequel[:rights_code].as(:rights), :description, :collection_code, :access, )
-    HF_source_bib_num_query = DB[:hf].join(:hf_source_bib, htid: :htid).select(Sequel[:hf][:htid].as(:id), Sequel[:rights_code].as(:rights), :description, :collection_code, :access, )
+    DB = HathiTrust::DBH::DB
 
-#DB.logger = Logger.new($stdout)
+    SELECTED_COLS = [
+      Sequel[:hf][:htid].as(:id),
+      Sequel[:rights_code].as(:rights),
+      :description,
+      :collection_code,
+      :access
+    ]
+
+    CC_TO_OF = ::Traject::TranslationMap.new('ht/collection_code_to_original_from')
+
+
+    # Note how for both oclc_nums and bibs we need to map everything to strings,
+    # since the database stores those values as strings. Confusingly, you'll get the
+    # right answer if you send ints becauyse mysql will silently change them, but it
+    # will then refuse to use the indexes!
+    def self.oclc_query(oclc_nums)
+      oclc_join = DB[:hf].join(:hf_oclc, htid: :htid)
+      hf_htid = Sequel[:hf][:htid]
+      oclc_join.select(*SELECTED_COLS).
+        where(source: 'MIU').
+        where(value: Array(oclc_nums).map(&:to_s))
+    end
+
+    def self.bib_query(bib_nums)
+      bib_join = DB[:hf].join(:hf_source_bib, htid: :htid)
+      bib_join.select(*SELECTED_COLS).
+        where(value: Array(bib_nums).map(&:to_s))
+    end
+
+    def self.query(bib_nums:, oclc_nums:)
+      self.bib_query(bib_nums).union(self.oclc_query(oclc_nums))
+    end
+
+    #DB.logger = Logger.new($stdout)
     # I use a db driver per thread to avoid any conflicts
     def self.get_hf_info(oclc_nums, bib_nums)
-#to_field 'htsource' do |record, acc, context|
-#  cc_to_of = Traject::TranslationMap.new('ht/collection_code_to_original_from')
-#  acc.concat context.clipboard[:ht][:items].collection_codes.map { |x| cc_to_of[x] } if context.clipboard[:ht][:has_items]
-#end
-      cc_to_of = ::Traject::TranslationMap.new('ht/collection_code_to_original_from')
       oclc_nums = Array(oclc_nums)
       bib_nums = Array(bib_nums)
-      hf_hash = Hash.new()
+      hf_hash = Hash.new
 
-      HF_source_bib_num_query.where(:value => bib_nums).where(source: "MIU").each do |r|
-        hf_hash[r[:id ]] = r
-        hf_hash[r[:id]]['source'] = cc_to_of[r[:collection_code]]
-      end
-      HF_oclc_query.where(:value => oclc_nums).each do |r|
-        hf_hash[r[:id ]] = r
-        hf_hash[r[:id]]['source'] = cc_to_of[r[:collection_code]]
+      self.query(bib_nums: bib_nums, oclc_nums: oclc_nums).each do |r|
+        hf_hash[r[:id]] = r
+        hf_hash[r[:id]]['source'] = CC_TO_OF[r[:collection_code].downcase]
       end
 
       hf_hash.values
