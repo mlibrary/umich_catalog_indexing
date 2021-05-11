@@ -1,11 +1,6 @@
 require 'traject'
 require 'match_map'
 require 'ht_traject/ht_constants'
-
-# unless ENV['SKIP_PH']
-#   require 'ht_traject/ht_print_holdings'
-# end
-
 require 'ht_traject/ht_macros'
 require 'json'
 
@@ -110,21 +105,6 @@ module HathiTrust
         end
         @intl
       end
-
-#       def fill_print_holdings!
-#         ids = self.ht_ids.flatten
-#         @ph = HathiTrust::PrintHoldings.get_print_holdings_hash(ids)
-# #        self.each do |item|
-# #           item.print_holdings = @ph[item.htid]
-# #        end
-# #       end
-#
-#       # Let's skip out on print holdings for library catalog
-#       def print_holdings
-#         return []
-#         # return @ph.values.flatten.uniq
-#       end
-
 
       # Turn this item into the sort of json object
       # we want to store in solr
@@ -232,12 +212,8 @@ module HathiTrust
 
       DEFAULT_DATE = '00000000'
 
-      attr_accessor :rights, :enum_chron, :last_update_date, :print_holdings, :collection_code, :dig_source
+      attr_accessor :rights, :enum_chron, :last_update_date, :collection_code, :dig_source
       attr_reader :htid, :set, :enum_pubdate, :enum_pubdate_range
-
-      def initialize
-        @print_holdings = []
-      end
 
       def self.new_from_974(f)
         inst = self.new
