@@ -78,6 +78,16 @@ to_field 'hlb3Delimited', extract_marc('050ab:082a:090ab:099a:086a:086z:852|0*|h
   acc.map! { |c| c.to_a.join(' | ') }
 end
 
+require 'best_bets'
+
+BestBets.load('https://apps.lib.umich.edu/admin/bestbets/export').each_term do |term|
+  to_field(term.to_field) do |rec, acc|
+    term.on(rec[term.marc].value) do |rank|
+      acc << rank
+    end
+  end
+end
+
 
 # UMich-specific stuff based on Hathitrust. For Mirlyn, we say something is
 # htso iff it has no ht fulltext, and no other holdings. Basically, this is
