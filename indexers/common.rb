@@ -19,6 +19,7 @@ require 'marc/fastxmlwriter'
 
 require 'marc_record_speed_monkeypatch'
 
+require 'ht_traject/ht_overlap.rb'
 
 settings do
   store "log.batch_progress", 10_000
@@ -34,7 +35,6 @@ logger.info RUBY_DESCRIPTION
 # Set up an area in the clipboard for use storing intermediate stuff
 each_record HathiTrust::Traject::Macros.setup
 
-
 #######  COMMON STUFF BETWEEN UMICH AND HT ########
 #######  INDEXING                          ########
 
@@ -43,7 +43,29 @@ each_record HathiTrust::Traject::Macros.setup
 ###### CORE FIELDS #############
 ################################
 
-to_field "id", extract_marc("001", :first => true)
+#to_field "id", extract_marc("001", :first => true)
+to_field "id", record_id
+to_field 'oclc', oclcnum('035a:035z')
+
+#to_field 'record_source', record_source 	# set to alma or zephir, based on record id
+to_field 'record_source' do |rec, acc, context|
+ acc << context.clipboard[:ht][:record_source]
+end
+
+# for zephir records, check umich print holdings overlap file--skip is oclc number is found in file
+# 
+each_record do |rec, context|
+  oclc_nums = context.output_hash['oclc']
+  context.clipboard[:ht][:overlap] = HathiTrust::UmichOverlap.get_overlap(oclc_nums) 	# returns count of all records found (:count_all), and access=deny records (:count_etas)
+  if context.clipboard[:ht][:record_source] == 'zephir'
+    if context.clipboard[:ht][:overlap][:count_all] > 0
+      id = context.output_hash['id']
+      context.skip!("#{context.output_hash['id']} : zephir record skipped")
+      logger.info "#{context.output_hash['id']} : zephir record skipped, overlap: #{context.clipboard[:ht][:overlap][:count_all]}"
+    end
+  end
+end
+  
 to_field "allfields", extract_all_marc_values(to: '850') do |r, acc|
   acc.replace [acc.join(' ')] # turn it into a single string
 end
@@ -51,6 +73,12 @@ end
 # to_field 'fullrecord', macr4j_as_xml
 
 to_field 'fullrecord' do |rec, acc|
+  #rec.each_by_tag(["FMT","CAT","CID","DAT","HOL"]) do |field|
+  #rec.each_by_tag("FMT") do |field|
+  fields_to_delete = rec.find_all {|field| field.tag =~ /^(FMT|HOL|CAT|CID|DAT)/} 
+  fields_to_delete.each do |field|
+    rec.fields.delete(field)
+  end
   acc << MARC::FastXMLWriter.single_record_document(rec)
 end
 
@@ -61,7 +89,6 @@ to_field 'format', umich_format_and_types
 ######## IDENTIFIERS ###########
 ################################
 
-to_field 'oclc', oclcnum('035a:035z')
 
 sdr_pattern = /^sdr-/
 to_field 'sdrnum' do |record, acc|

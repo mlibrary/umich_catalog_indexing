@@ -153,6 +153,48 @@ module HathiTrust::Traject::Macros
     end
   end
 
+  # id from 001 field--
+  def record_id
+
+    lambda do |r, accumulator, context|
+      id = r['001'].value
+      if (id =~ /\A\d{9}\Z/)
+        id = '11' + id 
+      end
+   
+      accumulator << id
+    end
+  end
+
+  # determine the record source
+  def record_source
+
+    lambda do |r, accumulator, context|
+      id = context.output_hash['id'].first
+      if (id =~ /\A\d{9}\Z/)
+        record_source = 'zephir'
+      elsif (id =~ /\A99.*?6381\Z/)
+        record_source = 'alma'
+      else
+        record_source = 'unknown'
+      end
+   
+      context.clipboard[:ht][:record_source] = record_source
+      accumulator << record_source
+    end
+  end
+
+  # get display string for ht links based on righs and ETAS status
+  def statusFromRights(rights, etas)
+
+    if rights =~ /^(pd|world|cc|und-world|ic-world)/
+      status = "Full text";
+    elsif etas
+      status = "Full text available, simultaneous access is limited (HathiTrust log in required)"
+    else
+      status = "Search only (no full text)"
+    end
+  end
 
   class HTMacros
 

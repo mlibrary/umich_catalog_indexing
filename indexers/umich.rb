@@ -43,7 +43,13 @@ end
 ##### Location ####
 
 #to_field 'institution', extract_marc('971a', :translation_map => 'umich/institution_map')
-to_field 'institution', extract_marc('958a', :translation_map => 'umich/institution_map')
+inst_map = Traject::TranslationMap.new('umich/institution_map')
+to_field 'institution', extract_marc('958a') do |rec, acc, context|
+  acc << 'MiU' if context.clipboard[:ht][:record_source] == 'zephir'   # add MiU as an institution for zephir records
+  acc.map! { |code| inst_map[code.strip] }
+  acc.flatten!
+  acc.uniq!
+end
 
 building_map = Traject::UMich.building_map
 to_field 'building', extract_marc('852bc:971a') do |rec, acc|
@@ -114,7 +120,7 @@ end
 
 to_field 'ht_searchonly' do |record, acc, context|
   has_ht_fulltext = context.clipboard[:ht][:items].us_fulltext?
-  if has_ht_fulltext or context.clipboard[:ht][:has_non_ht_holding]
+  if has_ht_fulltext or context.clipboard[:ht][:has_non_ht_holding] or context.clipboard[:ht][:record_source] == 'alma'
     acc << false
   else
     acc << true
