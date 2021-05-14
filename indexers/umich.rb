@@ -1,4 +1,5 @@
 require 'umich_traject'
+require 'callnumber_collation'
 
 ## OK, so one weird thing we need to do is have different ht_json docs for mirlyn vs hathitrust, since they have differently-formatted 974s. Pass in the :mirlyn symbol and the to_json will do the Right Thing.
 
@@ -18,7 +19,9 @@ end
 
 to_field 'callnosort' do |record, acc, context|
   if context.output_hash['callnumber']
-    acc << Array(context.output_hash['callnumber']).first
+    orig = Array(context.output_hash['callnumber']).first
+    collatable = CallnumberCollation::LC.new(orig)
+    acc << collatable.collation_key
   end
 end
 
