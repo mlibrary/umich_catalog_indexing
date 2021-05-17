@@ -29,6 +29,7 @@ module Traject
       m[/^HATCH.*/]     = "Hatcher Graduate"
       m[/^HSRS.*/]      = "Offsite Shelving H"
 #      m[/^UMTRI.*/]     = "Transportation Research Institute Library (UMTRI)"
+      m[/^SHAP.*/] = "Shapiro"
       m[/^UGL.*/] = "Shapiro Undergraduate"
       m[/^TAUB.*/] = "Taubman Medical"
       m[/^SPEC.*/] = "Special Collections"
