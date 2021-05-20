@@ -17,14 +17,26 @@ to_field 'callnoletters', extract_marc('852hij:050ab:090ab', :first => true) do 
   end
 end
 
+LC = Traject::MarcExtractor.cached('050:090', :first => true)
+SHELF_KEY = Traject::MarcExtractor.cached('852hij', :first => true)
+
 to_field 'callnosort' do |record, acc, context|
-  if context.output_hash['callnumber']
-    orig = Array(context.output_hash['callnumber']).first
-    collatable = CallnumberCollation::LC.new(orig)
-    acc << collatable.collation_key
+  lc = CallnumberCollation::LC.new(LC.extract(record).first)
+  shelf_key = CallnumberCollation::LC.new(SHELF_KEY.extract(record).first)
+  good = [lc, shelf_key].select{|x| x.valid?}
+  case good.size
+  when 1
+    acc << good.first.collation_key
+  when 2
+    a = lc.collation_key
+    b = shelf_key.collation_key
+    if b.start_with?(a)
+      acc << a
+    else
+      acc << b
+    end
   end
 end
-
 
 ### Last time the record was changed ####
 # cat_date -- the maximum value in a 972c
