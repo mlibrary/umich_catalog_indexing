@@ -171,7 +171,7 @@ module HathiTrust::Traject::Macros
 
     lambda do |r, accumulator, context|
       id = context.output_hash['id'].first
-      if (id =~ /\A\d{9}\Z/)
+      if (id =~ /\A11\d{9}\Z/)
         record_source = 'zephir'
       elsif (id =~ /\A99.*?6381\Z/)
         record_source = 'alma'

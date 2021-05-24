@@ -75,6 +75,7 @@ end
 #   acc.concat context.clipboard[:ht][:items].print_holdings if context.clipboard[:ht][:has_items]
 # end
 
+# timothy: if these are still needed, they should be calculated from the hol hathitrust entry
 to_field 'ht_availability' do |record, acc, context|
   acc.concat context.clipboard[:ht][:items].us_availability if context.clipboard[:ht][:has_items]
 end
@@ -89,15 +90,15 @@ end
 
 
 
-to_field 'ht_id' do |record, acc, context|
-  acc.concat context.clipboard[:ht][:items].ht_ids if context.clipboard[:ht][:has_items]
-end
+#to_field 'ht_id' do |record, acc, context|
+#  acc.concat context.clipboard[:ht][:items].ht_ids if context.clipboard[:ht][:has_items]
+#end
 
-to_field 'ht_id_display' do |record, acc, context|
-  context.clipboard[:ht][:items].each do |item|
-    acc << item.display_string
-  end
-end
+#to_field 'ht_id_display' do |record, acc, context|
+#  context.clipboard[:ht][:items].each do |item|
+#    acc << item.display_string
+#  end
+#end
 
 #to_field 'ht_id_update' do |record, acc, context|
 #  acc.concat context.clipboard[:ht][:items].last_update_dates if context.clipboard[:ht][:has_items]
@@ -105,13 +106,13 @@ end
 #end
 
 
-to_field 'ht_rightscode' do |record, acc, context|
-  acc.concat context.clipboard[:ht][:items].rights_list if context.clipboard[:ht][:has_items]
-end
+#to_field 'ht_rightscode' do |record, acc, context|
+#  acc.concat context.clipboard[:ht][:items].rights_list if context.clipboard[:ht][:has_items]
+#end
 
 
-to_field 'htsource' do |record, acc, context|
-  cc_to_of = Traject::TranslationMap.new('ht/collection_code_to_original_from')
-  acc.concat context.clipboard[:ht][:items].collection_codes.map { |x| cc_to_of[x] } if context.clipboard[:ht][:has_items]
-end
+#to_field 'htsource' do |record, acc, context|
+#  cc_to_of = Traject::TranslationMap.new('ht/collection_code_to_original_from')
+#  acc.concat context.clipboard[:ht][:items].collection_codes.map { |x| cc_to_of[x] } if context.clipboard[:ht][:has_items]
+#end
 

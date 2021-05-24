@@ -43,17 +43,12 @@ each_record HathiTrust::Traject::Macros.setup
 ###### CORE FIELDS #############
 ################################
 
-#to_field "id", extract_marc("001", :first => true)
 to_field "id", record_id
 to_field 'oclc', oclcnum('035a:035z')
 
-#to_field 'record_source', record_source 	# set to alma or zephir, based on record id
-to_field 'record_source' do |rec, acc, context|
- acc << context.clipboard[:ht][:record_source]
-end
+to_field 'record_source', record_source 	# set to alma or zephir, based on record id
 
 # for zephir records, check umich print holdings overlap file--skip is oclc number is found in file
-# 
 each_record do |rec, context|
   oclc_nums = context.output_hash['oclc']
   context.clipboard[:ht][:overlap] = HathiTrust::UmichOverlap.get_overlap(oclc_nums) 	# returns count of all records found (:count_all), and access=deny records (:count_etas)
@@ -61,7 +56,6 @@ each_record do |rec, context|
     if context.clipboard[:ht][:overlap][:count_all] > 0
       id = context.output_hash['id']
       context.skip!("#{context.output_hash['id']} : zephir record skipped")
-      logger.info "#{context.output_hash['id']} : zephir record skipped, overlap: #{context.clipboard[:ht][:overlap][:count_all]}"
     end
   end
 end
@@ -73,8 +67,7 @@ end
 # to_field 'fullrecord', macr4j_as_xml
 
 to_field 'fullrecord' do |rec, acc|
-  #rec.each_by_tag(["FMT","CAT","CID","DAT","HOL"]) do |field|
-  #rec.each_by_tag("FMT") do |field|
+  # these fields are present in zephir records and cause problems in specptrum
   fields_to_delete = rec.find_all {|field| field.tag =~ /^(FMT|HOL|CAT|CID|DAT)/} 
   fields_to_delete.each do |field|
     rec.fields.delete(field)

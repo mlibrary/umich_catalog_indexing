@@ -95,7 +95,11 @@ each_record do |r, context|
     r.each_by_tag('974') do |f|
       hol_mmsid = f['8']
       next if hol_mmsid == nil
-      if f['y'] and f['y'] =~ /Process Status: EO/ 
+# timothy: need to do the equivalent of this (from getHoldings):
+#  next ITEM if $row{item_process_status} =~ /SD|CA|WN|MG|CS/;        # process statuses to ignore
+# not sure how these will manifest in the Alma extract
+      #if f['y'] and f['y'] =~ /Process Status: EO/ 
+      if f['y'] and f['y'] =~ /Process Status: (EO|SD|CA|WN|MG|CS)/ 
         #logger.info "#{id} : EO item skipped"
         next
       end
@@ -135,6 +139,7 @@ each_record do |r, context|
       hol['collection_name'] = f['n'] if f['n']
       hol_list << hol
       availability << 'avail_online'
+      locations << hol['library']
       has_e56 = true
     end
    
@@ -158,7 +163,7 @@ each_record do |r, context|
         hol_list << hol
   
         id = context.output_hash['id']
-        logger.info "#{id} : 856 elec hol #{f}"
+        #logger.info "#{id} : 856 elec hol #{f}"
       end
     end
 

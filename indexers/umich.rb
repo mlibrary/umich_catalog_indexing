@@ -3,9 +3,9 @@ require 'callnumber_collation'
 
 ## OK, so one weird thing we need to do is have different ht_json docs for mirlyn vs hathitrust, since they have differently-formatted 974s. Pass in the :mirlyn symbol and the to_json will do the Right Thing.
 
-to_field 'ht_json' do |record, acc, context|
-  acc << context.clipboard[:ht][:items].to_json(:mirlyn) if context.clipboard[:ht][:has_items]
-end
+#to_field 'ht_json' do |record, acc, context|
+#  acc << context.clipboard[:ht][:items].to_json(:mirlyn) if context.clipboard[:ht][:has_items]
+#end
 
 
 # callnumber from the items
