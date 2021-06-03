@@ -64,7 +64,7 @@ each_record do |r, context|
       item['rights'] = f['r']
       item['description'] = f['z']
       item['collection_code'] = f['c']
-      item['source'] = cc_to_of[f['c']]
+      item['source'] = cc_to_of[f['c'].upcase]
       item['access'] = !!(item['rights'] =~ /^(pd|world|ic-world|cc|und-world)/)
       item['status'] = statusFromRights(item['rights'], etas_status)
       items << item
