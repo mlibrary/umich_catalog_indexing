@@ -114,7 +114,7 @@ each_record do |r, context|
         item['temp_location'] = false
       else 
         item['temp_location'] = true
-        logger.info "#{id} : temp loc, current: #{item['library']} #{item['location']} permanent: #{item['permanent_library']} #{item['permanent_location']}"
+        #logger.info "#{id} : temp loc, current: #{item['library']} #{item['location']} permanent: #{item['permanent_library']} #{item['permanent_location']}"
       end
       item['callnumber'] = f['h']
       item['public_note'] = f['n']
@@ -210,7 +210,6 @@ each_record do |r, context|
     etas_status = context.clipboard[:ht][:overlap][:count_etas] > 0
     #hf_item_list = HathiTrust::Hathifiles.get_hf_info(oclc_nums, bib_nums, etas_status)
     hf_item_list = HathiTrust::Hathifiles.get_hf_info(oclc_nums, bib_nums)
-    logger.info "#{id} : hf_info bib_nums: #{bib_nums}, oclc_nums: #{oclc_nums}"
     if hf_item_list.any? 
       hf_item_list.each do |r|
         r['status'] = statusFromRights(r['rights'], etas_status)
