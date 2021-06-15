@@ -106,13 +106,22 @@ each_record do |r, context|
       item = Hash.new()
       item['barcode'] = f['a']
       # b,c are current location
-      item['library'] = f['b']
-      item['location'] = f['c']
-      # d,e are permanent location
+      item['library'] = f['b']		# current_library
+      item['location'] = f['c']		# current_location
+      item['permanent_library'] = f['d']	# permanent_library
+      item['permanent_location'] = f['e']	# permanent_collection
+      if item['library'] == item['permanent_library'] and item['location'] == item['permanent_location'] 
+        item['temp_location'] = false
+      else 
+        item['temp_location'] = true
+        logger.info "#{id} : temp loc, current: #{item['library']} #{item['location']} permanent: #{item['permanent_library']} #{item['permanent_location']}"
+      end
       item['callnumber'] = f['h']
       item['public_note'] = f['n']
       item['process_type'] = f['t']
+      item['item_policy'] = f['p']
       item['description'] = f['z']
+      item['inventory_number'] = f['i']
       item['item_id'] = f['7']
       items[hol_mmsid] = Array.new() if items[hol_mmsid] == nil 
       items[hol_mmsid] << item
@@ -137,6 +146,7 @@ each_record do |r, context|
       hol['note'] = f['z'] if f['z']
       hol['interface_name'] = f['m'] if f['m']
       hol['collection_name'] = f['n'] if f['n']
+      hol['finding_aid'] = false
       hol_list << hol
       availability << 'avail_online'
       locations << hol['library']
@@ -159,11 +169,16 @@ each_record do |r, context|
         hol['link_text'] = f['y'] if f['y']
         hol['description'] = f['3'] if f['3']
         hol['note'] = f['z'] if f['z']
+        if link_text =~ /finding aid/i and hol['link'] =~ /umich/i 
+          hol['finding_aid'] = true
+          id = context.output_hash['id']
+          logger.info "#{id} : umich finding aid #{f}"
+        else
+          hol['finding_aid'] = false
+        end
         availability << 'avail_online'
         hol_list << hol
   
-        id = context.output_hash['id']
-        #logger.info "#{id} : 856 elec hol #{f}"
       end
     end
 
@@ -195,6 +210,7 @@ each_record do |r, context|
     etas_status = context.clipboard[:ht][:overlap][:count_etas] > 0
     #hf_item_list = HathiTrust::Hathifiles.get_hf_info(oclc_nums, bib_nums, etas_status)
     hf_item_list = HathiTrust::Hathifiles.get_hf_info(oclc_nums, bib_nums)
+    logger.info "#{id} : hf_info bib_nums: #{bib_nums}, oclc_nums: #{oclc_nums}"
     if hf_item_list.any? 
       hf_item_list.each do |r|
         r['status'] = statusFromRights(r['rights'], etas_status)
