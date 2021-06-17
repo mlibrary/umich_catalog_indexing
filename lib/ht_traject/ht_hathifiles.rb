@@ -23,16 +23,18 @@ module HathiTrust
     # right answer if you send ints becauyse mysql will silently change them, but it
     # will then refuse to use the indexes!
     def self.oclc_query(oclc_nums)
+      
+      oclc_nums.map!{|num| num.to_i}
       oclc_join = DB[:hf].join(:hf_oclc, htid: :htid)
       hf_htid = Sequel[:hf][:htid]
       oclc_join.select(*SELECTED_COLS).
-        where(source: 'MIU').
         where(value: Array(oclc_nums).map(&:to_s))
     end
 
     def self.bib_query(bib_nums)
       bib_join = DB[:hf].join(:hf_source_bib, htid: :htid)
       bib_join.select(*SELECTED_COLS).
+        where(source: 'MIU').
         where(value: Array(bib_nums).map(&:to_s))
     end
 
