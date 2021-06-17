@@ -254,4 +254,47 @@ to_field 'location' do |record, acc, context|
   acc.flatten!
   acc.uniq!
 end
-  
+
+
+#######################################
+# A-Z eJournal list
+# ####################################
+# filters:
+#  - "location:ELEC"
+#  - "format:Serial"
+# Map first letter of the filing title to one of
+# * A,B,...,Z
+# "0-9" for digits
+# "Other" for anything else
+
+filing_title_ex = extract_marc_filing_version('245abdefgknp', :include_original => false)
+def ejournal?(context)
+  loc = context.output_hash['location']
+  form = context.output_hash['format']
+  loc == 'ELEC' and form == 'Serial'
+end
+
+def first_char_map(str)
+  return nil if str.nil?
+  first_char = str[0]
+  if first_char =~ /[A-Za-z]/
+    first_char.upcase
+  elsif first_char =~ /\d/
+    '0-9'
+  else
+    'Other'
+  end
+
+end
+
+# Use extract_marc to get the title and any associated 880s
+to_field 'serialTitle_first_letter', extract_marc('245abdefgknp', alternate_script: true) do |rec, acc, context|
+  if ejournal?(context)
+    acc.map! {|t| first_char_map(t)}
+  else
+    acc.replace []
+  end
+end
+
+
+
