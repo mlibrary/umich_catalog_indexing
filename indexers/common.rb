@@ -19,7 +19,13 @@ require 'marc/fastxmlwriter'
 
 require 'marc_record_speed_monkeypatch'
 
-require 'ht_traject/ht_overlap.rb'
+UmichOverlap = if ENV['NODB']
+                 require "ht_traject/no_db_mocks/ht_overlap"
+                 HathiTrust::NoDB::UmichOverlap
+               else
+                 require 'ht_traject/ht_overlap.rb'
+                 HathiTrust::UmichOverlap
+               end
 
 settings do
   store "log.batch_progress", 10_000
@@ -48,10 +54,11 @@ to_field 'oclc', oclcnum('035a:035z')
 
 to_field 'record_source', record_source 	# set to alma or zephir, based on record id
 
+
 # for zephir records, check umich print holdings overlap file--skip is oclc number is found in file
 each_record do |rec, context|
   oclc_nums = context.output_hash['oclc']
-  context.clipboard[:ht][:overlap] = HathiTrust::UmichOverlap.get_overlap(oclc_nums) 	# returns count of all records found (:count_all), and access=deny records (:count_etas)
+  context.clipboard[:ht][:overlap] = UmichOverlap.get_overlap(oclc_nums) 	# returns count of all records found (:count_all), and access=deny records (:count_etas)
   if context.clipboard[:ht][:record_source] == 'zephir'
     if context.clipboard[:ht][:overlap][:count_all] > 0
       id = context.output_hash['id']
