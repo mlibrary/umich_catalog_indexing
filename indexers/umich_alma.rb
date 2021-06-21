@@ -1,8 +1,15 @@
 require 'umich_traject'
 require 'ht_traject'
-require 'ht_traject/ht_hathifiles.rb'
 #require 'ht_traject/ht_overlap.rb'
 require 'json'
+
+HathiFiles = if ENV['NODB']
+               require 'ht_traject/no_db_mocks/ht_hathifiles'
+               HathiTrust::NoDB::HathiFiles
+             else
+               require 'ht_traject/ht_hathifiles.rb'
+               HathiTrust::HathiFiles
+             end
 
 # skip course reserve records 
 
@@ -209,7 +216,7 @@ each_record do |r, context|
     oclc_nums = context.output_hash['oclc']
     etas_status = context.clipboard[:ht][:overlap][:count_etas] > 0
     #hf_item_list = HathiTrust::Hathifiles.get_hf_info(oclc_nums, bib_nums, etas_status)
-    hf_item_list = HathiTrust::Hathifiles.get_hf_info(oclc_nums, bib_nums)
+    hf_item_list = HathiFiles.get_hf_info(oclc_nums, bib_nums)
     if hf_item_list.any? 
       hf_item_list.each do |r|
         r['status'] = statusFromRights(r['rights'], etas_status)
