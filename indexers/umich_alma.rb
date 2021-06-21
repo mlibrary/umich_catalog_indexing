@@ -40,6 +40,7 @@ cc_to_of = Traject::TranslationMap.new('ht/collection_code_to_original_from')
 each_record do |r, context|
 
   locations = Array.new()
+  inst_codes = Array.new()
   availability = Array.new()
   sh = Hash.new()
   has_e56 = false
@@ -48,6 +49,7 @@ each_record do |r, context|
   # "OWN" field 
   r.each_by_tag(['958','OWN']) do |f|
     locations << f['a'].upcase if f['a']
+    inst_codes << f['a'].upcase if f['a']
   end
 
   hol_list = Array.new()
@@ -75,6 +77,8 @@ each_record do |r, context|
       hol['items'] = items
       hol_list << hol
       locations << 'MiU'
+      inst_codes << 'MIU'
+      inst_codes << 'MIFLIC'
     # get ht-related availability values
       availability << 'avail_ht'
       hol['items'].each do |item|
@@ -143,13 +147,28 @@ each_record do |r, context|
       hol['link_text'] = 'Available online'
       hol['link_text'] = f['y'] if f['y']
       hol['description'] = f['3'] if f['3']
-      hol['note'] = f['z'] if f['z']
+      #hol['note'] = f['z'] if f['z']
+      if f['z'] 
+        hol['note'] = f['z']
+      elsif f['n']
+        hol['note'] = f['n']
+      elsif f['m']
+        hol['note'] = f['m']
+      end
       hol['interface_name'] = f['m'] if f['m']
       hol['collection_name'] = f['n'] if f['n']
       hol['finding_aid'] = false
       hol_list << hol
       availability << 'avail_online'
       locations << hol['library']
+      if f['c'] 
+        campus = f['c']
+        inst_codes << 'MIU' if campus == 'UMAA'
+        inst_codes << 'MIFLIC' if campus == 'UMFL'
+      else 
+        inst_codes << 'MIU'   
+        inst_codes << 'MIFLIC'   
+      end
       has_e56 = true
     end
    
@@ -172,7 +191,6 @@ each_record do |r, context|
         if link_text =~ /finding aid/i and hol['link'] =~ /umich/i 
           hol['finding_aid'] = true
           id = context.output_hash['id']
-          logger.info "#{id} : umich finding aid #{f}"
         else
           hol['finding_aid'] = false
         end
@@ -198,6 +216,7 @@ each_record do |r, context|
       hol['summary_holdings'] = sh[hol_mmsid].join(' : ') if sh[hol_mmsid]
       hol_list << hol
       locations << f['a'].upcase if f['a']
+      inst_codes << f['a'].upcase if f['a']
       locations << hol['library'] if hol['library']
       locations << [hol['library'], hol['location']].join(' ') if hol['location']
     end
@@ -233,6 +252,7 @@ each_record do |r, context|
   context.clipboard[:ht][:hol_list] = hol_list
   context.clipboard[:ht][:availability] = availability.uniq
   context.clipboard[:ht][:locations] = locations.uniq
+  context.clipboard[:ht][:inst_codes] = inst_codes.uniq
 
 end
 
@@ -254,4 +274,15 @@ to_field 'location' do |record, acc, context|
   acc.flatten!
   acc.uniq!
 end
-  
+
+#MIU, MIU-C, MIU-H, MIFLIC
+inst_map = Traject::TranslationMap.new('umich/institution_map')
+to_field 'institution' do |record, acc, context|
+  inst_codes = Array(context.clipboard[:ht][:inst_codes])
+  #acc << 'MiU' if context.clipboard[:ht][:record_source] == 'zephir'   # add MiU as an institution for zephir records
+  acc.replace inst_codes
+  acc.map! { |code| inst_map[code.strip] }
+  acc.flatten!
+  acc.uniq!
+end
+ 

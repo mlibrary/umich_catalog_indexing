@@ -46,13 +46,14 @@ end
 ##### Location ####
 
 #to_field 'institution', extract_marc('971a', :translation_map => 'umich/institution_map')
-inst_map = Traject::TranslationMap.new('umich/institution_map')
-to_field 'institution', extract_marc('958a') do |rec, acc, context|
-  acc << 'MiU' if context.clipboard[:ht][:record_source] == 'zephir'   # add MiU as an institution for zephir records
-  acc.map! { |code| inst_map[code.strip] }
-  acc.flatten!
-  acc.uniq!
-end
+#MIU, MIU-C, MIU-H, MIFLIC
+#inst_map = Traject::TranslationMap.new('umich/institution_map')
+#to_field 'institution', extract_marc('958a') do |rec, acc, context|
+#  acc << 'MiU' if context.clipboard[:ht][:record_source] == 'zephir'   # add MiU as an institution for zephir records
+#  acc.map! { |code| inst_map[code.strip] }
+#  acc.flatten!
+#  acc.uniq!
+#end
 
 building_map = Traject::UMich.building_map
 to_field 'building', extract_marc('852bc:971a') do |rec, acc|
