@@ -274,11 +274,10 @@ end
 # "0-9" for digits
 # "Other" for anything else
 
-filing_title_ex = extract_marc_filing_version('245abdefgknp', :include_original => false)
 def ejournal?(context)
-  loc = context.output_hash['location']
+  elec = context.clipboard[:ht][:hol_list].any? { |hol| hol['library'].include? 'ELEC' }
   form = context.output_hash['format']
-  loc == 'ELEC' and form == 'Serial'
+  elec and form.include?('Serial')
 end
 
 def first_char_map(str)
@@ -291,17 +290,17 @@ def first_char_map(str)
   else
     'Other'
   end
-
 end
 
-# Use extract_marc to get the title and any associated 880s
-to_field 'serialTitle_first_letter', extract_marc('245abdefgknp', alternate_script: true) do |rec, acc, context|
+# Get the filing versions of the primary title
+to_field 'serialTitle_first_letter', extract_marc_filing_version('245abdefgknp', include_original: false) do |rec, acc, context|
   if ejournal?(context)
-    acc.map! {|t| first_char_map(t)}
+    acc.map! { |t| first_char_map(t) }
   else
     acc.replace []
   end
 end
+
 
 
 
