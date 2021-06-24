@@ -3,9 +3,9 @@ require 'callnumber_collation'
 
 ## OK, so one weird thing we need to do is have different ht_json docs for mirlyn vs hathitrust, since they have differently-formatted 974s. Pass in the :mirlyn symbol and the to_json will do the Right Thing.
 
-to_field 'ht_json' do |record, acc, context|
-  acc << context.clipboard[:ht][:items].to_json(:mirlyn) if context.clipboard[:ht][:has_items]
-end
+#to_field 'ht_json' do |record, acc, context|
+#  acc << context.clipboard[:ht][:items].to_json(:mirlyn) if context.clipboard[:ht][:has_items]
+#end
 
 
 # callnumber from the items
@@ -58,13 +58,14 @@ end
 ##### Location ####
 
 #to_field 'institution', extract_marc('971a', :translation_map => 'umich/institution_map')
-inst_map = Traject::TranslationMap.new('umich/institution_map')
-to_field 'institution', extract_marc('958a') do |rec, acc, context|
-  acc << 'MiU' if context.clipboard[:ht][:record_source] == 'zephir'   # add MiU as an institution for zephir records
-  acc.map! { |code| inst_map[code.strip] }
-  acc.flatten!
-  acc.uniq!
-end
+#MIU, MIU-C, MIU-H, MIFLIC
+#inst_map = Traject::TranslationMap.new('umich/institution_map')
+#to_field 'institution', extract_marc('958a') do |rec, acc, context|
+#  acc << 'MiU' if context.clipboard[:ht][:record_source] == 'zephir'   # add MiU as an institution for zephir records
+#  acc.map! { |code| inst_map[code.strip] }
+#  acc.flatten!
+#  acc.uniq!
+#end
 
 building_map = Traject::UMich.building_map
 to_field 'building', extract_marc('852bc:971a') do |rec, acc|

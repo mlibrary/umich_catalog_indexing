@@ -1,8 +1,15 @@
 require 'umich_traject'
 require 'ht_traject'
-require 'ht_traject/ht_hathifiles.rb'
 #require 'ht_traject/ht_overlap.rb'
 require 'json'
+
+HathiFiles = if ENV['NODB']
+               require 'ht_traject/no_db_mocks/ht_hathifiles'
+               HathiTrust::NoDB::HathiFiles
+             else
+               require 'ht_traject/ht_hathifiles.rb'
+               HathiTrust::HathiFiles
+             end
 
 # skip course reserve records 
 
@@ -40,6 +47,7 @@ cc_to_of = Traject::TranslationMap.new('ht/collection_code_to_original_from')
 each_record do |r, context|
 
   locations = Array.new()
+  inst_codes = Array.new()
   availability = Array.new()
   sh = Hash.new()
   has_e56 = false
@@ -48,6 +56,7 @@ each_record do |r, context|
   # "OWN" field 
   r.each_by_tag(['958','OWN']) do |f|
     locations << f['a'].upcase if f['a']
+    inst_codes << f['a'].upcase if f['a']
   end
 
   hol_list = Array.new()
@@ -64,7 +73,7 @@ each_record do |r, context|
       item['rights'] = f['r']
       item['description'] = f['z']
       item['collection_code'] = f['c']
-      item['source'] = cc_to_of[f['c']]
+      item['source'] = cc_to_of[f['c'].upcase]
       item['access'] = !!(item['rights'] =~ /^(pd|world|ic-world|cc|und-world)/)
       item['status'] = statusFromRights(item['rights'], etas_status)
       items << item
@@ -75,6 +84,8 @@ each_record do |r, context|
       hol['items'] = items
       hol_list << hol
       locations << 'MiU'
+      inst_codes << 'MIU'
+      inst_codes << 'MIFLIC'
     # get ht-related availability values
       availability << 'avail_ht'
       hol['items'].each do |item|
@@ -95,20 +106,33 @@ each_record do |r, context|
     r.each_by_tag('974') do |f|
       hol_mmsid = f['8']
       next if hol_mmsid == nil
-      if f['y'] and f['y'] =~ /Process Status: EO/ 
+# timothy: need to do the equivalent of this (from getHoldings):
+#  next ITEM if $row{item_process_status} =~ /SD|CA|WN|MG|CS/;        # process statuses to ignore
+# not sure how these will manifest in the Alma extract
+      #if f['y'] and f['y'] =~ /Process Status: EO/ 
+      if f['y'] and f['y'] =~ /Process Status: (EO|SD|CA|WN|MG|CS)/ 
         #logger.info "#{id} : EO item skipped"
         next
       end
       item = Hash.new()
       item['barcode'] = f['a']
       # b,c are current location
-      item['library'] = f['b']
-      item['location'] = f['c']
-      # d,e are permanent location
+      item['library'] = f['b']		# current_library
+      item['location'] = f['c']		# current_location
+      item['permanent_library'] = f['d']	# permanent_library
+      item['permanent_location'] = f['e']	# permanent_collection
+      if item['library'] == item['permanent_library'] and item['location'] == item['permanent_location'] 
+        item['temp_location'] = false
+      else 
+        item['temp_location'] = true
+        #logger.info "#{id} : temp loc, current: #{item['library']} #{item['location']} permanent: #{item['permanent_library']} #{item['permanent_location']}"
+      end
       item['callnumber'] = f['h']
       item['public_note'] = f['n']
       item['process_type'] = f['t']
+      item['item_policy'] = f['p']
       item['description'] = f['z']
+      item['inventory_number'] = f['i']
       item['item_id'] = f['7']
       items[hol_mmsid] = Array.new() if items[hol_mmsid] == nil 
       items[hol_mmsid] << item
@@ -130,11 +154,28 @@ each_record do |r, context|
       hol['link_text'] = 'Available online'
       hol['link_text'] = f['y'] if f['y']
       hol['description'] = f['3'] if f['3']
-      hol['note'] = f['z'] if f['z']
+      #hol['note'] = f['z'] if f['z']
+      if f['z'] 
+        hol['note'] = f['z']
+      elsif f['n']
+        hol['note'] = f['n']
+      elsif f['m']
+        hol['note'] = f['m']
+      end
       hol['interface_name'] = f['m'] if f['m']
       hol['collection_name'] = f['n'] if f['n']
+      hol['finding_aid'] = false
       hol_list << hol
       availability << 'avail_online'
+      locations << hol['library']
+      if f['c'] 
+        campus = f['c']
+        inst_codes << 'MIU' if campus == 'UMAA'
+        inst_codes << 'MIFLIC' if campus == 'UMFL'
+      else 
+        inst_codes << 'MIU'   
+        inst_codes << 'MIFLIC'   
+      end
       has_e56 = true
     end
    
@@ -154,11 +195,15 @@ each_record do |r, context|
         hol['link_text'] = f['y'] if f['y']
         hol['description'] = f['3'] if f['3']
         hol['note'] = f['z'] if f['z']
+        if link_text =~ /finding aid/i and hol['link'] =~ /umich/i 
+          hol['finding_aid'] = true
+          id = context.output_hash['id']
+        else
+          hol['finding_aid'] = false
+        end
         availability << 'avail_online'
         hol_list << hol
   
-        id = context.output_hash['id']
-        logger.info "#{id} : 856 elec hol #{f}"
       end
     end
 
@@ -178,6 +223,7 @@ each_record do |r, context|
       hol['summary_holdings'] = sh[hol_mmsid].join(' : ') if sh[hol_mmsid]
       hol_list << hol
       locations << f['a'].upcase if f['a']
+      inst_codes << f['a'].upcase if f['a']
       locations << hol['library'] if hol['library']
       locations << [hol['library'], hol['location']].join(' ') if hol['location']
     end
@@ -189,7 +235,7 @@ each_record do |r, context|
     oclc_nums = context.output_hash['oclc']
     etas_status = context.clipboard[:ht][:overlap][:count_etas] > 0
     #hf_item_list = HathiTrust::Hathifiles.get_hf_info(oclc_nums, bib_nums, etas_status)
-    hf_item_list = HathiTrust::Hathifiles.get_hf_info(oclc_nums, bib_nums)
+    hf_item_list = HathiFiles.get_hf_info(oclc_nums, bib_nums)
     if hf_item_list.any? 
       hf_item_list.each do |r|
         r['status'] = statusFromRights(r['rights'], etas_status)
@@ -213,6 +259,7 @@ each_record do |r, context|
   context.clipboard[:ht][:hol_list] = hol_list
   context.clipboard[:ht][:availability] = availability.uniq
   context.clipboard[:ht][:locations] = locations.uniq
+  context.clipboard[:ht][:inst_codes] = inst_codes.uniq
 
 end
 
@@ -234,4 +281,15 @@ to_field 'location' do |record, acc, context|
   acc.flatten!
   acc.uniq!
 end
-  
+
+#MIU, MIU-C, MIU-H, MIFLIC
+inst_map = Traject::TranslationMap.new('umich/institution_map')
+to_field 'institution' do |record, acc, context|
+  inst_codes = Array(context.clipboard[:ht][:inst_codes])
+  #acc << 'MiU' if context.clipboard[:ht][:record_source] == 'zephir'   # add MiU as an institution for zephir records
+  acc.replace inst_codes
+  acc.map! { |code| inst_map[code.strip] }
+  acc.flatten!
+  acc.uniq!
+end
+ 
