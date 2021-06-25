@@ -293,7 +293,7 @@ def first_char_map(str)
 end
 
 # Get the filing versions of the primary title
-to_field 'serialTitle_first_letter', extract_marc_filing_version('245abdefgknp', include_original: false) do |rec, acc, context|
+to_field 'title_initial', extract_marc_filing_version('245abdefgknp', include_original: false) do |rec, acc, context|
   if ejournal?(context)
     acc.map! { |t| first_char_map(t) }
   else
