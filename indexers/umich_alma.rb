@@ -292,11 +292,7 @@ to_field 'institution' do |record, acc, context|
   acc.flatten!
   acc.uniq!
 end
-<<<<<<< HEAD
- 
-=======
 
->>>>>>> a210f081e0300ed4bd5c8fd4c6896e6f65dd1efe
 #######################################
 # A-Z eJournal list
 # ####################################
@@ -327,7 +323,8 @@ def first_char_map(str)
 end
 
 # Get the filing versions of the primary title
-to_field 'title_initial', extract_marc_filing_version('245abdefgknp', include_original: false) do |rec, acc, context|
+#to_field 'title_initial', extract_marc_filing_version('245abdefgknp', include_original: false) do |rec, acc, context|
+to_field 'title_initial', extract_marc_filing_version('245abdefgknp', include_original: false), first_only do |rec, acc, context|
   if ejournal?(context)
     acc.map! { |t| first_char_map(t) }
   else
