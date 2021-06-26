@@ -81,7 +81,7 @@ each_record do |r, context|
     if items.any? 
       hol = Hash.new()
       hol['library'] = 'HathiTrust Digital Library' 
-      hol['items'] = items
+      hol['items'] = sortItems(items)
       hol_list << hol
       locations << 'MiU'
       inst_codes << 'MIU'
@@ -218,7 +218,7 @@ each_record do |r, context|
       hol['location'] = f['c']
       hol['callnumber'] = f['h']
       hol['public_note'] = f['z'] 
-      hol['items'] = items[hol_mmsid]
+      hol['items'] = sortItems(items[hol_mmsid])
       hol['summary_holdings'] = nil
       hol['summary_holdings'] = sh[hol_mmsid].join(' : ') if sh[hol_mmsid]
       hol_list << hol
@@ -242,7 +242,7 @@ each_record do |r, context|
       end
       hol = Hash.new()
       hol['library'] = 'HathiTrust Digital Library' 
-      hol['items'] = hf_item_list
+      hol['items'] = sortItems(hf_item_list)
       hol_list << hol
   
       # get ht-related availability values
@@ -331,4 +331,44 @@ to_field 'title_initial', extract_marc_filing_version('245abdefgknp', include_or
     acc.replace []
   end
 end
+
+# sorting routine for enum/chron (description) item sort
+      def enumcronSort a, b
+        return a[:sortstring] <=> b[:sortstring]
+      end
+
+      # Create a sortable string based on the digit strings present in an
+      # enumcron string
+
+      def enumcronSortString str
+        rv = '0'
+        str.scan(/\d+/).each do |nums|
+          rv += nums.size.to_s + nums
+        end
+        return rv
+      end
+
+      def sortItems arr
+        # Only one? Never mind
+        return arr if arr.size == 1
+
+        # First, add the _sortstring entries
+        arr.each do |h|
+          #if h.has_key? 'description'
+          if h['description']
+            h[:sortstring] = enumcronSortString(h['description'])
+          else
+            h[:sortstring] = '0'
+          end
+        end
+
+        # Then sort it
+        arr.sort! { |a, b| self.enumcronSort(a, b) }
+
+        # Then remove the sortstrings
+        arr.each do |h|
+          h.delete(:sortstring)
+        end
+        return arr
+      end
 
