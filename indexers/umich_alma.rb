@@ -69,13 +69,13 @@ each_record do |r, context|
     r.each_by_tag('974') do |f|
       next unless f['u']
       item = Hash.new()
-      item['id'] = f['u']
-      item['rights'] = f['r']
-      item['description'] = f['z']
-      item['collection_code'] = f['c']
-      item['source'] = cc_to_of[f['c'].upcase]
-      item['access'] = !!(item['rights'] =~ /^(pd|world|ic-world|cc|und-world)/)
-      item['status'] = statusFromRights(item['rights'], etas_status)
+      item[:id] = f['u']
+      item[:rights] = f['r']
+      item[:description] = f['z']
+      item[:collection_code] = f['c']
+      item[:source] = cc_to_of[f['c'].downcase]
+      item[:access] = !!(item[:rights] =~ /^(pd|world|ic-world|cc|und-world)/)
+      item[:status] = statusFromRights(item[:rights], etas_status)
       items << item
     end
     if items.any? 
@@ -115,31 +115,30 @@ each_record do |r, context|
         next
       end
       item = Hash.new()
-      item['barcode'] = f['a']
+      item[:barcode] = f['a']
       # b,c are current location
-      item['library'] = f['b']		# current_library
-      item['location'] = f['c']		# current_location
-      item['permanent_library'] = f['d']	# permanent_library
-      item['permanent_location'] = f['e']	# permanent_collection
-      if item['library'] == item['permanent_library'] and item['location'] == item['permanent_location'] 
-        item['temp_location'] = false
+      item[:library] = f['b']		# current_library
+      item[:location] = f['c']		# current_location
+      item[:permanent_library] = f['d']	# permanent_library
+      item[:permanent_location] = f['e']	# permanent_collection
+      if item[:library] == item[:permanent_library] and item[:location] == item[:permanent_location] 
+        item[:temp_location] = false
       else 
-        item['temp_location'] = true
-        #logger.info "#{id} : temp loc, current: #{item['library']} #{item['location']} permanent: #{item['permanent_library']} #{item['permanent_location']}"
+        item[:temp_location] = true
       end
-      item['callnumber'] = f['h']
-      item['public_note'] = f['n']
-      item['process_type'] = f['t']
-      item['item_policy'] = f['p']
-      item['description'] = f['z']
-      item['inventory_number'] = f['i']
-      item['item_id'] = f['7']
+      item[:callnumber] = f['h']
+      item[:public_note] = f['n']
+      item[:process_type] = f['t']
+      item[:item_policy] = f['p']
+      item[:description] = f['z']
+      item[:inventory_number] = f['i']
+      item[:item_id] = f['7']
       items[hol_mmsid] = Array.new() if items[hol_mmsid] == nil 
       items[hol_mmsid] << item
       # (not sure if this is right--still investigating in the alma publish job
       availability << 'avail_circ' if f['f'] == '1'
-      locations << item['library'] if item['library'] 
-      locations << [item['library'], item['location']].join(' ') if item['location']
+      locations << item[:library] if item[:library] 
+      locations << [item[:library], item[:location]].join(' ') if item[:location]
     end
   
 
@@ -237,12 +236,13 @@ each_record do |r, context|
     #hf_item_list = HathiTrust::Hathifiles.get_hf_info(oclc_nums, bib_nums, etas_status)
     hf_item_list = HathiFiles.get_hf_info(oclc_nums, bib_nums)
     if hf_item_list.any? 
+      hf_item_list = sortItems(hf_item_list)
       hf_item_list.each do |r|
         r['status'] = statusFromRights(r['rights'], etas_status)
       end
       hol = Hash.new()
       hol['library'] = 'HathiTrust Digital Library' 
-      hol['items'] = sortItems(hf_item_list)
+      hol['items'] = hf_item_list
       hol_list << hol
   
       # get ht-related availability values
@@ -333,42 +333,42 @@ to_field 'title_initial', extract_marc_filing_version('245abdefgknp', include_or
 end
 
 # sorting routine for enum/chron (description) item sort
-      def enumcronSort a, b
-        return a[:sortstring] <=> b[:sortstring]
-      end
+def enumcronSort a, b
+  return a[:sortstring] <=> b[:sortstring]
+end
 
-      # Create a sortable string based on the digit strings present in an
-      # enumcron string
+# Create a sortable string based on the digit strings present in an
+# enumcron string
 
-      def enumcronSortString str
-        rv = '0'
-        str.scan(/\d+/).each do |nums|
-          rv += nums.size.to_s + nums
-        end
-        return rv
-      end
+def enumcronSortString str
+  rv = '0'
+  str.scan(/\d+/).each do |nums|
+    rv += nums.size.to_s + nums
+  end
+  return rv
+end
 
-      def sortItems arr
-        # Only one? Never mind
-        return arr if arr.size == 1
+def sortItems arr
+  # Only one? Never mind
+  return arr if arr.size == 1
 
-        # First, add the _sortstring entries
-        arr.each do |h|
-          #if h.has_key? 'description'
-          if h['description']
-            h[:sortstring] = enumcronSortString(h['description'])
-          else
-            h[:sortstring] = '0'
-          end
-        end
+  # First, add the _sortstring entries
+  arr.each do |h|
+    #if h.has_key? 'description'
+    if h[:description]
+      h[:sortstring] = enumcronSortString(h[:description])
+    else
+      h[:sortstring] = '0'
+    end
+  end
 
-        # Then sort it
-        arr.sort! { |a, b| self.enumcronSort(a, b) }
+  # Then sort it
+  arr.sort! { |a, b| self.enumcronSort(a, b) }
 
-        # Then remove the sortstrings
-        arr.each do |h|
-          h.delete(:sortstring)
-        end
-        return arr
-      end
+  # Then remove the sortstrings
+  arr.each do |h|
+    h.delete(:sortstring)
+  end
+  return arr
+end
 

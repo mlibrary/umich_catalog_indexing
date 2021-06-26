@@ -51,7 +51,7 @@ module HathiTrust
 
       self.query(bib_nums: bib_nums, oclc_nums: oclc_nums).each do |r|
         hf_hash[r[:id]] = r
-        hf_hash[r[:id]]['source'] = CC_TO_OF[r[:collection_code].upcase]
+        hf_hash[r[:id]]['source'] = CC_TO_OF[r[:collection_code].downcase]
       end
 
       hf_hash.values
