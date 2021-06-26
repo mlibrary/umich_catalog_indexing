@@ -292,7 +292,11 @@ to_field 'institution' do |record, acc, context|
   acc.flatten!
   acc.uniq!
 end
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> a210f081e0300ed4bd5c8fd4c6896e6f65dd1efe
 #######################################
 # A-Z eJournal list
 # ####################################
