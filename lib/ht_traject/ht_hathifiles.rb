@@ -4,7 +4,7 @@ require 'sequel'
 
 module HathiTrust
 
-  class Hathifiles
+  class HathiFiles
     DB = HathiTrust::DBH::DB
 
     SELECTED_COLS = [
