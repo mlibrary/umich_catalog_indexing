@@ -97,6 +97,7 @@ each_record do |r, context|
       availability << 'avail_ht_etas' if context.clipboard[:ht][:overlap][:count_etas] > 0
     end
   else 
+    record_has_finding_aid = false
     r.each_by_tag('866') do |f|
       hol_mmsid = f['8']
       next if hol_mmsid == nil
@@ -123,9 +124,10 @@ each_record do |r, context|
       item[:location] = f['c']		# current_location
       lib_loc = item[:library]
       lib_loc = [item[:library], item[:location]].join(' ') if item[:location]
+      item[:info_link] = libLocInfo[lib_loc]["info_link"]
+      item[:display_name] = libLocInfo[lib_loc]["name"]
       item[:can_reserve] = false	# default
       item[:can_reserve] = true if item[:library] =~ /(CLEM|BENT|SPEC)/
-      item[:info_link] = libLocInfo[lib_loc]["info_link"]
       #logger.info "#{id} : #{lib_loc} : #{item[:info_link]}"
       item[:permanent_library] = f['d']	# permanent_library
       item[:permanent_location] = f['e']	# permanent_collection
@@ -204,6 +206,7 @@ each_record do |r, context|
         hol['note'] = f['z'] if f['z']
         if link_text =~ /finding aid/i and hol['link'] =~ /umich/i 
           hol['finding_aid'] = true
+          record_has_finding_aid = true
           id = context.output_hash['id']
         else
           hol['finding_aid'] = false
@@ -223,11 +226,23 @@ each_record do |r, context|
       hol['hol_mmsid'] = hol_mmsid
       hol['library'] = f['b']
       hol['location'] = f['c']
+      lib_loc = hol['library']
+      lib_loc = [hol['library'], hol['location']].join(' ') if hol['location']
+      hol[:info_link] = libLocInfo[lib_loc]["info_link"]
+      hol[:display_name] = libLocInfo[lib_loc]["name"]
       hol['callnumber'] = f['h']
       hol['public_note'] = f['z'] 
       hol['items'] = sortItems(items[hol_mmsid])
+      hol['items'].map do |i| 
+        i[:record_has_finding_aid] = record_has_finding_aid
+        if i[:library] =~ /^(BENT|CLEM|SPEC)/ and record_has_finding_aid
+          i[:can_reserve] = false
+          #logger.info "#{id} : can_reserve changed to false"
+        end
+      end
       hol['summary_holdings'] = nil
       hol['summary_holdings'] = sh[hol_mmsid].join(' : ') if sh[hol_mmsid]
+      hol['record_has_finding_aid'] = record_has_finding_aid
       hol_list << hol
       locations << f['a'].upcase if f['a']
       inst_codes << f['a'].upcase if f['a']
