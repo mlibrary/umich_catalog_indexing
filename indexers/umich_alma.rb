@@ -2,6 +2,7 @@ require 'umich_traject'
 require 'ht_traject'
 #require 'ht_traject/ht_overlap.rb'
 require 'json'
+require 'umich_traject/floor_location.rb'
 
 HathiFiles = if ENV['NODB']
                require 'ht_traject/no_db_mocks/ht_hathifiles'
@@ -12,6 +13,8 @@ HathiFiles = if ENV['NODB']
              end
 
 libLocInfo = Traject::TranslationMap.new('umich/libLocInfo')
+
+UMich::FloorLocation.configure('lib/translation_maps/umich/floor_locations.json')
 
 # skip course reserve records 
 
@@ -82,15 +85,15 @@ each_record do |r, context|
     end
     if items.any? 
       hol = Hash.new()
-      hol['library'] = 'HathiTrust Digital Library' 
-      hol['items'] = sortItems(items)
+      hol[:library] = 'HathiTrust Digital Library' 
+      hol[:items] = sortItems(items)
       hol_list << hol
       locations << 'MiU'
       inst_codes << 'MIU'
       inst_codes << 'MIFLIC'
     # get ht-related availability values
       availability << 'avail_ht'
-      hol['items'].each do |item|
+      hol[:items].each do |item|
         availability << 'avail_ht_fulltext' if item[:access]
         availability << 'avail_online' if item[:access]
       end
@@ -156,27 +159,25 @@ each_record do |r, context|
     r.each_by_tag('E56') do |f|
       next unless f['u']
       hol = Hash.new()
-      hol['link'] = URI.escape(f['u'])
-      hol['library'] = 'ELEC'
-      #hol['status'] = 'Available online'
-      hol['status'] = f['s'] if f['s']
-      hol['link_text'] = 'Available online'
-      hol['link_text'] = f['y'] if f['y']
-      hol['description'] = f['3'] if f['3']
-      #hol['note'] = f['z'] if f['z']
+      hol[:link] = URI.escape(f['u'])
+      hol[:library] = 'ELEC'
+      hol[:status] = f['s'] if f['s']
+      hol[:link_text] = 'Available online'
+      hol[:link_text] = f['y'] if f['y']
+      hol[:description] = f['3'] if f['3']
       if f['z'] 
-        hol['note'] = f['z']
+        hol[:note] = f['z']
       elsif f['n']
-        hol['note'] = f['n']
+        hol[:note] = f['n']
       elsif f['m']
-        hol['note'] = f['m']
+        hol[:note] = f['m']
       end
-      hol['interface_name'] = f['m'] if f['m']
-      hol['collection_name'] = f['n'] if f['n']
-      hol['finding_aid'] = false
+      hol[:interface_name] = f['m'] if f['m']
+      hol[:collection_name] = f['n'] if f['n']
+      hol[:finding_aid] = false
       hol_list << hol
       availability << 'avail_online'
-      locations << hol['library']
+      locations << hol[:library]
       if f['c'] 
         campus = f['c']
         inst_codes << 'MIU' if campus == 'UMAA'
@@ -197,19 +198,19 @@ each_record do |r, context|
       link_text = f['y'] if f['y']
       if ( link_text =~ /finding aid/i ) or !has_e56 
         hol = Hash.new()
-        hol['link'] = URI.escape(f['u'])
-        hol['library'] = 'ELEC'
-        hol['status'] = f['s'] if f['s']
-        hol['link_text'] = 'Available online'
-        hol['link_text'] = f['y'] if f['y']
-        hol['description'] = f['3'] if f['3']
-        hol['note'] = f['z'] if f['z']
-        if link_text =~ /finding aid/i and hol['link'] =~ /umich/i 
-          hol['finding_aid'] = true
+        hol[:link] = URI.escape(f['u'])
+        hol[:library] = 'ELEC'
+        hol[:status] = f['s'] if f['s']
+        hol[:link_text] = 'Available online'
+        hol[:link_text] = f['y'] if f['y']
+        hol[:description] = f['3'] if f['3']
+        hol[:note] = f['z'] if f['z']
+        if link_text =~ /finding aid/i and hol[:link] =~ /umich/i 
+          hol[:finding_aid] = true
           record_has_finding_aid = true
           id = context.output_hash['id']
         else
-          hol['finding_aid'] = false
+          hol[:finding_aid] = false
         end
         availability << 'avail_online'
         hol_list << hol
@@ -223,31 +224,32 @@ each_record do |r, context|
       next if hol_mmsid == nil
       next unless items[hol_mmsid]		# might also have to check for linked records
       hol = Hash.new()
-      hol['hol_mmsid'] = hol_mmsid
-      hol['library'] = f['b']
-      hol['location'] = f['c']
-      lib_loc = hol['library']
-      lib_loc = [hol['library'], hol['location']].join(' ') if hol['location']
+      hol[:hol_mmsid] = hol_mmsid
+      hol[:callnumber] = f['h']
+      hol[:library] = f['b']
+      hol[:location] = f['c']
+      lib_loc = hol[:library]
+      lib_loc = [hol[:library], hol[:location]].join(' ') if hol[:location]
       hol[:info_link] = libLocInfo[lib_loc]["info_link"]
       hol[:display_name] = libLocInfo[lib_loc]["name"]
-      hol['callnumber'] = f['h']
-      hol['public_note'] = f['z'] 
-      hol['items'] = sortItems(items[hol_mmsid])
-      hol['items'].map do |i| 
+      hol[:floor_location] = UMich::FloorLocation.resolve(hol[:library], hol[:location], hol[:callnumber]) if hol[:callnumber]
+      hol[:public_note] = f['z'] 
+      hol[:items] = sortItems(items[hol_mmsid])
+      hol[:items].map do |i| 
         i[:record_has_finding_aid] = record_has_finding_aid
         if i[:library] =~ /^(BENT|CLEM|SPEC)/ and record_has_finding_aid
           i[:can_reserve] = false
           #logger.info "#{id} : can_reserve changed to false"
         end
       end
-      hol['summary_holdings'] = nil
-      hol['summary_holdings'] = sh[hol_mmsid].join(' : ') if sh[hol_mmsid]
-      hol['record_has_finding_aid'] = record_has_finding_aid
+      hol[:summary_holdings] = nil
+      hol[:summary_holdings] = sh[hol_mmsid].join(' : ') if sh[hol_mmsid]
+      hol[:record_has_finding_aid] = record_has_finding_aid
       hol_list << hol
       locations << f['a'].upcase if f['a']
       inst_codes << f['a'].upcase if f['a']
-      locations << hol['library'] if hol['library']
-      locations << [hol['library'], hol['location']].join(' ') if hol['location']
+      locations << hol[:library] if hol[:library]
+      locations << [hol[:library], hol[:location]].join(' ') if hol[:location]
     end
   
     # add hol for HT volumes
@@ -264,13 +266,13 @@ each_record do |r, context|
         r['status'] = statusFromRights(r['rights'], etas_status)
       end
       hol = Hash.new()
-      hol['library'] = 'HathiTrust Digital Library' 
-      hol['items'] = hf_item_list
+      hol[:library] = 'HathiTrust Digital Library' 
+      hol[:items] = hf_item_list
       hol_list << hol
   
       # get ht-related availability values
       availability << 'avail_ht'
-      hol['items'].each do |item|
+      hol[:items].each do |item|
         availability << 'avail_ht_fulltext' if item[:access]
         availability << 'avail_online' if item[:access]
       end
@@ -328,7 +330,7 @@ end
 # "Other" for anything else
 
 def ejournal?(context)
-  elec = context.clipboard[:ht][:hol_list].any? { |hol| hol['library'].include? 'ELEC' }
+  elec = context.clipboard[:ht][:hol_list].any? { |hol| hol[:library].include? 'ELEC' }
   form = context.output_hash['format']
   elec and form.include?('Serial')
 end
