@@ -11,6 +11,8 @@ HathiFiles = if ENV['NODB']
                HathiTrust::HathiFiles
              end
 
+libLocInfo = Traject::TranslationMap.new('umich/libLocInfo')
+
 # skip course reserve records 
 
 each_record do |r, context|
@@ -119,6 +121,12 @@ each_record do |r, context|
       # b,c are current location
       item[:library] = f['b']		# current_library
       item[:location] = f['c']		# current_location
+      lib_loc = item[:library]
+      lib_loc = [item[:library], item[:location]].join(' ') if item[:location]
+      item[:can_reserve] = false	# default
+      item[:can_reserve] = true if item[:library] =~ /(CLEM|BENT|SPEC)/
+      item[:info_link] = libLocInfo[lib_loc]["info_link"]
+      #logger.info "#{id} : #{lib_loc} : #{item[:info_link]}"
       item[:permanent_library] = f['d']	# permanent_library
       item[:permanent_location] = f['e']	# permanent_collection
       if item[:library] == item[:permanent_library] and item[:location] == item[:permanent_location] 
