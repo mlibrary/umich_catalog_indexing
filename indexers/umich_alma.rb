@@ -127,8 +127,13 @@ each_record do |r, context|
       item[:location] = f['c']		# current_location
       lib_loc = item[:library]
       lib_loc = [item[:library], item[:location]].join(' ') if item[:location]
-      item[:info_link] = libLocInfo[lib_loc]["info_link"]
-      item[:display_name] = libLocInfo[lib_loc]["name"]
+      if libLocInfo[lib_loc]
+        item[:info_link] = libLocInfo[lib_loc]["info_link"]
+        item[:display_name] = libLocInfo[lib_loc]["name"]
+      else 
+        item[:info_link] = nil
+        item[:display_name] = lib_loc
+      end
       item[:can_reserve] = false	# default
       item[:can_reserve] = true if item[:library] =~ /(CLEM|BENT|SPEC)/
       #logger.info "#{id} : #{lib_loc} : #{item[:info_link]}"
@@ -230,8 +235,13 @@ each_record do |r, context|
       hol[:location] = f['c']
       lib_loc = hol[:library]
       lib_loc = [hol[:library], hol[:location]].join(' ') if hol[:location]
-      hol[:info_link] = libLocInfo[lib_loc]["info_link"]
-      hol[:display_name] = libLocInfo[lib_loc]["name"]
+      if libLocInfo[lib_loc]
+        hol[:info_link] = libLocInfo[lib_loc]["info_link"]
+        hol[:display_name] = libLocInfo[lib_loc]["name"]
+      else
+        hol[:info_link] = nil
+        hol[:display_name] = lib_loc
+      end
       hol[:floor_location] = UMich::FloorLocation.resolve(hol[:library], hol[:location], hol[:callnumber]) if hol[:callnumber]
       hol[:public_note] = f['z'] 
       hol[:items] = sortItems(items[hol_mmsid])
