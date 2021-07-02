@@ -7,6 +7,7 @@ module Traject
 
     # @param [Traject::Reader]
     def initialize(input_stream, settings)
+      @settings = settings
       globs = get_and_validate_globs(settings)
       super
       @inputs = streams_from_globs(globs)
@@ -63,8 +64,16 @@ module Traject
       globs
     end
 
+    def open_stream(filename) )
+      if @settings["marc_source.encoding"] == "xml"
+        File.open(filename, 'r:utf-8')
+      else
+        File.open(filename, 'r')
+      end
+    end
+
     def streams_from_globs(globs)
-      streammap = globs.each_with_object({}) { |g, h| h[g] = Dir.glob(g).map { |f| [f, File.open(f, 'r')] } }
+      streammap = globs.each_with_object({}) { |g, h| h[g] = Dir.glob(g).map { |f| [f, open_stream(f)] } }
       streammap.each_pair do |g, s|
         if s.empty?
           logger.warn "Glob '#{g}' matched no files"
