@@ -21,7 +21,8 @@ module MARC
           # if subfield.getCode is more than 255, subsequent .chr
           # would raise.
 
-          if sf_code !~ /[a-z0-9]/
+          #if sf_code !~ /[a-z0-9]/
+          if sf_code !~ /[\dA-Za-z!"#$%&'()*+,-.\/:;<=>?{}_^`~\[\]\\]/
             if @logger
               @logger.warn("Marc4JReader: Invalid MARC data, record id #{marc4j.getControlNumber}, field #{marc4j_data.tag}, invalid subfield code '#{sf_code}'. Skipping subfield, but continuing with record.")
             end
