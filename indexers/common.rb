@@ -18,6 +18,7 @@ extend Traject::UMichFormat::Macros
 require 'marc/fastxmlwriter'
 
 require 'marc_record_speed_monkeypatch'
+require 'marc4j_fix'
 
 UmichOverlap = if ENV['NODB']
                  require "ht_traject/no_db_mocks/ht_overlap"
