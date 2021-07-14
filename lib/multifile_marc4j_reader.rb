@@ -2,6 +2,7 @@
 require 'traject/marc4j_reader'
 require 'marc'
 require 'stringio'
+require_relative 'marc4j_fix'
 
 module Traject
   class MultiFileMarc4JReader < Traject::Marc4JReader
@@ -14,18 +15,6 @@ module Traject
       @inputs = streams_from_globs(globs)
     end
 
-
-    # We're getting some items from alma with encoding problems that manifest when
-    # trying to generate JSON. Because it's not already too slow to index, we'll
-    # do a vacuous #to_json on the record and capture the error for logging
-
-    def can_be_jsonified(r)
-      r.to_hash.to_json
-      :ok
-    rescue JSON::GeneratorError, Encoding::UndefinedConversionError => e
-      e
-    end
-
     alias_method :old_each, :each
 
     def each
@@ -36,25 +25,8 @@ module Traject
         logger.info("Processing #{filename}")
 
         @internal_reader = create_marc_reader!
-        already_retried = false
-        i = 0
         self.old_each do |r|
-          i += 1
-          jsonifiable = can_be_jsonified(r)
-          if jsonifiable == :ok
-            already_retried = false
-            yield r
-          else
-            id = r["001"].value
-            if already_retried
-              logger.error "Skipping un-json-ifyable record #{id} (record #[i} in  #{filename}): #{jsonifiable}"
-            else
-              logger.warn "Scrubbing record #{id} (record #{i} in file #{filename}) and retrying due to #{jsonifiable.inspect}"
-              str = r.to_xml.to_s.scrub
-              r = MARC::XMLReader.new(StringIO.new(str)).first
-              redo
-            end
-          end
+          yield r
         end
       end
     end

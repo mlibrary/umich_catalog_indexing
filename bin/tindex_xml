@@ -18,7 +18,7 @@ then
   echo
   echo "...where"
   echo "  - 'writer' is the name of the writer config (in ht_traject/writers/, without the 'rb')"
-  echo "  - 'filename' is the name of the file of MARC records"
+  echo "  - 'filename' is the name of the file of MARC records or a (quoted!) filesystem glob for many files"
   echo "  - 'logfile' is the name of the log file"
   echo 
   echo "You can set the environment variable READER to the name of the reader config file (without"
@@ -37,14 +37,25 @@ export TMPDIR="${HERE}/logs"
 
 #READER=alephsequential
 #READER=xml
-READER=m4j
+READER=multim4j
 WRITER=$1
 
-filename=$2
-filebase=`basename "$filename"`
+filename_glob=$2
 
 logfile=$3
 [[ ! -z "$logfile" ]] && logfile=`realpath "$logfile"`
+
+# Better double-check to make sure we're not going to append our log stuff
+# to an xml file, which would happen if the caller forgets to quote
+# the glob
+
+if [[ "${logfile}" =~ .xml$ ]]; then
+  echo "Logfile is $logfile"
+  echo "Logfile (argument 3) seems to have an xml extension"
+  echo "Did you forget to quote the filename glob, resulting in"
+  echo "command-line expansion of filenames?"
+  exit 1
+fi
 
 # Pull in functions to find marc/del files
 source $SCRIPTDIR/utils.sh
@@ -77,7 +88,7 @@ cd $TDIR
 log "Getting collection map" $logfile
 # $JRUBY -S bundle exec $SCRIPTDIR/get_collection_map.rb
 
-log "Indexing from $filename with reader $READER into $WRITER ($SOLR_URL)" $logfile
+log "Indexing from ${filename_glob} with reader $READER into $WRITER ($SOLR_URL)" $logfile
 
 cmd="bundle exec traject 
   -c $TDIR/readers/$READER.rb 
@@ -86,6 +97,7 @@ cmd="bundle exec traject
   -c $TDIR/indexers/common_ht.rb 
   -c $TDIR/indexers/umich.rb 
   -c $TDIR/indexers/umich_alma.rb 
+  -s source_glob="${filename_glob}"
   -s log.file=STDOUT 
   $filename"
 
