@@ -1,10 +1,15 @@
+# encoding: utf-8
 require 'traject/marc4j_reader'
+require 'marc'
+require 'stringio'
+require_relative 'marc4j_fix'
 
 module Traject
   class MultiFileMarc4JReader < Traject::Marc4JReader
 
     # @param [Traject::Reader]
     def initialize(input_stream, settings)
+      @settings = settings
       globs = get_and_validate_globs(settings)
       super
       @inputs = streams_from_globs(globs)
@@ -15,8 +20,10 @@ module Traject
     def each
       return to_enum(:each) unless block_given?
       @inputs.each do |stream|
-        logger.info("Processing #{stream.first}")
+        filename = stream.first
         @input_stream = stream.last
+        logger.info("Processing #{filename}")
+
         @internal_reader = create_marc_reader!
         self.old_each do |r|
           yield r
@@ -25,6 +32,7 @@ module Traject
     end
 
     private
+
     def get_and_validate_globs(settings)
       globstr = settings['source_glob']
       globs = globstr.split(/\s*,\s*/)
@@ -32,8 +40,16 @@ module Traject
       globs
     end
 
+    def open_stream(filename)
+      if @settings["marc_source.encoding"] == "xml"
+        File.open(filename, 'r:utf-8')
+      else
+        File.open(filename, 'r')
+      end
+    end
+
     def streams_from_globs(globs)
-      streammap = globs.each_with_object({}) { |g, h| h[g] = Dir.glob(g).map{|f| [f, File.open(f, 'r')]}}
+      streammap = globs.each_with_object({}) { |g, h| h[g] = Dir.glob(g).map { |f| [f, open_stream(f)] } }
       streammap.each_pair do |g, s|
         if s.empty?
           logger.warn "Glob '#{g}' matched no files"
