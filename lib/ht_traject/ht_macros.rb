@@ -34,7 +34,7 @@ module HathiTrust::Traject::Macros
     #
     # This isn't deep, deep magic, but it's not exactly intuitive.
     # Basically, we're opening up the eigenclass for this one
-    # instance and redefining the method that deterines if
+    # instance and redefining the method that determines if
     # a field matches the spec
     #
     # Most of it is copied from the original implementation
