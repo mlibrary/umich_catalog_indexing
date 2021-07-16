@@ -116,7 +116,7 @@ each_record do |r, context|
 #  next ITEM if $row{item_process_status} =~ /SD|CA|WN|MG|CS/;        # process statuses to ignore
 # not sure how these will manifest in the Alma extract
       #if f['y'] and f['y'] =~ /Process Status: EO/ 
-      if f['y'] and f['y'] =~ /Process Status: (EO|SD|CA|WN|MG|CS)/ 
+      if f['y'] and f['y'] =~ /Process Status: (EO|SD|CA|WN|WD|MG|CS)/ 
         #logger.info "#{id} : EO item skipped"
         next
       end
