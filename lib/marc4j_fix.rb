@@ -12,6 +12,14 @@ module MARC
       end
 
       marc4j.getDataFields.each do |marc4j_data|
+        i1 = marc4j_data.getIndicator1.chr(Encoding::UTF_8)
+        i2 = marc4j_data.getIndicator2.chr(Encoding::UTF_8)
+        if i1 !~ /[ \dA-Za-z!"#$%&'()*+,-.\/:;<=>?{}_^`~\[\]\\]/ or i2 !~ /[ \dA-Za-z!"#$%&'()*+,-.\/:;<=>?{}_^`~\[\]\\]/
+          if @logger
+            @logger.warn("Marc4JReader: Invalid MARC data, record id #{marc4j.getControlNumber}, field #{marc4j_data.tag}, invalid indicator(s) '#{i1}' '#{i2}'. Skipping field, but continuing with record.")
+          end
+          next
+        end
         rdata = MARC::DataField.new(  marc4j_data.getTag,  marc4j_data.getIndicator1.chr, marc4j_data.getIndicator2.chr )
 
         marc4j_data.getSubfields.each do |subfield|
