@@ -46,7 +46,7 @@ AAEL MICM:
 AAEL NONE:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
-  name: Art Architecture & Engineering 
+  name: Art Architecture & Engineering
 AAEL OPEN:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
@@ -114,7 +114,7 @@ BENT ELEC:
 BENT NONE:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/bentley-historical-library
-  name: Bentley Historical 
+  name: Bentley Historical
 BENT RR:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/bentley-historical-library
@@ -142,7 +142,7 @@ BSTA ERES:
 BSTA NONE:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/biological-station-library
-  name: Biological Station 
+  name: Biological Station
 BSTA OVR:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/biological-station-library
@@ -159,83 +159,7 @@ BSTA UNASSIGNED:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/biological-station-library
   name: 'Biological Station '
-BUHR AAEL:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/buhr-building
-  name: Buhr Shelving Facility Ask at any library
-BUHR ASIA:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/buhr-building
-  name: Buhr Shelving Facility Ask at any library
-BUHR CHEM:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/buhr-building
-  name: Buhr Shelving Facility Ask at any library
-BUHR DENT:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/buhr-building
-  name: Buhr Shelving Facility Ask at any library
-BUHR FINE:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/buhr-building
-  name: Buhr Shelving Facility Ask at any library
-BUHR FVL:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/buhr-building
-  name: Buhr Shelving Facility Ask at any library
-BUHR GLMR:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/buhr-building
-  name: Buhr Shelving Facility Ask at any library
-BUHR GRAD:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/buhr-building
-  name: Buhr Shelving Facility Ask at any library
-BUHR JUV:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/buhr-building
-  name: Buhr Shelving Facility Ask at any library
-BUHR MAP:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/buhr-building
-  name: Buhr Shelving Facility Ask at any library
-BUHR MUSI:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/buhr-building
-  name: Buhr Shelving Facility Ask at any library
-BUHR MUSM:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/buhr-building
-  name: Buhr Shelving Facility Ask at any library
-BUHR NONE:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/buhr-building
-  name: Buhr Shelving Facility 
-BUHR PAPY:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/buhr-building
-  name: Buhr Shelving Facility Ask at any library
-BUHR PUB:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/buhr-building
-  name: Buhr Shelving Facility Ask at any library
-BUHR SCI:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/buhr-building
-  name: Buhr Shelving Facility Ask at any library
-BUHR SOC:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/buhr-building
-  name: Buhr Shelving Facility Ask at any library
-BUHR SSBU:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/buhr-building
-  name: 'Buhr Shelving Facility Serials Set - Ask at any library'
-BUHR TAUB:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/buhr-building
-  name: Buhr Shelving Facility Ask at any library
-BUHR UNASSIGNED:
+BUHR MAIN:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/buhr-building
   name: 'Buhr Shelving Facility '
@@ -246,7 +170,7 @@ BUHR WARE:
 CHES NONE:
   description: ~
   info_link: ''
-  name: Mark Chesler Library 
+  name: Mark Chesler Library
 CHES UNASSIGNED:
   description: ~
   info_link: ''
@@ -254,7 +178,7 @@ CHES UNASSIGNED:
 CLEM NONE:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/clements-library
-  name: William L. Clements 
+  name: William L. Clements
 CLEM OVFL:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/clements-library
@@ -274,7 +198,7 @@ CLEM UNASSIGNED:
 CSCAR NONE:
   description: ~
   info_link: ''
-  name: 'CSCAR - Rackham Building NONE'
+  name: 'CSCAR - Rackham Building'
 CSCAR UNASSIGNED:
   description: ~
   info_link: ''
@@ -358,7 +282,7 @@ FINE FOL:
 FINE NONE:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/fine-arts-library
-  name: Fine Arts 
+  name: Fine Arts
 FINE OSFF:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/fine-arts-library
@@ -502,7 +426,7 @@ FLINT NEWB:
 FLINT NONE:
   description: ~
   info_link: https://libguides.umflint.edu/library
-  name: Flint 
+  name: Flint
 FLINT OVERZ:
   description: ~
   info_link: https://libguides.umflint.edu/library
@@ -562,7 +486,7 @@ FVL LOA:
 FVL NONE:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
-  name: Askwith Media Library 
+  name: Askwith Media Library
 FVL RESC:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
@@ -698,7 +622,7 @@ HATCH GLRF:
 HATCH GRAD:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
-  name: 'Hatcher Graduate '
+  name: Hatcher Graduate GRAD
 HATCH GRNT:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
@@ -722,7 +646,7 @@ HATCH NER:
 HATCH NONE:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
-  name: Hatcher Graduate 
+  name: Hatcher Graduate
 HATCH PAPY:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
@@ -774,7 +698,7 @@ HERB HEBR:
 HERB NONE:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/museums-library-herbarium-division
-  name: Herbarium 
+  name: Herbarium
 HERB UNASSIGNED:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/museums-library-herbarium-division
@@ -794,7 +718,7 @@ HSRS MUSMR:
 HSRS NONE:
   description: ~
   info_link: ''
-  name: Offsite Shelving H 
+  name: Offsite Shelving H
 HSRS OVR:
   description: ~
   info_link: ''
@@ -810,7 +734,7 @@ HSRS STOR:
 HSRS UNASSIGNED:
   description: ~
   info_link: ''
-  name: 'Offsite Shelving H'
+  name: 'Offsite Shelving H '
 MAP UNASSIGNED:
   description: ~
   info_link: ''
@@ -846,7 +770,7 @@ MUSIC MINI:
 MUSIC NONE:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/music-library
-  name: Music 
+  name: Music
 MUSIC OVCD:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/music-library
@@ -990,7 +914,7 @@ MUSM MOLO:
 MUSM NONE:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
-  name: Research Museums Center 
+  name: Research Museums Center
 MUSM OVR:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
@@ -1055,66 +979,6 @@ RES_SHARE OUT_RS_REQ:
   description: Temporarily manages inventory that is sent to or received from resource sharing partners
   info_link: ''
   name: 'Resource Sharing Library '
-SCI ATL:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: 'Shapiro Science Atlases & Maps - 4th floor'
-SCI BKS:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: 'Shapiro Science Book Stacks - 4th floor'
-SCI DIS:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: 'Shapiro Science Dissertations/Masters - 4th floor'
-SCI ERES:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: 'Shapiro Science Reserves - Electronic Resource'
-SCI IND:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: 'Shapiro Science Indexes & Abstracts - 3rd floor'
-SCI INDT:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: 'Shapiro Science Reference Tables - 3rd floor'
-SCI MAS:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: Shapiro Science Masters Theses Archival Collection
-SCI NONE:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: Shapiro Science 
-SCI OVR:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: 'Shapiro Science Oversize Stacks - 4th floor'
-SCI REFU:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: 'Shapiro Science Reference - The Wu Reading Room - 3rd floor'
-SCI RESC:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: 'Shapiro Science Course Reserves - 3rd floor - Ask at Desk'
-SCI RESP:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: 'Shapiro Science Science Media Cabinet - 3rd floor'
-SCI SBCS:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: Shapiro Science Shapiro Basement Compact Shelving
-SCI SER:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: Shapiro Science Journals
-SCI UNASSIGNED:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: 'Shapiro Science '
 SDR GWLA:
   description: ~
   info_link: ''
@@ -1390,7 +1254,7 @@ SPEC MYRSR:
 SPEC NONE:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
-  name: Special Collections 
+  name: Special Collections
 SPEC PARS:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
@@ -1606,7 +1470,7 @@ STAFF NCRC:
 STAFF NONE:
   description: ~
   info_link: ''
-  name: Staff 
+  name: Staff
 STAFF OPS:
   description: ~
   info_link: ''
@@ -1678,7 +1542,7 @@ TAUB MIC:
 TAUB NONE:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/taubman-health-sciences-library
-  name: Taubman Health Sciences 
+  name: Taubman Health Sciences
 TAUB OVR:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/taubman-health-sciences-library
@@ -1706,60 +1570,8 @@ TAUB UNASSIGNED:
 TOY NONE:
   description: ~
   info_link: ''
-  name: Spectrum/Jim Toy Library 
+  name: Spectrum/Jim Toy Library
 TOY UNASSIGNED:
   description: ~
   info_link: ''
   name: 'Spectrum/Jim Toy Library '
-UGL ATL:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: 'Shapiro Undergraduate Atlas Cases - 1st Floor'
-UGL COLSC:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: 'Shapiro Undergraduate College and Career Success Collection - 1st Floor'
-UGL DLAB:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: Shapiro Undergraduate Design Lab
-UGL ERES:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: 'Shapiro Undergraduate Reserves - Electronic Resource'
-UGL IND:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: Shapiro Undergraduate Index Tables
-UGL NONE:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: Shapiro Undergraduate 
-UGL OFF:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: Shapiro Undergraduate Ask at reference desk
-UGL OVR:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: 'Shapiro Undergraduate Oversize - basement'
-UGL PER:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: 'Shapiro Undergraduate Periodical Shelves - 2nd Floor'
-UGL PRON:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: 'Shapiro Undergraduate 2nd floor Browsing Collection - Shelved by author'
-UGL REF:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: 'Shapiro Undergraduate Reference Shelves - 1st Floor'
-UGL RESC:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: 'Shapiro Undergraduate University Reserves - Askwith Media Lib, 2002 Shapiro'
-UGL UNASSIGNED:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: 'Shapiro Undergraduate '
