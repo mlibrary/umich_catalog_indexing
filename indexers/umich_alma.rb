@@ -338,6 +338,7 @@ end
 # * A,B,...,Z
 # "0-9" for digits
 # "Other" for anything else
+#
 
 def ejournal?(context)
   elec = context.clipboard[:ht][:hol_list].any? { |hol| hol[:library].include? 'ELEC' }
@@ -345,24 +346,13 @@ def ejournal?(context)
   elec and form.include?('Serial')
 end
 
-def first_char_map(str)
-  return nil if str.nil?
-  first_char = str[0]
-  if first_char =~ /[A-Za-z]/
-    first_char.upcase
-  elsif first_char =~ /\d/
-    '0-9'
-  else
-    'Other'
-  end
-end
 
-# Get the filing versions of the primary title
-#to_field 'title_initial', extract_marc_filing_version('245abdefgknp', include_original: false) do |rec, acc, context|
-to_field 'title_initial', extract_marc_filing_version('245abdefgknp', include_original: false), first_only do |rec, acc, context|
-  if ejournal?(context)
-    acc.map! { |t| first_char_map(t) }
-  else
+# Get the filing versions of the primary title and send it to solr to
+# figure out where to put it in the A-Z list -- but only if it's an ejournal
+to_field 'title_initial', extract_marc_filing_version('245abdefgknp', include_original: false),
+         first_only,
+         trim_punctuation do |rec, acc, context|
+  if !ejournal?(context)
     acc.replace []
   end
 end
