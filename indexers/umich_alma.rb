@@ -356,7 +356,7 @@ def filing_titles_880(r)
   rv
 end
 
-STARTS_WITH_LATIN = /\A[\p{P}\p{Z}\p{Sm}\p{Sc}]*\p{Latin}/
+STARTS_WITH_LATIN = /\A[\p{P}\p{Z}\p{Sm}\p{Sc}]*[\d\p{Latin}]/
 
 def string_starts_with_latin(str)
   STARTS_WITH_LATIN.match? str
@@ -400,9 +400,9 @@ to_field 'title_initial', extract_marc_filing_version('245abdefgknp', include_or
     if filing_title && !string_starts_with_latin(filing_title)
       extra_filing_title = filing_titles_880(rec).select { |t| string_starts_with_latin(t) }
       best_guess = latinized_in_double_brackets(filing_title) || latinized_after_equal_title(filing_title) || extra_filing_title
-      if best_guess
+      if best_guess and !best_guess.empty?
         acc.replace [best_guess]
-        logger.info "A-Z List: replaced #{context.output_hash['title_common']} with #{best_guess}"
+        logger.info "A-Z List: replaced #{context.output_hash['title_common'].first} with #{best_guess}"
       end
     end
   end
