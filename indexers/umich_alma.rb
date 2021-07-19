@@ -350,18 +350,20 @@ FILING_TITLE_880_extractor = Traject::MarcExtractor.new('245abdefgknp', alternat
 def filing_titles_880(r)
   rv = []
   FILING_TITLE_880_extractor.each_matching_line(r) do |field, spec, extractor|
-    str  = FILING_TITLE_880_extractor.collect_subfields(field, spec).first
+    str = FILING_TITLE_880_extractor.collect_subfields(field, spec).first
     rv << Traject::Macros::Marc21Semantics.filing_version(field, str, spec)
   end
   rv
 end
 
 STARTS_WITH_LATIN = /\A[\p{P}\p{Z}\p{Sm}\p{Sc}]*\p{Latin}/
+
 def string_starts_with_latin(str)
   STARTS_WITH_LATIN.match? str
 end
 
 DOUBLE_BRACKET_TITLE = /\A.*[^\p{Latin}].*?\[\[(\p{Latin}.*?)\]\]/
+
 def latinized_in_double_brackets(str)
   return str if string_starts_with_latin(str)
   m = DOUBLE_BRACKET_TITLE.match(str)
@@ -373,6 +375,7 @@ def latinized_in_double_brackets(str)
 end
 
 AFTER_EQUAL_TITLE = /\A.*[^\p{Latin}].*?\s+=\s*(\p{Latin}.*)/
+
 def latinized_after_equal_title(str)
   return str if string_starts_with_latin(str)
   m = AFTER_EQUAL_TITLE.match(str)
@@ -382,6 +385,7 @@ def latinized_after_equal_title(str)
     nil
   end
 end
+
 # Get the filing versions of the primary title and send it to solr to
 # figure out where to put it in the A-Z list -- but only if it's an ejournal
 #
@@ -394,8 +398,8 @@ to_field 'title_initial', extract_marc_filing_version('245abdefgknp', include_or
   else
     filing_title = acc.first
     if filing_title && !string_starts_with_latin(filing_title)
-      extra_filing_title = filing_titles_880(rec).select{|t| string_starts_with_latin(t)}
-      best_guess = extra_filing_title || latinized_in_double_brackets(filing_title) || latinized_after_equal_title(filing_title)
+      extra_filing_title = filing_titles_880(rec).select { |t| string_starts_with_latin(t) }
+      best_guess = latinized_in_double_brackets(filing_title) || latinized_after_equal_title(filing_title) || extra_filing_title
       if best_guess
         acc.replace [best_guess]
         logger.info "A-Z List: replaced #{context.output_hash['title_common']} with #{best_guess}"
