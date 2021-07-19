@@ -402,7 +402,7 @@ to_field 'title_initial', extract_marc_filing_version('245abdefgknp', include_or
       best_guess = latinized_in_double_brackets(filing_title) || latinized_after_equal_title(filing_title) || extra_filing_title
       if best_guess and !best_guess.empty?
         acc.replace [best_guess]
-        logger.info "A-Z List: replaced #{context.output_hash['title_common'].first} with #{best_guess}"
+#        logger.info "A-Z List: replaced #{context.output_hash['title_common'].first} with #{best_guess}"
       end
     end
   end
