@@ -349,7 +349,7 @@ FILING_TITLE_880_extractor = Traject::MarcExtractor.new('245abdefgknp', alternat
 
 def filing_titles_880(r)
   rv = []
-  FILING_TITLE_880_extractor.each_matching_line(marc_record) do |field, spec, extractor|
+  FILING_TITLE_880_extractor.each_matching_line(r) do |field, spec, extractor|
     str  = FILING_TITLE_880_extractor.collect_subfields(field, spec).first
     rv << Traject::Macros::Marc21Semantics.filing_version(field, str, spec)
   end
@@ -372,9 +372,10 @@ to_field 'title_initial', extract_marc_filing_version('245abdefgknp', include_or
     acc.replace []
   else
     if !acc.empty? && !string_starts_with_latin(acc.first)
-      filing_titles = filing_titles_880(r).select{|t| string_starts_with_latin(t)}
+      filing_titles = filing_titles_880(rec).select{|t| string_starts_with_latin(t)}
       if filing_titles[0]
         acc.replace [filing_titles.first]
+        logger.info "Replaced #{context.output_hash['title_common']} with #{filing_titles.first}"
       end
     end
   end
