@@ -361,6 +361,27 @@ def string_starts_with_latin(str)
   STARTS_WITH_LATIN.match? str
 end
 
+DOUBLE_BRACKET_TITLE = /\A.*[^\p{Latin}].*?\[\[(\p{Latin}.*?)\]\]/
+def latinized_in_double_brackets(str)
+  return str if string_starts_with_latin(str)
+  m = DOUBLE_BRACKET_TITLE.match(str)
+  if m
+    m[1]
+  else
+    nil
+  end
+end
+
+AFTER_EQUAL_TITLE = /\A.*[^\p{Latin}].*?\s+=\s*(\p{Latin}.*)/
+def latinized_after_equal_title(str)
+  return str if string_starts_with_latin(str)
+  m = AFTER_EQUAL_TITLE.match(str)
+  if m
+    m[1]
+  else
+    nil
+  end
+end
 # Get the filing versions of the primary title and send it to solr to
 # figure out where to put it in the A-Z list -- but only if it's an ejournal
 #
@@ -371,11 +392,13 @@ to_field 'title_initial', extract_marc_filing_version('245abdefgknp', include_or
   if !ejournal?(context)
     acc.replace []
   else
-    if !acc.empty? && !string_starts_with_latin(acc.first)
-      filing_titles = filing_titles_880(rec).select{|t| string_starts_with_latin(t)}
-      if filing_titles[0]
-        acc.replace [filing_titles.first]
-        logger.info "Replaced #{context.output_hash['title_common']} with #{filing_titles.first}"
+    filing_title = acc.first
+    if filing_title && !string_starts_with_latin(filing_title)
+      extra_filing_title = filing_titles_880(rec).select{|t| string_starts_with_latin(t)}
+      best_guess = extra_filing_title || latinized_in_double_brackets(filing_title) || latinized_after_equal_title(filing_title)
+      if best_guess
+        acc.replace [best_guess]
+        logger.info "A-Z List: replaced #{context.output_hash['title_common']} with #{best_guess}"
       end
     end
   end
