@@ -33,8 +33,8 @@ aleph_pattern = /^\(MiU\)\d{9}MIU01$/
 to_field 'aleph_id' do |record, acc, context|
   if context.clipboard[:ht][:record_source] == 'alma'
     aleph_spec = Traject::MarcExtractor.cached('035a')
-    aleph_spec.extract(record).grep(aleph_pattern).each { |alephnum| 
-      acc << alephnum[5,9]
+    aleph_spec.extract(record).grep(aleph_pattern).each { |alephnum|
+      acc << alephnum[5, 9]
     }
   end
 end
@@ -59,7 +59,7 @@ each_record do |r, context|
   id = context.output_hash['id']
 
   # "OWN" field 
-  r.each_by_tag(['958','OWN']) do |f|
+  r.each_by_tag(['958', 'OWN']) do |f|
     locations << f['a'].upcase if f['a']
     inst_codes << f['a'].upcase if f['a']
   end
@@ -70,7 +70,7 @@ each_record do |r, context|
     #cc_to_of = Traject::TranslationMap.new('ht/collection_code_to_original_from')
     # add hol for HT volumes
     items = Array.new()
-    etas_status = context.clipboard[:ht][:overlap][:count_etas] > 0	# make it a boolean
+    etas_status = context.clipboard[:ht][:overlap][:count_etas] > 0 # make it a boolean
     r.each_by_tag('974') do |f|
       next unless f['u']
       item = Hash.new()
@@ -83,15 +83,15 @@ each_record do |r, context|
       item[:status] = statusFromRights(item[:rights], etas_status)
       items << item
     end
-    if items.any? 
+    if items.any?
       hol = Hash.new()
-      hol[:library] = 'HathiTrust Digital Library' 
+      hol[:library] = 'HathiTrust Digital Library'
       hol[:items] = sortItems(items)
       hol_list << hol
       locations << 'MiU'
       inst_codes << 'MIU'
       inst_codes << 'MIFLIC'
-    # get ht-related availability values
+      # get ht-related availability values
       availability << 'avail_ht'
       hol[:items].each do |item|
         availability << 'avail_ht_fulltext' if item[:access]
@@ -99,7 +99,7 @@ each_record do |r, context|
       end
       availability << 'avail_ht_etas' if context.clipboard[:ht][:overlap][:count_etas] > 0
     end
-  else 
+  else
     record_has_finding_aid = false
     r.each_by_tag('866') do |f|
       hol_mmsid = f['8']
@@ -107,41 +107,41 @@ each_record do |r, context|
       sh[hol_mmsid] = Array.new() unless sh[hol_mmsid]
       sh[hol_mmsid] << f['a']
     end
-  
+
     items = Hash.new()
     r.each_by_tag('974') do |f|
       hol_mmsid = f['8']
       next if hol_mmsid == nil
-# timothy: need to do the equivalent of this (from getHoldings):
-#  next ITEM if $row{item_process_status} =~ /SD|CA|WN|MG|CS/;        # process statuses to ignore
-# not sure how these will manifest in the Alma extract
+      # timothy: need to do the equivalent of this (from getHoldings):
+      #  next ITEM if $row{item_process_status} =~ /SD|CA|WN|MG|CS/;        # process statuses to ignore
+      # not sure how these will manifest in the Alma extract
       #if f['y'] and f['y'] =~ /Process Status: EO/ 
-      if f['y'] and f['y'] =~ /Process Status: (EO|SD|CA|WN|WD|MG|CS)/ 
+      if f['y'] and f['y'] =~ /Process Status: (EO|SD|CA|WN|WD|MG|CS)/
         #logger.info "#{id} : EO item skipped"
         next
       end
       item = Hash.new()
       item[:barcode] = f['a']
       # b,c are current location
-      item[:library] = f['b']		# current_library
-      item[:location] = f['c']		# current_location
+      item[:library] = f['b'] # current_library
+      item[:location] = f['c'] # current_location
       lib_loc = item[:library]
       lib_loc = [item[:library], item[:location]].join(' ') if item[:location]
       if libLocInfo[lib_loc]
         item[:info_link] = libLocInfo[lib_loc]["info_link"]
         item[:display_name] = libLocInfo[lib_loc]["name"]
-      else 
+      else
         item[:info_link] = nil
         item[:display_name] = lib_loc
       end
-      item[:can_reserve] = false	# default
+      item[:can_reserve] = false # default
       item[:can_reserve] = true if item[:library] =~ /(CLEM|BENT|SPEC)/
       #logger.info "#{id} : #{lib_loc} : #{item[:info_link]}"
-      item[:permanent_library] = f['d']	# permanent_library
-      item[:permanent_location] = f['e']	# permanent_collection
-      if item[:library] == item[:permanent_library] and item[:location] == item[:permanent_location] 
+      item[:permanent_library] = f['d'] # permanent_library
+      item[:permanent_location] = f['e'] # permanent_collection
+      if item[:library] == item[:permanent_library] and item[:location] == item[:permanent_location]
         item[:temp_location] = false
-      else 
+      else
         item[:temp_location] = true
       end
       item[:callnumber] = f['h']
@@ -151,14 +151,13 @@ each_record do |r, context|
       item[:description] = f['z']
       item[:inventory_number] = f['i']
       item[:item_id] = f['7']
-      items[hol_mmsid] = Array.new() if items[hol_mmsid] == nil 
+      items[hol_mmsid] = Array.new() if items[hol_mmsid] == nil
       items[hol_mmsid] << item
       # (not sure if this is right--still investigating in the alma publish job
       availability << 'avail_circ' if f['f'] == '1'
-      locations << item[:library] if item[:library] 
+      locations << item[:library] if item[:library]
       locations << [item[:library], item[:location]].join(' ') if item[:location]
     end
-  
 
     # get elec links for E56 fields
     r.each_by_tag('E56') do |f|
@@ -170,7 +169,7 @@ each_record do |r, context|
       hol[:link_text] = 'Available online'
       hol[:link_text] = f['y'] if f['y']
       hol[:description] = f['3'] if f['3']
-      if f['z'] 
+      if f['z']
         hol[:note] = f['z']
       elsif f['n']
         hol[:note] = f['n']
@@ -183,17 +182,17 @@ each_record do |r, context|
       hol_list << hol
       availability << 'avail_online'
       locations << hol[:library]
-      if f['c'] 
+      if f['c']
         campus = f['c']
         inst_codes << 'MIU' if campus == 'UMAA'
         inst_codes << 'MIFLIC' if campus == 'UMFL'
-      else 
-        inst_codes << 'MIU'   
-        inst_codes << 'MIFLIC'   
+      else
+        inst_codes << 'MIU'
+        inst_codes << 'MIFLIC'
       end
       has_e56 = true
     end
-   
+
     # check 856 fields:
     #   -finding aids
     #   -passwordkeeper records
@@ -201,7 +200,7 @@ each_record do |r, context|
     r.each_by_tag('856') do |f|
       next unless f['u']
       link_text = f['y'] if f['y']
-      if ( link_text =~ /finding aid/i ) or !has_e56 
+      if (link_text =~ /finding aid/i) or !has_e56
         hol = Hash.new()
         hol[:link] = URI.escape(f['u'])
         hol[:library] = 'ELEC'
@@ -210,7 +209,7 @@ each_record do |r, context|
         hol[:link_text] = f['y'] if f['y']
         hol[:description] = f['3'] if f['3']
         hol[:note] = f['z'] if f['z']
-        if link_text =~ /finding aid/i and hol[:link] =~ /umich/i 
+        if link_text =~ /finding aid/i and hol[:link] =~ /umich/i
           hol[:finding_aid] = true
           record_has_finding_aid = true
           id = context.output_hash['id']
@@ -219,7 +218,7 @@ each_record do |r, context|
         end
         availability << 'avail_online'
         hol_list << hol
-  
+
       end
     end
 
@@ -227,7 +226,7 @@ each_record do |r, context|
     r.each_by_tag('852') do |f|
       hol_mmsid = f['8']
       next if hol_mmsid == nil
-      next unless items[hol_mmsid]		# might also have to check for linked records
+      next unless items[hol_mmsid] # might also have to check for linked records
       hol = Hash.new()
       hol[:hol_mmsid] = hol_mmsid
       hol[:callnumber] = f['h']
@@ -243,9 +242,9 @@ each_record do |r, context|
         hol[:display_name] = lib_loc
       end
       hol[:floor_location] = UMich::FloorLocation.resolve(hol[:library], hol[:location], hol[:callnumber]) if hol[:callnumber]
-      hol[:public_note] = f['z'] 
+      hol[:public_note] = f['z']
       hol[:items] = sortItems(items[hol_mmsid])
-      hol[:items].map do |i| 
+      hol[:items].map do |i|
         i[:record_has_finding_aid] = record_has_finding_aid
         if i[:library] =~ /^(BENT|CLEM|SPEC)/ and record_has_finding_aid
           i[:can_reserve] = false
@@ -261,7 +260,7 @@ each_record do |r, context|
       locations << hol[:library] if hol[:library]
       locations << [hol[:library], hol[:location]].join(' ') if hol[:location]
     end
-  
+
     # add hol for HT volumes
     bib_nums = Array.new()
     bib_nums << context.output_hash['aleph_id'].first if context.output_hash['aleph_id']
@@ -270,16 +269,16 @@ each_record do |r, context|
     etas_status = context.clipboard[:ht][:overlap][:count_etas] > 0
     #hf_item_list = HathiTrust::Hathifiles.get_hf_info(oclc_nums, bib_nums, etas_status)
     hf_item_list = HathiFiles.get_hf_info(oclc_nums, bib_nums)
-    if hf_item_list.any? 
+    if hf_item_list.any?
       hf_item_list = sortItems(hf_item_list)
       hf_item_list.each do |r|
         r['status'] = statusFromRights(r['rights'], etas_status)
       end
       hol = Hash.new()
-      hol[:library] = 'HathiTrust Digital Library' 
+      hol[:library] = 'HathiTrust Digital Library'
       hol[:items] = hf_item_list
       hol_list << hol
-  
+
       # get ht-related availability values
       availability << 'avail_ht'
       hol[:items].each do |item|
@@ -288,7 +287,7 @@ each_record do |r, context|
       end
       availability << 'avail_ht_etas' if context.clipboard[:ht][:overlap][:count_etas] > 0
     end
-  
+
   end
 
   context.clipboard[:ht][:hol_list] = hol_list
@@ -346,14 +345,38 @@ def ejournal?(context)
   elec and form.include?('Serial')
 end
 
+FILING_TITLE_880_extractor = Traject::MarcExtractor.new('245abdefgknp', alternate_script: :only)
+
+def filing_titles_880(r)
+  rv = []
+  FILING_TITLE_880_extractor.each_matching_line(marc_record) do |field, spec, extractor|
+    str  = FILING_TITLE_880_extractor.collect_subfields(field, spec).first
+    rv << Traject::Macros::Marc21Semantics.filing_version(field, str, spec)
+  end
+  rv
+end
+
+STARTS_WITH_LATIN = /\A[\p{P}\p{Z}\p{Sm}\p{Sc}]*\p{Latin}/
+def string_starts_with_latin(str)
+  STARTS_WITH_LATIN.match? str
+end
 
 # Get the filing versions of the primary title and send it to solr to
 # figure out where to put it in the A-Z list -- but only if it's an ejournal
+#
+first_880_title = Traject::MarcExtractor.new('245abdefgknp',)
 to_field 'title_initial', extract_marc_filing_version('245abdefgknp', include_original: false),
          first_only,
          trim_punctuation do |rec, acc, context|
   if !ejournal?(context)
     acc.replace []
+  else
+    if !acc.empty? && !string_starts_with_latin(acc.first)
+      filing_titles = filing_titles_880(r).select{|t| string_starts_with_latin(t)}
+      if filing_titles[0]
+        acc.replace [filing_titles.first]
+      end
+    end
   end
 end
 
