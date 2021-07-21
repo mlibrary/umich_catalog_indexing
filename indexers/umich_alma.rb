@@ -362,7 +362,7 @@ def string_starts_with_latin(str)
   STARTS_WITH_LATIN.match? str
 end
 
-DOUBLE_BRACKET_TITLE = /\A.*[^\p{Latin}].*?\[\[(\p{Latin}.*?)\]\]/
+DOUBLE_BRACKET_TITLE = /\A.*[^\p{Latin}].*?\[\[\s*(\p{Latin}.*?)\]\]/
 
 def latinized_in_double_brackets(str)
   return str if string_starts_with_latin(str)
@@ -389,7 +389,6 @@ end
 # Get the filing versions of the primary title and send it to solr to
 # figure out where to put it in the A-Z list -- but only if it's an ejournal
 #
-first_880_title = Traject::MarcExtractor.new('245abdefgknp',)
 to_field 'title_initial', extract_marc_filing_version('245abdefgknp', include_original: false),
          first_only,
          trim_punctuation do |rec, acc, context|
@@ -398,8 +397,11 @@ to_field 'title_initial', extract_marc_filing_version('245abdefgknp', include_or
   else
     filing_title = acc.first
     if filing_title && !string_starts_with_latin(filing_title)
-      extra_filing_title = filing_titles_880(rec).select { |t| string_starts_with_latin(t) }
+      extra_filing_title = filing_titles_880(rec).select { |t| string_starts_with_latin(t) }.first
       best_guess = latinized_in_double_brackets(filing_title) || latinized_after_equal_title(filing_title) || extra_filing_title
+#      if !string_starts_with_latin(best_guess)
+#        best_guess = latinized_in_double_brackets(extra_filing_title) || latinized_after_equal_title(extra_filing_title) || filing_title
+#      end
       if best_guess and !best_guess.empty?
         acc.replace [best_guess]
 #        logger.info "A-Z List: replaced #{context.output_hash['title_common'].first} with #{best_guess}"

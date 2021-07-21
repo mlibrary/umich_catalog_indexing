@@ -35,7 +35,7 @@ module Traject
 
     def get_and_validate_globs(settings)
       globstr = settings['source_glob']
-      globs = globstr.split(/\s*,\s*/)
+      globs = globstr.split(/\s*,\s*/).sort
       raise "#{self} requires setting 'source_glob' to be set" if globs.empty?
       globs
     end
