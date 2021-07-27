@@ -1,12 +1,14 @@
 function jruby_bin_dir()  {
     HERE=`dirname $0`
     SCRIPTDIR=`realpath $HERE`
-    echo `realpath "${SCRIPTDIR}/../../jruby/bin"`
+    #echo `realpath "${SCRIPTDIR}/../../jruby/bin"`
+    echo `realpath "$HOME/apps/jruby/bin"`
 }
 
 function port() {
     if [[ -z $PORT ]]; then
-	echo 8025
+	#echo 8025
+	echo 8023
     else
 	echo $PORT
     fi
@@ -34,10 +36,31 @@ function find_marc_file_for_date() {
 function find_del_file_for_date() {
     local datestr=$1
     local datadir=$2
-    if [[ -z $MARCFILEBASE ]]; then
-	MARCFILEBASE="vufind_upd"
+    # search_2021072511_15655281340006381_delete
+    if [ ! -d "$datadir/$datestr" ]; then
+      echo "no datadir $datadir/$datestr"
+      return
     fi
-    echo -e "${datadir}/${MARCFILEBASE}_${datestr}_delete.log"
+
+    if [ -f $datadir/$datestr/search_${datestr}*_delete.log ]; then
+      echo -e `ls ${datadir}/${datestr}/search_${datestr}*_delete.log`
+    else 
+      echo
+    fi
+}
+
+function find_zephir_file_for_date() {
+    local datestr=$1
+    local datadir=$2
+    # zephir update files have the previous days date in their filename
+    zephir_date=`date --date="$datestr -1 day" +"%Y%m%d"`
+    # zephir_upd_20210726.json.gz
+
+    if [ -f $datadir/zephir_upd_${zephir_date}.json* ]; then
+      echo -e `ls $datadir/zephir_upd_${zephir_date}.json*`
+    else 
+      echo
+    fi
 }
 
 function data_dir() {

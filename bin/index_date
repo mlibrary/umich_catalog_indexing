@@ -1,81 +1,76 @@
 #!/bin/bash
 
-if [ $# -lt 1 -o $# -gt 3 ] || [[ "$1" -eq "-h" ]]
+SCRIPTNAME=`basename $0`
+if [ $# -lt 1 -o $# -gt 3 ] 
 then
   echo
-  echo "index_date: run the catchup (delete and index) for a particular date"
+  echo "$SCRIPTNAME: process alma and zephir update files (delete and index) for a particular date"
   echo "into http://localhost:$PORT/solr/biblio"
   echo
   echo "[\$SOLR_URL will override default core and port ] "
   echo
   echo
   echo "USAGE:"
-  echo "    index_date YYYYMMDD <optional_port> <optional1_logfile>"
+  echo "    $SCRIPTNAME date  port <optional1_logfile>"
   echo
   echo "DEFAULT VALUES"
-  echo "   port: 8025"
   echo "   logfile: stdout"
   echo
   echo "EXAMPLES"
-  echo "    index_date 20190909"
-  echo "    index_date 20190909 8026"
-  echo "    index_date 2090909  8025 /path/to/logfile"
+  echo "    $SCRIPTNAME 20190909 8026"
+  echo "    $SCRIPTNAME 20190909 8025 /path/to/logfile"
   echo
   exit
 fi
 
-
 HERE=`dirname $0`
 SCRIPTDIR=`realpath $HERE`
 ROOTDIR=`realpath $SCRIPTDIR/..`
-DATE=$1
-
+DDIR=/l/solr-vufind/data/xml
+#delfile=$1
+date=$1
 
 cd $SCRIPTDIR
 
+# Pull in functions to find marc/del files
 source $SCRIPTDIR/utils.sh
 
+delfile=`find_del_file_for_date $date $DDIR`
 port=$2
-[[ -z "$port" ]] && port=8025
+[[ -z "$port" ]] && port=8023
 
 logfile=$3
 [[ ! -z "$logfile" ]] && logfile=`realpath "$3"`
 
-
 export target_url=`solr_url $port`
-
-# where do we keep the data?
-DDIR=`data_dir`
 
 jruby_path=`jruby_bin_dir`
 export PATH=$jruby_path:$PATH
 JRUBY="${jruby_path}/jruby"
 
-delfile=`find_del_file_for_date $DATE $DDIR`
-marcfile=`find_marc_file_for_date $DATE $DDIR`
-
-if [ ! -f "$marcfile" ]; then
-    log  "Could not find marc file $marcfile. Exiting" $logfile
-    exit 1
-fi
-
-
 log "Targeting $target_url"
 
-log "Sleeping for 5s" $logfile
-sleep 5
+echo datadir is $DDIR
+echo delfile is $delfile
 
 if [ -f "$delfile" ]; then
   log  "Deleting from $delfile" $logfile
   cd $ROOTDIR
-  delout=`bundle exec jruby $SCRIPTDIR/delete_ids "$delfile" "$target_url"`
+#  delout=`bundle exec jruby $SCRIPTDIR/delete_ids "$delfile" "$target_url"`
+#  commit
   log "$delout" "$logfile"
+  echo $delout
 else
   log "Could not find delfile '$delfile'" $logfile
-  log "Assuming no deletes for date $DATE" $logfile
 fi
 
-cd $TDIR
-$SCRIPTDIR/index_file $marcfile $port $logfile
+#$SCRIPTDIR/tindex_xml localhost "$DDIR/$date/search_${date}*.xml" $logfile
 
-exit $?
+DDIR_ZEPHIR=/l/solr-vufind/data/zephir
+zephir_file=`find_zephir_file_for_date $date $DDIR_ZEPHIR`
+echo zephir file is $zephir_file
+if [ -z $zephir_file ]; then
+  echo no zephir file to process
+else
+  $SCRIPTDIR/tindex_json localhost $zephir_file $logfile
+fi

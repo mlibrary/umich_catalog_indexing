@@ -272,7 +272,7 @@ each_record do |r, context|
     if hf_item_list.any?
       hf_item_list = sortItems(hf_item_list)
       hf_item_list.each do |r|
-        r['status'] = statusFromRights(r['rights'], etas_status)
+        r[:status] = statusFromRights(r[:rights], etas_status)
       end
       hol = Hash.new()
       hol[:library] = 'HathiTrust Digital Library'
