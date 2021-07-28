@@ -44,7 +44,6 @@ fi
 
 
 echo $SCRIPTDIR/index_date $TODAY $port $LOGFILE
-exit
 
 traject_exit_value=$?
 hostname=`hostname -s`
