@@ -56,15 +56,15 @@ echo delfile is $delfile
 if [ -f "$delfile" ]; then
   log  "Deleting from $delfile" $logfile
   cd $ROOTDIR
-#  delout=`bundle exec jruby $SCRIPTDIR/delete_ids "$delfile" "$target_url"`
-#  commit
+  delout=`bundle exec jruby $SCRIPTDIR/delete_ids "$delfile" "$target_url"`
+  commit
   log "$delout" "$logfile"
   echo $delout
 else
   log "Could not find delfile '$delfile'" $logfile
 fi
 
-#$SCRIPTDIR/tindex_xml localhost "$DDIR/$date/search_${date}*.xml" $logfile
+$SCRIPTDIR/tindex_xml localhost "$DDIR/$date/search_${date}*.xml" $logfile
 
 DDIR_ZEPHIR=/l/solr-vufind/data/zephir
 zephir_file=`find_zephir_file_for_date $date $DDIR_ZEPHIR`

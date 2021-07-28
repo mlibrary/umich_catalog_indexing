@@ -43,7 +43,8 @@ else
 fi
 
 
-$SCRIPTDIR/index_date $TODAY $port $LOGFILE
+echo $SCRIPTDIR/index_date $TODAY $port $LOGFILE
+exit
 
 traject_exit_value=$?
 hostname=`hostname -s`

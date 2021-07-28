@@ -8,7 +8,7 @@ function jruby_bin_dir()  {
 function port() {
     if [[ -z $PORT ]]; then
 	#echo 8025
-	echo 8023
+	echo 8026
     else
 	echo $PORT
     fi
