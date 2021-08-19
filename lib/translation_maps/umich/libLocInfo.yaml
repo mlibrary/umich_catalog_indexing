@@ -15,6 +15,10 @@ AAEL CAR:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: 'Art Architecture & Engineering Career Collection - 2nd Floor'
+AAEL DISP:
+  description: ~
+  info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
+  name: Art Architecture & Engineering
 AAEL DISS:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
@@ -31,10 +35,6 @@ AAEL GAME:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: 'Art Architecture & Engineering Video Games - Basement'
-AAEL IEEE:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
-  name: 'Art Architecture & Engineering IEEE - see current location'
 AAEL MICE:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
@@ -102,7 +102,7 @@ AAEL STOF:
 AAEL UNASSIGNED:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
-  name: 'Art Architecture & Engineering '
+  name: Art Architecture & Engineering
 AAEL XOVR:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
@@ -130,7 +130,7 @@ BENT STOR:
 BENT UNASSIGNED:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/bentley-historical-library
-  name: 'Bentley Historical '
+  name: Bentley Historical
 BSTA CAGE:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/biological-station-library
@@ -158,11 +158,11 @@ BSTA RESC:
 BSTA UNASSIGNED:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/biological-station-library
-  name: 'Biological Station '
+  name: Biological Station
 BUHR MAIN:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/buhr-building
-  name: 'Buhr Shelving Facility '
+  name: Buhr Shelving Facility
 BUHR WARE:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/buhr-building
@@ -174,7 +174,7 @@ CHES NONE:
 CHES UNASSIGNED:
   description: ~
   info_link: ''
-  name: 'Mark Chesler Library '
+  name: Mark Chesler Library
 CLEM NONE:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/clements-library
@@ -194,7 +194,7 @@ CLEM RSTO:
 CLEM UNASSIGNED:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/clements-library
-  name: 'William L. Clements '
+  name: William L. Clements
 CSCAR NONE:
   description: ~
   info_link: ''
@@ -202,7 +202,11 @@ CSCAR NONE:
 CSCAR UNASSIGNED:
   description: ~
   info_link: ''
-  name: 'CSCAR - Rackham Building '
+  name: 'CSCAR - Rackham Building'
+DBRN UNASSIGNED:
+  description: 'Pick Up Library only - do not use for Acquisitions'
+  info_link: ''
+  name: Dearborn Library
 DHCL BOOK:
   description: ~
   info_link: https://lsa.umich.edu/ftvm/resources/donald-hall-collection.html
@@ -254,7 +258,7 @@ DHCL TAPEC:
 DHCL UNASSIGNED:
   description: ~
   info_link: https://lsa.umich.edu/ftvm/resources/donald-hall-collection.html
-  name: 'Donald Hall Collection '
+  name: Donald Hall Collection
 DHCL VHS:
   description: ~
   info_link: https://lsa.umich.edu/ftvm/resources/donald-hall-collection.html
@@ -262,11 +266,11 @@ DHCL VHS:
 EG UNASSIGNED:
   description: ~
   info_link: ''
-  name: 'Exchange and Gift '
+  name: Exchange and Gift
 ELEC UNASSIGNED:
   description: ~
   info_link: ''
-  name: 'Electronic Resources '
+  name: Electronic Resources
 FINE ADM:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/fine-arts-library
@@ -342,7 +346,7 @@ FINE SPO:
 FINE UNASSIGNED:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/fine-arts-library
-  name: 'Fine Arts '
+  name: Fine Arts
 FLINT ABST:
   description: ~
   info_link: https://libguides.umflint.edu/library
@@ -462,7 +466,23 @@ FLINT TIME:
 FLINT UNASSIGNED:
   description: ~
   info_link: https://libguides.umflint.edu/library
-  name: 'Flint '
+  name: Flint
+FVL 13478761680006381:
+  description: ~
+  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
+  name: Askwith Media Library
+FVL 13505406710006381:
+  description: ~
+  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
+  name: Askwith Media Library
+FVL 2764070900006381:
+  description: ~
+  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
+  name: Askwith Media Library
+FVL 2769362980006381:
+  description: ~
+  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
+  name: Askwith Media Library
 FVL BUH:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
@@ -494,7 +514,7 @@ FVL RESC:
 FVL UNASSIGNED:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
-  name: 'Askwith Media Library '
+  name: Askwith Media Library
 HATCH ACQ:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
@@ -599,6 +619,14 @@ HATCH CLSTR:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/clark-library
   name: 'Hatcher Graduate Clark Library Storage - Ask at Clark Library - 2nd floor S'
+HATCH DISP-C:
+  description: ~
+  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  name: Hatcher Graduate Clark Display Cases
+HATCH DISP-N:
+  description: ~
+  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  name: Hatcher Graduate North Hatcher Display Cases
 HATCH FAC:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
@@ -627,6 +655,10 @@ HATCH GRNT:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
   name: 'Hatcher Graduate Reference - Grants collection - 2nd floor N'
+HATCH IS-SEEES:
+  description: ~
+  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  name: Hatcher Graduate International Studies In Process Closed Shelving
 HATCH JUV:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
@@ -682,7 +714,7 @@ HATCH TECH:
 HATCH UNASSIGNED:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
-  name: 'Hatcher Graduate '
+  name: Hatcher Graduate
 HERB HEBC:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/museums-library-herbarium-division
@@ -702,7 +734,7 @@ HERB NONE:
 HERB UNASSIGNED:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/museums-library-herbarium-division
-  name: 'Herbarium '
+  name: Herbarium
 HSRS IND:
   description: ~
   info_link: ''
@@ -734,11 +766,11 @@ HSRS STOR:
 HSRS UNASSIGNED:
   description: ~
   info_link: ''
-  name: 'Offsite Shelving H '
+  name: Offsite Shelving H
 MAP UNASSIGNED:
   description: ~
   info_link: ''
-  name: 'Map Library '
+  name: Map Library
 MUSIC ADM:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/music-library
@@ -814,7 +846,7 @@ MUSIC SOFT:
 MUSIC UNASSIGNED:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/music-library
-  name: 'Music '
+  name: Music
 MUSIC VID:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/music-library
@@ -954,11 +986,11 @@ MUSM SPE:
 MUSM UNASSIGNED:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
-  name: 'Research Museums Center '
+  name: Research Museums Center
 MUSMO UNASSIGNED:
   description: ~
   info_link: ''
-  name: 'Research Museums Center(MUSMO) '
+  name: Research Museums Center(MUSMO)
 OFFS ELLS:
   description: ~
   info_link: ''
@@ -970,15 +1002,15 @@ OFFS STATE:
 OFFS UNASSIGNED:
   description: ~
   info_link: ''
-  name: 'Offsite Shelving '
+  name: Offsite Shelving
 RES_SHARE IN_RS_REQ:
   description: Temporarily manages inventory that is sent to or received from resource sharing partners
   info_link: ''
-  name: 'Resource Sharing Library '
+  name: Resource Sharing Library
 RES_SHARE OUT_RS_REQ:
   description: Temporarily manages inventory that is sent to or received from resource sharing partners
   info_link: ''
-  name: 'Resource Sharing Library '
+  name: Resource Sharing Library
 SDR GWLA:
   description: ~
   info_link: ''
@@ -1070,7 +1102,7 @@ SHAP UGL:
 SHAP UNASSIGNED:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
-  name: 'Shapiro '
+  name: Shapiro
 SPEC AMSBN:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
@@ -1086,7 +1118,7 @@ SPEC AMSHW:
 SPEC AMSNB:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
-  name: 'Special Collections '
+  name: Special Collections
 SPEC AMSNC:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
@@ -1362,7 +1394,7 @@ SPEC THCO:
 SPEC UNASSIGNED:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
-  name: 'Special Collections '
+  name: Special Collections
 SPEC WALP:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
@@ -1518,7 +1550,7 @@ STAFF UGL:
 STAFF UNASSIGNED:
   description: ~
   info_link: ''
-  name: 'Staff '
+  name: Staff
 TAUB ERES:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/taubman-health-sciences-library
@@ -1566,7 +1598,7 @@ TAUB STOR:
 TAUB UNASSIGNED:
   description: ~
   info_link: http://lib.umich.edu/locations-and-hours/taubman-health-sciences-library
-  name: 'Taubman Health Sciences '
+  name: Taubman Health Sciences
 TOY NONE:
   description: ~
   info_link: ''
@@ -1574,4 +1606,4 @@ TOY NONE:
 TOY UNASSIGNED:
   description: ~
   info_link: ''
-  name: 'Spectrum/Jim Toy Library '
+  name: Spectrum/Jim Toy Library
