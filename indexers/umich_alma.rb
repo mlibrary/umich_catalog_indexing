@@ -185,7 +185,10 @@ each_record do |r, context|
       locations << hol[:library]
       if f['c']
         campus = f['c']
-        inst_codes << 'MIU' if campus == 'UMAA'
+        if campus == 'UMAA'
+          inst_codes << 'MIU'
+          hol[:link].sub!("openurl", "openurl-UMAA") 
+        end
         inst_codes << 'MIFLIC' if campus == 'UMFL'
       else
         inst_codes << 'MIU'
