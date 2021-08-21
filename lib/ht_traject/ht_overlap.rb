@@ -16,7 +16,8 @@ module HathiTrust
       if oclc_nums.any?
         Umich_overlap_query.where(oclc: oclc_nums).each do |r|
           count_all += 1
-          count_etas += 1 if r[:access] == 'deny'
+          # following line commented out--ETAS is not active as of 2021-08-21 (timothy)
+          # count_etas += 1 if r[:access] == 'deny'
         end
       end
 
