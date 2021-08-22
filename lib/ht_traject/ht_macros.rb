@@ -185,7 +185,7 @@ module HathiTrust::Traject::Macros
   end
 
   # get display string for ht links based on righs and ETAS status
-  def statusFromRights(rights, etas)
+  def statusFromRights(rights, etas = false)
 
     if rights =~ /^(pd|world|cc|und-world|ic-world)/
       status = "Full text";

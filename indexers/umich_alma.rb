@@ -39,15 +39,6 @@ to_field 'aleph_id' do |record, acc, context|
   end
 end
 
-#each_record do |r, context|
-#  bib_nums = Array.new()
-#  bib_nums << context.output_hash['aleph_id'].first if context.output_hash['aleph_id']
-#  bib_nums << context.output_hash['id'].first
-#  oclc_nums = context.output_hash['oclc']
-#  etas_status = context.clipboard[:ht][:overlap][:count_etas] > 0
-#  context.clipboard[:ht][:hf_item_list] = HathiTrust::Hathifiles.get_hf_info(oclc_nums, bib_nums, etas_status)
-#end
-
 cc_to_of = Traject::TranslationMap.new('ht/collection_code_to_original_from')
 each_record do |r, context|
 
