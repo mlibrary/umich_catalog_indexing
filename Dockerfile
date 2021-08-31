@@ -1,4 +1,4 @@
-FROM jruby:9.2.8.0
+FROM jruby:9.2
 
 RUN apt-get update -yqq && apt-get install -yqq --no-install-recommends \
   build-essential 

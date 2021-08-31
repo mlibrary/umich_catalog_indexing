@@ -12,11 +12,9 @@ services:
       - HLB_XML_ENDPOINT=https://apps.lib.umich.edu/browse/categories/xml.php 
 
   solr:
-    image: library_solr_config_solr 
+    image: ghcr.io/mlibrary/library-solr:latest 
     ports:
      - "8026:8026"
-    environment:
-      - SOLR_PORT=8026
 
 volumes:
   gem_cache:

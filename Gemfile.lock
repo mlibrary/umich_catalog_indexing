@@ -96,6 +96,7 @@ GEM
 
 PLATFORMS
   java
+  universal-java-1.8
 
 DEPENDENCIES
   bundler
@@ -118,4 +119,4 @@ DEPENDENCIES
   yell
 
 BUNDLED WITH
-   2.0.2
+   2.2.26
