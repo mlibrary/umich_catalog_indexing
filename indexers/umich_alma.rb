@@ -179,11 +179,16 @@ each_record do |r, context|
         if campus == 'UMAA'
           inst_codes << 'MIU'
           hol[:link].sub!("openurl", "openurl-UMAA") 
+        elsif campus == 'UMFL'
+          inst_codes << 'MIFLIC'
+          hol[:link].sub!("openurl", "openurl-UMFL") 
+        else	# should not occur
+          logger.info "#{id} : unknown campus for E56 subfield c (#{campus})"
         end
-        inst_codes << 'MIFLIC' if campus == 'UMFL'
-      else
+      else	# no campus, add both inst codes and add default -UMAA suffix
         inst_codes << 'MIU'
         inst_codes << 'MIFLIC'
+        hol[:link].sub!("openurl", "openurl-UMAA") 
       end
       has_e56 = true
     end
