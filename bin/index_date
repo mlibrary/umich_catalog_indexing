@@ -64,7 +64,7 @@ else
   log "Could not find delfile '$delfile'" $logfile
 fi
 
-$SCRIPTDIR/tindex_xml localhost "$DDIR/$date/search_${date}*.xml" $logfile
+PORT=$port $SCRIPTDIR/tindex_xml localhost "$DDIR/$date/search_${date}*.xml" $logfile
 
 DDIR_ZEPHIR=/l/solr-vufind/data/zephir
 zephir_file=`find_zephir_file_for_date $date $DDIR_ZEPHIR`
@@ -72,5 +72,5 @@ echo zephir file is $zephir_file
 if [ -z $zephir_file ]; then
   echo no zephir file to process
 else
-  $SCRIPTDIR/tindex_json localhost $zephir_file $logfile
+  PORT=$port $SCRIPTDIR/tindex_json localhost $zephir_file $logfile
 fi
