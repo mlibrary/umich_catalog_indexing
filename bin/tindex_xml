@@ -31,8 +31,9 @@ fi
 HERE=`dirname $0`
 SCRIPTDIR=`realpath $HERE`
 
-export JRUBY_OPTS="--server -J-Xmx2048m -Xcompile.invokedynamic=true -J-Djava.io.tmpdir=$HERE/logs
-                   -J-Dmaven.repo.local=/l/solr-vufind/.mvn"
+#mrio: commented out becasue we're using docker
+#export JRUBY_OPTS="--server -J-Xmx2048m -Xcompile.invokedynamic=true -J-Djava.io.tmpdir=$HERE/logs
+                   #-J-Dmaven.repo.local=/l/solr-vufind/.mvn"
 export TMPDIR="${HERE}/logs"
 
 #READER=alephsequential
@@ -62,9 +63,10 @@ source $SCRIPTDIR/utils.sh
 
 export SOLR_URL=`solr_url`
 
-jruby_path=`jruby_bin_dir`
-export PATH=$jruby_path:$PATH
-JRUBY="${jruby_path}/jruby"
+#mrio: commented out because we are using docker?
+#jruby_path=`jruby_bin_dir`
+#export PATH=$jruby_path:$PATH
+#JRUBY="${jruby_path}/jruby"
 
 
 
