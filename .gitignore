@@ -1,3 +1,6 @@
 ht_secure_data.rb
 logs
+tmp/
+debug.out
+lib/translation_maps/hlb.json.gz
 

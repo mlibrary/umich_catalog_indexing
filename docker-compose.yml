@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    volumes:
+      - .:/app
+      - gem_cache:/gems
+    environment:
+      - SOLR_URL=http://solr:8026/solr/biblio
+      - NODB=1
+      - HLB_XML_ENDPOINT=https://apps.lib.umich.edu/browse/categories/xml.php 
+
+  solr:
+    image: library_solr_config_solr 
+    ports:
+     - "8026:8026"
+    environment:
+      - SOLR_PORT=8026
+
+volumes:
+  gem_cache:
+
