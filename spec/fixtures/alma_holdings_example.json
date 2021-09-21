@@ -1,0 +1,43 @@
+[
+    {
+        "finding_aid": false,
+        "interface_name": "Gerritsen Collection",
+        "library": "ELEC",
+        "link": "https://na04.alma.exlibrisgroup.com/view/uresolver/01UMICH_INST/openurl-UMAA?u.ignore_date_coverage=true&portfolio_pid=531021233730006381&Force_direct=true",
+        "link_text": "Available online",
+        "note": "Access to the Gerritsen Collection online version restricted; authentication may be required:",
+        "status": "Available"
+    },
+    {
+        "callnumber": null,
+        "display_name": "Buhr Shelving Facility",
+        "hol_mmsid": "22923776740006381",
+        "info_link": "http://lib.umich.edu/locations-and-hours/buhr-building",
+        "items": [
+            {
+                "barcode": "B1753008",
+                "callnumber": "MICRO-F 4113 no.188",
+                "can_reserve": false,
+                "description": null,
+                "display_name": "Buhr Shelving Facility",
+                "info_link": "http://lib.umich.edu/locations-and-hours/buhr-building",
+                "inventory_number": null,
+                "item_id": "23923776730006381",
+                "item_policy": "01",
+                "library": "BUHR",
+                "location": "MAIN",
+                "permanent_library": "BUHR",
+                "permanent_location": "MAIN",
+                "process_type": null,
+                "public_note": null,
+                "record_has_finding_aid": false,
+                "temp_location": false
+            }
+        ],
+        "library": "BUHR",
+        "location": "MAIN",
+        "public_note": null,
+        "record_has_finding_aid": false,
+        "summary_holdings": null
+    }
+]

@@ -17,6 +17,7 @@ services:
       - HATHI_OVERLAP_DB=bibliosearch
       - HATHI_OVERLAP_USER=root
       - HATHI_OVERLAP_PASSWORD=pass
+        #- JRUBY_OPTS=--debug
         #- NODB=1
 
   solr:

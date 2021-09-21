@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 group :development do
   gem "bundler"
   gem 'rake'
-  gem 'minitest'
+  gem 'rspec'
 end
 
 gem 'yell'
@@ -29,4 +29,4 @@ gem 'marc-fastxmlwriter'
 gem 'high_level_browse'
 
 gem 'pry'
-
+gem 'pry-debugger-jruby'
