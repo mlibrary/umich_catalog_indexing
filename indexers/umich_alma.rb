@@ -1,8 +1,9 @@
 require 'umich_traject'
 require 'ht_traject'
-#require 'ht_traject/ht_overlap.rb'
+require 'ht_traject/ht_overlap.rb'
 require 'json'
 require 'umich_traject/floor_location.rb'
+require 'umich_traject/holding.rb'
 
 HathiFiles = if ENV['NODB']
                require 'ht_traject/no_db_mocks/ht_hathifiles'
@@ -41,12 +42,15 @@ end
 
 cc_to_of = Traject::TranslationMap.new('ht/collection_code_to_original_from')
 each_record do |r, context|
+  my_holding = UMich::Holdings.new(r)
+  puts my_holding.holdings.map{|x| x.hol_mmsid}
 
   locations = Array.new()
   inst_codes = Array.new()
   availability = Array.new()
-  sh = Hash.new()
+  sh = Hash.new() #summary holdings?
   has_e56 = false
+  #context.output_hash gets sent to solr
   id = context.output_hash['id']
 
   # "OWN" field 
@@ -91,6 +95,7 @@ each_record do |r, context|
       availability << 'avail_ht_etas' if context.clipboard[:ht][:overlap][:count_etas] > 0
     end
   else
+    #summary_holdings
     record_has_finding_aid = false
     r.each_by_tag('866') do |f|
       hol_mmsid = f['8']
