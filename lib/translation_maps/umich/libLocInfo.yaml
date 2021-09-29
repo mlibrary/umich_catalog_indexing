@@ -1,170 +1,158 @@
 ---
 AAEL BKART:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: 'Art Architecture & Engineering Book Arts 2nd floor - ask at service desk'
 AAEL BKS:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: Art Architecture & Engineering Book Collection
-AAEL BSMT:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
-  name: 'Art Architecture & Engineering Basement - B484'
 AAEL CAR:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: 'Art Architecture & Engineering Career Collection - 2nd Floor'
 AAEL DISP:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: Art Architecture & Engineering
-AAEL DISS:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
-  name: 'Art Architecture & Engineering Dissertation - Basement'
 AAEL ERES:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: 'Art Architecture & Engineering Reserves - Electronic Resource'
 AAEL FUN:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: 'Art Architecture & Engineering Recreational Reading - 2nd Floor - shelved by author'
 AAEL GAME:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: 'Art Architecture & Engineering Video Games - Basement'
 AAEL MICE:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: 'Art Architecture & Engineering Microfiche - Basement'
 AAEL MICM:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: 'Art Architecture & Engineering Microfilm - Basement'
 AAEL NONE:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: Art Architecture & Engineering
 AAEL OPEN:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: 'Art Architecture & Engineering Open Reserves - No Loan'
 AAEL OVR:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: 'Art Architecture & Engineering Book Collection - Oversize'
 AAEL PER:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: Art Architecture & Engineering Journal Collection
 AAEL PERU:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: 'Art Architecture & Engineering Current Journals - 2nd floor'
 AAEL RAR:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: 'Art Architecture & Engineering Special Coll. - By appt. only'
 AAEL REF:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: 'Art Architecture & Engineering Reference - 2nd Floor'
 AAEL RESC:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: 'Art Architecture & Engineering Course Reserve - 2nd Floor'
 AAEL RESI:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: Art Architecture & Engineering Ask at 2nd Floor Desk
 AAEL RESP:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: 'Art Architecture & Engineering Reserves - 2nd Floor'
 AAEL SECD:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: 'Art Architecture & Engineering 2nd Floor - 2321 M'
 AAEL SLD:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: Art Architecture & Engineering 2nd Floor Service Desk
 AAEL STO:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: 'Art Architecture & Engineering Closed shelving - Ask at Circ'
 AAEL STOF:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: 'Art Architecture & Engineering Folio closed shelving - Ask at Circ'
 AAEL UNASSIGNED:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
   name: Art Architecture & Engineering
-AAEL XOVR:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
-  name: 'Art Architecture & Engineering Book Collection - Oversize - 2nd Floor'
 BENT ELEC:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/bentley-historical-library
+  description: ''
+  info_link: https://bentley.umich.edu/
   name: Bentley Historical Electronic resources
 BENT NONE:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/bentley-historical-library
+  description: ''
+  info_link: https://bentley.umich.edu/
   name: Bentley Historical
 BENT RR:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/bentley-historical-library
+  description: ''
+  info_link: https://bentley.umich.edu/
   name: Bentley Historical Reading Room
 BENT SF:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/bentley-historical-library
+  description: ''
+  info_link: https://bentley.umich.edu/
   name: Bentley Historical Security File
 BENT STOR:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/bentley-historical-library
+  description: ''
+  info_link: https://bentley.umich.edu/
   name: 'Bentley Historical Storage - Ask at library'
 BENT UNASSIGNED:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/bentley-historical-library
+  description: ''
+  info_link: https://bentley.umich.edu/
   name: Bentley Historical
 BSTA CAGE:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/biological-station-library
   name: 'Biological Station Cage - Ask Staff'
 BSTA ERES:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/biological-station-library
   name: 'Biological Station Reserves - Electronic Resource'
 BSTA NONE:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/biological-station-library
   name: Biological Station
 BSTA OVR:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/biological-station-library
   name: Biological Station Oversize
 BSTA REF:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/biological-station-library
   name: Biological Station Reference
 BSTA RESC:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/biological-station-library
   name: Biological Station Course Reserve
 BSTA UNASSIGNED:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/biological-station-library
   name: Biological Station
 BUHR MAIN:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/buhr-building
   name: Buhr Shelving Facility
 BUHR WARE:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/buhr-building
   name: Buhr Shelving Facility Ask at any library
 CHES NONE:
@@ -176,24 +164,24 @@ CHES UNASSIGNED:
   info_link: ''
   name: Mark Chesler Library
 CLEM NONE:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/clements-library
+  description: ''
+  info_link: https://clements.umich.edu/
   name: William L. Clements
 CLEM OVFL:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/clements-library
+  description: ''
+  info_link: https://clements.umich.edu/
   name: William L. Clements Overflow
 CLEM RBR:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/clements-library
+  description: ''
+  info_link: https://clements.umich.edu/
   name: William L. Clements RBR
 CLEM RSTO:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/clements-library
+  description: ''
+  info_link: https://clements.umich.edu/
   name: 'William L. Clements Remote Storage - Ask in advance'
 CLEM UNASSIGNED:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/clements-library
+  description: ''
+  info_link: https://clements.umich.edu/
   name: William L. Clements
 CSCAR NONE:
   description: ~
@@ -204,63 +192,63 @@ CSCAR UNASSIGNED:
   info_link: ''
   name: 'CSCAR - Rackham Building'
 DBRN UNASSIGNED:
-  description: 'Pick Up Library only - do not use for Acquisitions'
+  description: ''
   info_link: ''
-  name: Dearborn Library
+  name: Dearborn Mardigian Library
 DHCL BOOK:
-  description: ~
+  description: ''
   info_link: https://lsa.umich.edu/ftvm/resources/donald-hall-collection.html
   name: Donald Hall Collection Monographs
 DHCL BRD:
-  description: ~
+  description: ''
   info_link: https://lsa.umich.edu/ftvm/resources/donald-hall-collection.html
   name: Donald Hall Collection Blu-ray Disc
 DHCL BRR:
-  description: ~
+  description: ''
   info_link: https://lsa.umich.edu/ftvm/resources/donald-hall-collection.html
   name: Donald Hall Collection Blu-ray ROM
 DHCL CDROM:
-  description: ~
+  description: ''
   info_link: https://lsa.umich.edu/ftvm/resources/donald-hall-collection.html
   name: Donald Hall Collection CD-ROM
 DHCL DISC:
-  description: ~
+  description: ''
   info_link: https://lsa.umich.edu/ftvm/resources/donald-hall-collection.html
   name: Donald Hall Collection Audio Disc
 DHCL DVD:
-  description: ~
+  description: ''
   info_link: https://lsa.umich.edu/ftvm/resources/donald-hall-collection.html
   name: Donald Hall Collection DVDs
 DHCL DVROM:
-  description: ~
+  description: ''
   info_link: https://lsa.umich.edu/ftvm/resources/donald-hall-collection.html
   name: Donald Hall Collection DVD-ROM
 DHCL GAME:
-  description: ~
+  description: ''
   info_link: https://lsa.umich.edu/ftvm/resources/donald-hall-collection.html
   name: Donald Hall Collection Video Games
 DHCL LASER:
-  description: ~
+  description: ''
   info_link: https://lsa.umich.edu/ftvm/resources/donald-hall-collection.html
   name: Donald Hall Collection Laserdiscs
 DHCL OVR:
-  description: ~
+  description: ''
   info_link: https://lsa.umich.edu/ftvm/resources/donald-hall-collection.html
   name: Donald Hall Collection Oversize
 DHCL SCRN:
-  description: ~
+  description: ''
   info_link: https://lsa.umich.edu/ftvm/resources/donald-hall-collection.html
   name: Donald Hall Collection Screenplays
 DHCL TAPEC:
-  description: ~
+  description: ''
   info_link: https://lsa.umich.edu/ftvm/resources/donald-hall-collection.html
   name: Donald Hall Collection Sound Cassette
 DHCL UNASSIGNED:
-  description: ~
+  description: ''
   info_link: https://lsa.umich.edu/ftvm/resources/donald-hall-collection.html
   name: Donald Hall Collection
 DHCL VHS:
-  description: ~
+  description: ''
   info_link: https://lsa.umich.edu/ftvm/resources/donald-hall-collection.html
   name: Donald Hall Collection VHS Tapes
 EG UNASSIGNED:
@@ -272,468 +260,512 @@ ELEC UNASSIGNED:
   info_link: ''
   name: Electronic Resources
 FINE ADM:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/fine-arts-library
   name: Fine Arts Staff Offices
 FINE ERES:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/fine-arts-library
   name: 'Fine Arts Reserves - Electronic Resource'
 FINE FOL:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/fine-arts-library
   name: Fine Arts Flat Folio Collection
+FINE MAIN:
+  description: ''
+  info_link: http://lib.umich.edu/locations-and-hours/fine-arts-library
+  name: Fine Arts Fine Arts Main Collection
 FINE NONE:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/fine-arts-library
   name: Fine Arts
 FINE OSFF:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/fine-arts-library
   name: Fine Arts Oriental Seminar Rm. Flat Folios
 FINE OSR:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/fine-arts-library
   name: Fine Arts Oriental Seminar Rm.
 FINE OSRF:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/fine-arts-library
   name: Fine Arts Oriental Seminar Rm. Folios
 FINE OSRJ:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/fine-arts-library
   name: Fine Arts Oriental Seminar Rm. Journals
 FINE OSRR:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/fine-arts-library
   name: Fine Arts Oriental Seminar Rm. Reference
 FINE OVR:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/fine-arts-library
   name: 'Fine Arts Oversize - 1st floor'
 FINE OVR2:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/fine-arts-library
   name: 'Fine Arts Oversize - 2nd floor'
 FINE PER:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/fine-arts-library
   name: Fine Arts Journals
 FINE PERC:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/fine-arts-library
   name: Fine Arts Current Journals
 FINE REF:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/fine-arts-library
   name: Fine Arts Reference
 FINE RESC:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/fine-arts-library
   name: 'Fine Arts Reserves - Circulation Desk'
 FINE RESP:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/fine-arts-library
   name: Fine Arts Open Reserves Shelving Area
 FINE SPE:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/fine-arts-library
   name: Fine Arts Special Collections
 FINE SPO:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/fine-arts-library
   name: Fine Arts Special Collections Oversize
 FINE UNASSIGNED:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/fine-arts-library
   name: Fine Arts
 FLINT ABST:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint Indexes & Abstracts
+  name: Flint Frances Willson Thompson Library Indexes & Abstracts
 FLINT ARCH:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint Archives
+  name: Flint Frances Willson Thompson Library Archives
 FLINT ATLAS:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint Atlas Collection
+  name: Flint Frances Willson Thompson Library Atlas Collection
 FLINT BROWS:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint Browsing Collection
+  name: Flint Frances Willson Thompson Library Browsing Collection
 FLINT CHILD:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint Children's Literature
+  name: Flint Frances Willson Thompson Library Children's Literature
 FLINT DISP:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint Flint Display
+  name: Flint Frances Willson Thompson Library Flint Display
 FLINT ELEC:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint Electronic resources
+  name: Flint Frances Willson Thompson Library Electronic resources
 FLINT ELP1:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint English Language Program 1
+  name: Flint Frances Willson Thompson Library English Language Program 1
 FLINT ELP2:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint English Language Program 2
+  name: Flint Frances Willson Thompson Library English Language Program 2
 FLINT ELP3:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint English Language Program 3
+  name: Flint Frances Willson Thompson Library English Language Program 3
 FLINT ERES:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: 'Flint Reserves - Electronic Resource'
+  name: 'Flint Frances Willson Thompson Library Reserves - Electronic Resource'
 FLINT FSPAM:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint Pamphlets
+  name: Flint Frances Willson Thompson Library Pamphlets
 FLINT MAIN:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint Main Collection
+  name: Flint Frances Willson Thompson Library Main Collection
 FLINT MCARD:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint Microcard
+  name: Flint Frances Willson Thompson Library Microcard
 FLINT MEDIA:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint Media Collection
+  name: Flint Frances Willson Thompson Library Media Collection
 FLINT MFICH:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint Microfiche
+  name: Flint Frances Willson Thompson Library Microfiche
 FLINT MFILM:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint Microfilm
+  name: Flint Frances Willson Thompson Library Microfilm
 FLINT MODEL:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint Anatomical Models
+  name: Flint Frances Willson Thompson Library Anatomical Models
 FLINT MSTR:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint Masters Theses
+  name: Flint Frances Willson Thompson Library Masters Theses
 FLINT NEWB:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint Flint New Books
+  name: Flint Frances Willson Thompson Library Flint New Books
 FLINT NONE:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint
+  name: Flint Frances Willson Thompson Library
 FLINT OVERZ:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint Oversized Collection
+  name: Flint Frances Willson Thompson Library Oversized Collection
 FLINT PERI:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint Periodicals
+  name: Flint Frances Willson Thompson Library Periodicals
 FLINT REF:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint Reference Collection
+  name: Flint Frances Willson Thompson Library Reference Collection
 FLINT REFD:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: 'Flint Reference, Ready'
+  name: 'Flint Frances Willson Thompson Library Reference, Ready'
 FLINT RESV:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint Reserved Readings
+  name: Flint Frances Willson Thompson Library Reserved Readings
 FLINT SPEC:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: 'Flint Archives - Special Collections'
+  name: 'Flint Frances Willson Thompson Library Archives - Special Collections'
 FLINT TECH:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint Technical Services Department
+  name: Flint Frances Willson Thompson Library Technical Services Department
 FLINT TIME:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint Time Capsule
+  name: Flint Frances Willson Thompson Library Time Capsule
 FLINT UNASSIGNED:
-  description: ~
+  description: ''
   info_link: https://libguides.umflint.edu/library
-  name: Flint
+  name: Flint Frances Willson Thompson Library
+FVL 13460354630006381:
+  description: ''
+  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
+  name: Askwith Media Library
+FVL 13463245270006381:
+  description: ''
+  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
+  name: Askwith Media Library
 FVL 13478761680006381:
-  description: ~
+  description: ''
+  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
+  name: Askwith Media Library
+FVL 13488104990006381:
+  description: ''
+  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
+  name: Askwith Media Library
+FVL 13494105180006381:
+  description: ''
+  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
+  name: Askwith Media Library
+FVL 13496798000006381:
+  description: ''
+  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
+  name: Askwith Media Library
+FVL 13497013940006381:
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
   name: Askwith Media Library
 FVL 13505406710006381:
-  description: ~
+  description: ''
+  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
+  name: Askwith Media Library
+FVL 13508588850006381:
+  description: ''
+  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
+  name: Askwith Media Library
+FVL 13510378150006381:
+  description: ''
+  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
+  name: Askwith Media Library
+FVL 13511602850006381:
+  description: ''
+  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
+  name: Askwith Media Library
+FVL 2759070770006381:
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
   name: Askwith Media Library
 FVL 2764070900006381:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
   name: Askwith Media Library
 FVL 2769362980006381:
-  description: ~
+  description: ''
+  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
+  name: Askwith Media Library
+FVL 2771772180006381:
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
   name: Askwith Media Library
 FVL BUH:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
   name: 'Askwith Media Library Offsite Shelving - please allow 3 days for delivery'
 FVL ELL:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
   name: 'Askwith Media Library Offsite Shelving - please allow 3 days for delivery'
 FVL F2:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
   name: 'Askwith Media Library Room 2002 Shapiro - Non-circulating'
 FVL H1:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
   name: Askwith Media Library Room 2002 Shapiro
 FVL LOA:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
   name: Askwith Media Library Library staff loaners
+FVL LRC:
+  description: ''
+  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
+  name: Askwith Media Library Language Research Center
 FVL NONE:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
   name: Askwith Media Library
 FVL RESC:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
   name: 'Askwith Media Library University Reserves - Askwith Media Lib, 2002 Shapiro'
 FVL UNASSIGNED:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
   name: Askwith Media Library
 HATCH ACQ:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: Hatcher Graduate Acquisitions
 HATCH AMHC:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate The Azad and Margaret Hogikyan Armenian Studies Collection - 100 Hatcher North'
 HATCH AMIC:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/asia-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Asia Library Microforms - Ask at Office - Rm. 418 N'
 HATCH AOFF:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/asia-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Asia Library Office - Rm. 418 N'
 HATCH AOVR:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/asia-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Asia Library Oversized - East Attic'
 HATCH AREF:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/asia-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Asia Library Reference - Rm. 421 N'
 HATCH ARGM:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Argus - MoA'
 HATCH ASIA:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/asia-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: Hatcher Graduate Asia Library Stacks
 HATCH ASPEC:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/asia-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: Hatcher Graduate Asia Library Special Collections
 HATCH BACK:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: Hatcher Graduate In process
 HATCH CLARK:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/clark-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Clark Library Book Shelves - 2nd floor S'
 HATCH CLATL:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/clark-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Clark Library Atlas Shelves - 2nd floor S'
 HATCH CLBKS:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/clark-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Clark Library Book Shelves - 2nd floor S'
 HATCH CLC:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/clark-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: "Hatcher Graduate Children's Literature Collection - 3rd floor S"
 HATCH CLFIL:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/clark-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Clark Library File Cabinets - 2nd floor S'
 HATCH CLFIR:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/clark-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Clark Library Rare File - Ask at Clark Library - 2nd floor S'
 HATCH CLFOL:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/clark-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Clark Library Folio - Ask at Clark Library - 2nd floor S'
 HATCH CLLAB:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/clark-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Clark Library Lab - Ask at Clark Library - 2nd floor S'
 HATCH CLMAP:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/clark-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Clark Library Map Cases - Ask at Clark Library - 2nd floor S'
 HATCH CLOFF:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/clark-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Clark Library Office - Ask at Clark Library - 2nd floor S'
 HATCH CLOS:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: Hatcher Graduate Closed Shelving
 HATCH CLOVD:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/clark-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Clark Library Oversize Drawer - Ask at Clark Library - 2nd floor S'
 HATCH CLOVR:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/clark-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Clark Library Oversize - Ask at Clark Library - 2nd floor S'
 HATCH CLRAR:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/clark-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Clark Library Rare Cases - Ask at Clark Library - 2nd floor S'
 HATCH CLSOF:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/clark-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Clark Library Software - Ask at Clark Library - 2nd floor S'
 HATCH CLSTR:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/clark-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Clark Library Storage - Ask at Clark Library - 2nd floor S'
 HATCH DISP-C:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: Hatcher Graduate Clark Display Cases
 HATCH DISP-N:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: Hatcher Graduate North Hatcher Display Cases
 HATCH FAC:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate 2nd Floor U-M Faculty Authors - Shelved by author'
 HATCH GDESK:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Reference Desk - 2nd floor N'
 HATCH GFOL:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Folio - Ask at Circ, Rm. 104 N'
 HATCH GLMR:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Serials and Microforms - 203 N. Hatcher'
 HATCH GLRF:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Reference Rm. - 2nd floor N'
 HATCH GRAD:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: Hatcher Graduate
 HATCH GRNT:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Reference - Grants collection - 2nd floor N'
 HATCH IS-SEEES:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: Hatcher Graduate International Studies In Process Closed Shelving
 HATCH JUV:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Juvenile Collection - 3rd floor N'
 HATCH MIXM:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Graduate Library Mixed Media - 203 N. Hatcher'
 HATCH MONO:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: Hatcher Graduate MonoCat
 HATCH NER:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Middle East Reference - 1 West'
 HATCH NONE:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: Hatcher Graduate
 HATCH PAPY:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: Hatcher Graduate Papyrology Collection (807 S. Hatcher)
 HATCH SAR:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate South Asia Reference - 1 West'
 HATCH SEAR:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Southeast Asia Reference - 1 West'
 HATCH SEM:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Near East Seminar - Rm. 3020 Thayer Academic Bldg (Dept of Middle East Studies)'
 HATCH SLVR:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Slavic Reference - 1 West'
 HATCH SLVRH:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Slavic Reference - Holtzman - Restricted - Ask at Rm. 110F for access'
 HATCH SSBU:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: 'Hatcher Graduate Serials Set - 1 East'
 HATCH TECH:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: Hatcher Graduate Technical Services Backlog
 HATCH UNASSIGNED:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/hatcher-graduate-library
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/hatcher-library
   name: Hatcher Graduate
-HERB HEBC:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/museums-library-herbarium-division
-  name: 'Herbarium Cage - By appointment only'
 HERB HEBO:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/museums-library-herbarium-division
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/museums-library
   name: Herbarium Oversize
 HERB HEBR:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/museums-library-herbarium-division
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/museums-library
   name: Herbarium Reference
 HERB NONE:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/museums-library-herbarium-division
-  name: Herbarium
-HERB UNASSIGNED:
-  description: ~
-  info_link: http://lib.umich.edu/locations-and-hours/museums-library-herbarium-division
+  description: ''
+  info_link: https://lib.umich.edu/locations-and-hours/museums-library
   name: Herbarium
 HSRS IND:
   description: ~
@@ -772,224 +804,228 @@ MAP UNASSIGNED:
   info_link: ''
   name: Map Library
 MUSIC ADM:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/music-library
   name: Music Staff Offices
 MUSIC DIS:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/music-library
   name: 'Music Dissertations - 4th floor'
 MUSIC DVD:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/music-library
   name: Music DVD Collection
 MUSIC EDIS:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/music-library
   name: Music American Sheet Music
 MUSIC ERES:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/music-library
   name: 'Music Reserves - Electronic Resource'
 MUSIC FOLIO:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/music-library
   name: 'Music Folio Collection - 3rd floor'
 MUSIC MINI:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/music-library
   name: 'Music Miniatures - 4th floor'
 MUSIC NONE:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/music-library
   name: Music
 MUSIC OVCD:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/music-library
   name: 'Music Oversize Recordings - Circulation Desk'
 MUSIC OVR:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/music-library
   name: 'Music Oversize Shelves - 4th floor'
 MUSIC PER:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/music-library
   name: 'Music Periodicals Rack - 3rd floor'
 MUSIC RAR:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/music-library
   name: Music Rare Book Rm.
 MUSIC RARS:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/music-library
   name: Music Sheet Music Collection
 MUSIC RARW:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/music-library
   name: Music Women Composers Collection
 MUSIC REC:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/music-library
   name: 'Music Recordings - Circulation Desk'
 MUSIC REF:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/music-library
   name: 'Music Reference - 3rd floor'
 MUSIC RESC:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/music-library
   name: 'Music Reserves - Circulation Desk'
 MUSIC SOFT:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/music-library
   name: 'Music Software - Circulation Desk'
 MUSIC UNASSIGNED:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/music-library
   name: Music
 MUSIC VID:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/music-library
   name: 'Music Videos- Circulation Desk'
 MUSM ANT:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: Research Museums Center Anthropology Division
 MUSM ANTE:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: 'Research Museums Center Anthro. Div. - Ethnobotany'
 MUSM ANTO:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: 'Research Museums Center Anthro. Div. - Oversize'
 MUSM BIR:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: Research Museums Center Birds Division
 MUSM BIRC:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: 'Research Museums Center Birds Division - Case'
 MUSM CAGE:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: 'Research Museums Center Cage - by appointment only'
 MUSM ERES:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: 'Research Museums Center Reserves - Electronic Resource'
 MUSM FIS:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: Research Museums Center Fish Division
 MUSM FISO:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: 'Research Museums Center Fish Division - Oversize'
 MUSM HEBC:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: 'Research Museums Center Cage - By appointment only'
 MUSM HEBO:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: Research Museums Center Oversize
 MUSM HEBR:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: Research Museums Center Reference
 MUSM HEP:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: Research Museums Center Herpetology Division
 MUSM HEPO:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: 'Research Museums Center Herpetology Division - Oversize'
+MUSM HERB:
+  description: ''
+  info_link: http://lib.umich.edu/locations-and-hours/museums-library
+  name: Research Museums Center Herbarium Stacks
 MUSM INS:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: Research Museums Center Insect Division
 MUSM INSO:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: 'Research Museums Center Insect Division - Oversize'
 MUSM INST:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: 'Research Museums Center Insect Division - Orthoptera'
 MUSM MAIN:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: Research Museums Center Room 2500
 MUSM MAM:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: Research Museums Center Mammals Division
 MUSM MAMO:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: 'Research Museums Center Mammals Division - Oversize'
 MUSM MIC:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: 'Research Museums Center Microform Collection - Rm. 2500'
 MUSM MOL:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: Research Museums Center Mollusks Division
 MUSM MOLO:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: 'Research Museums Center Mollusks Division - Oversize'
 MUSM NONE:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: Research Museums Center
 MUSM OVR:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: 'Research Museums Center Room 2500 - Oversize'
 MUSM PAL:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: Research Museums Center Paleontology Division
 MUSM PALO:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: 'Research Museums Center Paleontology - Oversize'
 MUSM PALR:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: 'Research Museums Center Paleontology - Reference'
 MUSM PER:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: Research Museums Center Journals
 MUSM REF:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: 'Research Museums Center Reference - Rm. 2500'
 MUSM RESC:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: 'Research Museums Center Course Reserves - Rm. 2500'
 MUSM RESP:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: 'Research Museums Center Permanent Reserves - Rm. 2500'
 MUSM SPE:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: 'Research Museums Center Special Formats - Ask Staff'
 MUSM UNASSIGNED:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: Research Museums Center
 MUSMO UNASSIGNED:
-  description: ~
-  info_link: ''
+  description: ''
+  info_link: http://lib.umich.edu/locations-and-hours/museums-library
   name: Research Museums Center(MUSMO)
 OFFS ELLS:
   description: ~
@@ -1004,11 +1040,11 @@ OFFS UNASSIGNED:
   info_link: ''
   name: Offsite Shelving
 RES_SHARE IN_RS_REQ:
-  description: Temporarily manages inventory that is sent to or received from resource sharing partners
+  description: ''
   info_link: ''
   name: Resource Sharing Library
 RES_SHARE OUT_RS_REQ:
-  description: Temporarily manages inventory that is sent to or received from resource sharing partners
+  description: ''
   info_link: ''
   name: Resource Sharing Library
 SDR GWLA:
@@ -1040,395 +1076,395 @@ SDR UMLAW:
   info_link: ''
   name: HathiTrust University of Michigan
 SHAP ATL:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
   name: 'Shapiro Atlases & Maps - 4th floor'
 SHAP COLSC:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
   name: 'Shapiro College and Career Success Collection - 1st Floor'
 SHAP DIS:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
   name: 'Shapiro Dissertations/Masters - 4th floor'
 SHAP DLAB:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
   name: Shapiro Design Lab
 SHAP MAS:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
   name: Shapiro Masters Theses Archival Collection
 SHAP OVR:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
   name: 'Shapiro Undergrad Oversize - basement'
 SHAP PER:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
   name: 'Shapiro Undergrad Periodical Shelves - 2nd Floor'
 SHAP PRON:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
   name: 'Shapiro 2nd floor Browsing Collection - Shelved by author'
 SHAP REFU:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
   name: 'Shapiro Reference - The Wu Reading Room - 3rd floor'
 SHAP RESP:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
   name: 'Shapiro Science Media Cabinet - 3rd floor'
 SHAP SBCS:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
   name: Shapiro Shapiro Basement Compact Shelving
 SHAP SCI:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
   name: 'Shapiro Science Book Stacks - 4th floor'
 SHAP SER:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
   name: 'Shapiro Science Journals - 3rd Floor'
 SHAP SOVR:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
   name: 'Shapiro Science Oversize Stacks - 4th floor'
 SHAP UGL:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
   name: Shapiro Undergraduate stacks
 SHAP UNASSIGNED:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/shapiro-library
   name: Shapiro
 SPEC AMSBN:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Archival and Manuscript Collections
 SPEC AMSHE:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Archival and Manuscript Collections
 SPEC AMSHW:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Archival and Manuscript Collections
 SPEC AMSNB:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections
 SPEC AMSNC:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Archival and Manuscript Collections
 SPEC ASG:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Asa Gray Collection
 SPEC BIND:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Publishers' Bindings
 SPEC BUHR:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections General and Rare
 SPEC CHIL:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Children's Literature
 SPEC CHIL1:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Children's Literature
 SPEC CHIL2:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Children's Literature
 SPEC CHIL3:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Children's Literature
 SPEC CHIL4:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Children's Literature
 SPEC CHILO:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Children's Literature
 SPEC CULHN:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Janice Bluestein Longone Culinary Archive
 SPEC CULHS:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Janice Bluestein Longone Culinary Archive
 SPEC CULNB:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Janice Bluestein Longone Culinary Archive
 SPEC FAUL:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Faulkner Collection
 SPEC FAULX:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Faulkner Collection
 SPEC GOSL:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Pop-Up and Movable Books
 SPEC HUB:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Hubbard Imaginary Voyages
 SPEC HUBO:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Hubbard Imaginary Voyages
 SPEC ISLM:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Islamic Manuscripts
 SPEC JHC:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Jewish Heritage Collection
 SPEC JHCO:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Jewish Heritage Collection
 SPEC LABD:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Labadie Collection
 SPEC LABH1:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Labadie Collection
 SPEC LABH2:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Labadie Collection
 SPEC LABHC:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Labadie Collection
 SPEC LABHE:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Labadie Collection
 SPEC LABHF:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Labadie Collection
 SPEC LABHV:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Labadie Collection
 SPEC LABS1:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Labadie Collection
 SPEC LABS2:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Labadie Collection
 SPEC LABSF:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Labadie Collection
 SPEC LAFO:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Labadie Collection
 SPEC LAMS:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Labadie Collection
 SPEC LAOV:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Labadie Collection
 SPEC LAPA:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Labadie Collection
 SPEC LASTR:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Labadie Collection
 SPEC LASVF:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Labadie Collection
 SPEC MICH:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Michigan Manuscripts
 SPEC MSS:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Manuscripts
 SPEC MYRSO:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Myers Collection
 SPEC MYRSR:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Myers Collection
 SPEC NONE:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections
 SPEC PARS:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Parsons-Rau Collection
 SPEC RARE:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections General and Rare
 SPEC RAREO:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections General and Rare
 SPEC RAREX:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections General and Rare
 SPEC RCLC:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Children's Literature
 SPEC REF:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Reference Collection
 SPEC REFH:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Reference Collection
 SPEC REFO:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Reference Collection
 SPEC SCFI:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Science Fiction Collection
 SPEC SCI:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections General and Rare
 SPEC SHA:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Shakespeare Collection
 SPEC SHORT:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Shorthand Collection
 SPEC TAUBC:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: 'Special Collections History of Medicine - Crummer Collection'
 SPEC TAUBD:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: 'Special Collections History of Medicine - Dock Collection'
 SPEC TAUBF:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections History of Medicine
 SPEC TAUBH:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: 'Special Collections History of Medicine - Huntley Collection'
 SPEC TAUBI:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections History of Medicine
 SPEC TAUBL:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: 'Special Collections History of Medicine - Weller Collection'
 SPEC TAUBM:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections History of Medicine
 SPEC TAUBO:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections History of Medicine
 SPEC TAUBP:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: 'Special Collections History of Medicine - Pilcher Collection'
 SPEC TAUBR:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections History of Medicine
 SPEC TAUBS:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections History of Medicine
 SPEC TAUBW:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: 'Special Collections History of Medicine - Warthin Collection'
 SPEC THC:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Transportation History Collection
 SPEC THCO:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Transportation History Collection
 SPEC UNASSIGNED:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections
 SPEC WALP:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Walp Family Juvenile Collection
 SPEC WALP1:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Walp Family Juvenile Collection
 SPEC WALP2:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Walp Family Juvenile Collection
 SPEC WALP3:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Walp Family Juvenile Collection
 SPEC WALP4:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Walp Family Juvenile Collection
 SPEC WALPO:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Walp Family Juvenile Collection
 SPEC WLPR:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Walp Family Juvenile Collection
 SPEC WOR:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Worcester Philippine History Collection
 SPEC WORO:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
   name: Special Collections Philippine History Collection
 STAFF AAEL:
@@ -1552,51 +1588,51 @@ STAFF UNASSIGNED:
   info_link: ''
   name: Staff
 TAUB ERES:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/taubman-health-sciences-library
   name: 'Taubman Health Sciences Reserves - Electronic Resource'
 TAUB ILL:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/taubman-health-sciences-library
   name: Taubman Health Sciences Interlibrary Loan
 TAUB IND:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/taubman-health-sciences-library
   name: 'Taubman Health Sciences Indexes - Reference Rm.'
 TAUB INDA:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/taubman-health-sciences-library
   name: 'Taubman Health Sciences Indexes - 5th floor alcove'
 TAUB MIC:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/taubman-health-sciences-library
   name: 'Taubman Health Sciences Microforms - Reference Rm.'
 TAUB NONE:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/taubman-health-sciences-library
   name: Taubman Health Sciences
 TAUB OVR:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/taubman-health-sciences-library
   name: 'Taubman Health Sciences Oversize - 6th floor'
 TAUB PER:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/taubman-health-sciences-library
   name: Taubman Health Sciences Journals
 TAUB REF:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/taubman-health-sciences-library
   name: Taubman Health Sciences Reference
 TAUB RESC:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/taubman-health-sciences-library
   name: 'Taubman Health Sciences Reserves - Ask at the Circulation Desk'
 TAUB STOR:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/taubman-health-sciences-library
   name: 'Taubman Health Sciences Storage - Ask at the Circulation Desk'
 TAUB UNASSIGNED:
-  description: ~
+  description: ''
   info_link: http://lib.umich.edu/locations-and-hours/taubman-health-sciences-library
   name: Taubman Health Sciences
 TOY NONE:
