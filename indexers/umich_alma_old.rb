@@ -2,11 +2,7 @@ require 'umich_traject'
 require 'ht_traject'
 require 'ht_traject/ht_overlap.rb'
 require 'json'
-require 'pry-debugger-jruby'
 require 'umich_traject/floor_location.rb'
-require 'umich_traject/record/alma_item.rb'
-require 'umich_traject/record/alma_holding.rb'
-require 'umich_traject/record/alma_record.rb'
 
 HathiFiles = if ENV['NODB']
                require 'ht_traject/no_db_mocks/ht_hathifiles'
@@ -63,10 +59,10 @@ each_record do |r, context|
   hol_list = Array.new()
   # this is ugly--needs to be refactored
   if context.clipboard[:ht][:record_source] == 'zephir'
-    etas_status = context.clipboard[:ht][:overlap][:count_etas] > 0 # make it a boolean
     #cc_to_of = Traject::TranslationMap.new('ht/collection_code_to_original_from')
     # add hol for HT volumes
     items = Array.new()
+    etas_status = context.clipboard[:ht][:overlap][:count_etas] > 0 # make it a boolean
     r.each_by_tag('974') do |f|
       next unless f['u']
       item = Hash.new()
@@ -96,7 +92,177 @@ each_record do |r, context|
       availability << 'avail_ht_etas' if context.clipboard[:ht][:overlap][:count_etas] > 0
     end
   else
-    record = UMich::AlmaRecord.new(r)
+    #summary_holdings
+    record_has_finding_aid = false
+    r.each_by_tag('866') do |f|
+      hol_mmsid = f['8']
+      next if hol_mmsid == nil
+      sh[hol_mmsid] = Array.new() unless sh[hol_mmsid]
+      sh[hol_mmsid] << f['a']
+    end
+
+    items = Hash.new()
+    r.each_by_tag('974') do |f|
+      hol_mmsid = f['8']
+      next if hol_mmsid == nil
+      # timothy: need to do the equivalent of this (from getHoldings):
+      #  next ITEM if $row{item_process_status} =~ /SD|CA|WN|MG|CS/;        # process statuses to ignore
+      # not sure how these will manifest in the Alma extract
+      #if f['y'] and f['y'] =~ /Process Status: EO/ 
+      next if f['b'] == 'ELEC'		# ELEC is mistakenly migrated from ALEPH
+      if f['y'] and f['y'] =~ /Process Status: (EO|SD|CA|WN|WD|MG|CS)/
+        #logger.info "#{id} : EO item skipped"
+        next
+      end
+      item = Hash.new()
+      item[:barcode] = f['a']
+      # b,c are current location
+      item[:library] = f['b'] # current_library
+      item[:location] = f['c'] # current_location
+      lib_loc = item[:library]
+      lib_loc = [item[:library], item[:location]].join(' ') if item[:location]
+      if libLocInfo[lib_loc]
+        item[:info_link] = libLocInfo[lib_loc]["info_link"]
+        item[:display_name] = libLocInfo[lib_loc]["name"]
+      else
+        item[:info_link] = nil
+        item[:display_name] = lib_loc
+      end
+      item[:can_reserve] = false # default
+      item[:can_reserve] = true if item[:library] =~ /(CLEM|BENT|SPEC)/
+      #logger.info "#{id} : #{lib_loc} : #{item[:info_link]}"
+      item[:permanent_library] = f['d'] # permanent_library
+      item[:permanent_location] = f['e'] # permanent_collection
+      if item[:library] == item[:permanent_library] and item[:location] == item[:permanent_location]
+        item[:temp_location] = false
+      else
+        item[:temp_location] = true
+      end
+      item[:callnumber] = f['h']
+      item[:public_note] = f['n']
+      item[:process_type] = f['t']
+      item[:item_policy] = f['p']
+      item[:description] = f['z']
+      item[:inventory_number] = f['i']
+      item[:item_id] = f['7']
+      items[hol_mmsid] = Array.new() if items[hol_mmsid] == nil
+      items[hol_mmsid] << item
+      # (not sure if this is right--still investigating in the alma publish job
+      availability << 'avail_circ' if f['f'] == '1'
+      locations << item[:library] if item[:library]
+      locations << [item[:library], item[:location]].join(' ') if item[:location]
+    end
+
+    # get elec links for E56 fields
+    r.each_by_tag('E56') do |f|
+      next unless f['u']
+      hol = Hash.new()
+      hol[:link] = URI.escape(f['u'])
+      hol[:library] = 'ELEC'
+      hol[:status] = f['s'] if f['s']
+      hol[:link_text] = 'Available online'
+      hol[:link_text] = f['y'] if f['y']
+      hol[:description] = f['3'] if f['3']
+      if f['z']
+        hol[:note] = f['z']
+      elsif f['n']
+        hol[:note] = f['n']
+      elsif f['m']
+        hol[:note] = f['m']
+      end
+      hol[:interface_name] = f['m'] if f['m']
+      hol[:collection_name] = f['n'] if f['n']
+      hol[:finding_aid] = false
+      hol_list << hol
+      availability << 'avail_online'
+      locations << hol[:library]
+      if f['c']
+        campus = f['c']
+        if campus == 'UMAA'
+          inst_codes << 'MIU'
+          hol[:link].sub!("openurl", "openurl-UMAA") 
+        elsif campus == 'UMFL'
+          inst_codes << 'MIFLIC'
+          hol[:link].sub!("openurl", "openurl-UMFL") 
+        else	# should not occur
+          logger.info "#{id} : unknown campus for E56 subfield c (#{campus})"
+        end
+      else	# no campus, add both inst codes and add default -UMAA suffix
+        inst_codes << 'MIU'
+        inst_codes << 'MIFLIC'
+        hol[:link].sub!("openurl", "openurl-UMAA") 
+      end
+      has_e56 = true
+    end
+
+    # check 856 fields:
+    #   -finding aids
+    #   -passwordkeeper records
+    #   -other electronic resources not in alma as portfolio???
+    r.each_by_tag('856') do |f|
+      next unless f['u']
+      link_text = f['y'] if f['y']
+      if (link_text =~ /finding aid/i) or !has_e56
+        hol = Hash.new()
+        hol[:link] = URI.escape(f['u'])
+        hol[:library] = 'ELEC'
+        hol[:status] = f['s'] if f['s']
+        hol[:link_text] = 'Available online'
+        hol[:link_text] = f['y'] if f['y']
+        hol[:description] = f['3'] if f['3']
+        hol[:note] = f['z'] if f['z']
+        if link_text =~ /finding aid/i and hol[:link] =~ /umich/i
+          hol[:finding_aid] = true
+          record_has_finding_aid = true
+          id = context.output_hash['id']
+        else
+          hol[:finding_aid] = false
+        end
+        availability << 'avail_online'
+        hol_list << hol
+
+      end
+    end
+
+    # copy-level(one for each 852)
+    r.each_by_tag('852') do |f|
+      hol_mmsid = f['8']
+      next if hol_mmsid == nil
+      next if f['b'] == 'ELEC'		# ELEC is mistakenly migrated from ALEPH
+      next unless items[hol_mmsid] # might also have to check for linked records
+      hol = Hash.new()
+      hol[:hol_mmsid] = hol_mmsid
+      hol[:callnumber] = f['h']
+      hol[:library] = f['b']
+      hol[:location] = f['c']
+      lib_loc = hol[:library]
+      lib_loc = [hol[:library], hol[:location]].join(' ') if hol[:location]
+      if libLocInfo[lib_loc]
+        hol[:info_link] = libLocInfo[lib_loc]["info_link"]
+        hol[:display_name] = libLocInfo[lib_loc]["name"]
+      else
+        hol[:info_link] = nil
+        hol[:display_name] = lib_loc
+      end
+      hol[:floor_location] = UMich::FloorLocation.resolve(hol[:library], hol[:location], hol[:callnumber]) if hol[:callnumber]
+      hol[:public_note] = f['z']
+      hol[:items] = sortItems(items[hol_mmsid])
+      hol[:items].map do |i|
+        i[:record_has_finding_aid] = record_has_finding_aid
+        if i[:library] =~ /^(BENT|CLEM|SPEC)/ and record_has_finding_aid
+          i[:can_reserve] = false
+          #logger.info "#{id} : can_reserve changed to false"
+        end
+      end
+      hol[:summary_holdings] = nil
+      hol[:summary_holdings] = sh[hol_mmsid].join(' : ') if sh[hol_mmsid]
+      hol[:record_has_finding_aid] = record_has_finding_aid
+      hol_list << hol
+      locations << f['a'].upcase if f['a']
+      inst_codes << f['a'].upcase if f['a']
+      locations << hol[:library] if hol[:library]
+      locations << [hol[:library], hol[:location]].join(' ') if hol[:location]
+    end
 
     # add hol for HT volumes
     bib_nums = Array.new()
@@ -127,10 +293,10 @@ each_record do |r, context|
 
   end
 
-  context.clipboard[:ht][:hol_list] = record.holdings
-  context.clipboard[:ht][:availability] = record.availability
-  context.clipboard[:ht][:locations] = record.locations
-  context.clipboard[:ht][:inst_codes] = record.institution_codes
+  context.clipboard[:ht][:hol_list] = hol_list
+  context.clipboard[:ht][:availability] = availability.uniq
+  context.clipboard[:ht][:locations] = locations.uniq
+  context.clipboard[:ht][:inst_codes] = inst_codes.uniq
 
 end
 
@@ -156,7 +322,7 @@ end
 #MIU, MIU-C, MIU-H, MIFLIC
 inst_map = Traject::TranslationMap.new('umich/institution_map')
 to_field 'institution' do |record, acc, context|
-  inst_codes = context.clipboard[:ht][:inst_codes].flatten
+  inst_codes = Array(context.clipboard[:ht][:inst_codes])
   #acc << 'MiU' if context.clipboard[:ht][:record_source] == 'zephir'   # add MiU as an institution for zephir records
   acc.replace inst_codes
   acc.map! { |code| inst_map[code.strip] }
@@ -177,7 +343,7 @@ end
 #
 
 def ejournal?(context)
-  elec = context.clipboard[:ht][:hol_list].any? { |hol| hol["library"].include? 'ELEC' }
+  elec = context.clipboard[:ht][:hol_list].any? { |hol| hol[:library].include? 'ELEC' }
   form = context.output_hash['format']
   elec and form.include?('Serial')
 end

@@ -1,8 +1,8 @@
 require_relative "../spec_helper"
 require 'marc'
 require 'pry-debugger-jruby'
-require 'umich_traject/record/item.rb'
-describe UMich::Record::Item do
+require 'umich_traject/record/alma_item.rb'
+describe UMich::AlmaRecord::AlmaItem do
   before(:each) do
     reader = MARC::XMLReader.new('./spec/fixtures/alma_example.xml')
     record = reader.first

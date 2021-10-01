@@ -1,9 +1,12 @@
 module UMich
-  class Record
-    class Holding
+  class AlmaRecord
+    class AlmaHolding
       def initialize(field, libLocInfo = ::Traject::TranslationMap.new('umich/libLocInfo').hash)
         @field = field
         @libLocInfo = libLocInfo
+      end
+      def institution_code
+        @field['a']&.upcase
       end
       def hol_mmsid 
         @field['8']
@@ -35,6 +38,9 @@ module UMich
         [ 'callnumber','display_name', 'hol_mmsid','info_link','library', 'location',
           'public_note', 'floor_location'
         ].map{|x| [x, public_send(x) ] }.to_h
+      end
+      def locations
+        [institution_code, library, lib_loc].compact
       end
       private
       def lib_loc

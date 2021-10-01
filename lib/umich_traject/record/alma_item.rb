@@ -1,6 +1,6 @@
 module UMich
-  class Record
-    class Item
+  class AlmaRecord
+    class AlmaItem
       attr_reader :record
       def initialize(field, libLocInfo = ::Traject::TranslationMap.new('umich/libLocInfo').hash)
         @field = field
@@ -60,11 +60,17 @@ module UMich
       def item_id
         @field['7']
       end
+      def circulating?
+        @field['f'] == '1'
+      end
       def to_h
         ['barcode','callnumber','can_reserve','description','display_name','info_link',
          'inventory_number','item_id','item_policy','library','location','permanent_library',
          'permanent_location','process_type','public_note','temp_location'
         ].map{|x| [x, public_send(x) ] }.to_h
+      end
+      def locations
+        [library, lib_loc].compact
       end
 
       private
