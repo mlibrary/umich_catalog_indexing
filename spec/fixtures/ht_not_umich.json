@@ -1,0 +1,511 @@
+{
+    "fields": [
+        {
+            "001": "102090597"
+        },
+        {
+            "002": "u749109"
+        },
+        {
+            "003": "MiAaHDL"
+        },
+        {
+            "005": "20171212000000.0"
+        },
+        {
+            "006": "m        d        "
+        },
+        {
+            "007": "cr bn ---auaua"
+        },
+        {
+            "008": "751101d19661970enkqr p       0uuua0eng u"
+        },
+        {
+            "035": {
+                "ind1": " ",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "a": "sdr-uva.u749109"
+                    }
+                ]
+            }
+        },
+        {
+            "035": {
+                "ind1": " ",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "a": "(OCoLC)1758881"
+                    }
+                ]
+            }
+        },
+        {
+            "035": {
+                "ind1": " ",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "a": "(Sirsi) o01758881"
+                    }
+                ]
+            }
+        },
+        {
+            "040": {
+                "ind1": " ",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "c": "MUL"
+                    },
+                    {
+                        "d": "EEM"
+                    },
+                    {
+                        "d": "OCL"
+                    },
+                    {
+                        "d": "NYS"
+                    },
+                    {
+                        "d": "VA@"
+                    }
+                ]
+            }
+        },
+        {
+            "049": {
+                "ind1": " ",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "a": "VA@5"
+                    }
+                ]
+            }
+        },
+        {
+            "090": {
+                "ind1": " ",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "a": "ML1"
+                    },
+                    {
+                        "b": ".M2273"
+                    },
+                    {
+                        "m": "VA@5"
+                    },
+                    {
+                        "q": "SERIALS CONVERSION"
+                    }
+                ]
+            }
+        },
+        {
+            "130": {
+                "ind1": "0",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "a": "Music (Schools Music Association (London, England))"
+                    }
+                ]
+            }
+        },
+        {
+            "245": {
+                "ind1": "0",
+                "ind2": "0",
+                "subfields": [
+                    {
+                        "a": "Music /"
+                    },
+                    {
+                        "c": "the official journal of the Schools Music Association."
+                    }
+                ]
+            }
+        },
+        {
+            "260": {
+                "ind1": " ",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "a": "[London :"
+                    },
+                    {
+                        "b": "Newman Neame Ltd. on behalf of Pergamon Press Ltd.,"
+                    },
+                    {
+                        "c": "1966-1970]."
+                    }
+                ]
+            }
+        },
+        {
+            "300": {
+                "ind1": " ",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "a": "4 v. :"
+                    },
+                    {
+                        "b": "ill. ;"
+                    },
+                    {
+                        "c": "26 cm."
+                    }
+                ]
+            }
+        },
+        {
+            "310": {
+                "ind1": " ",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "a": "Quarterly"
+                    }
+                ]
+            }
+        },
+        {
+            "362": {
+                "ind1": "1",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "a": "Ceased with: v. 4, no. 2, in 1970."
+                    }
+                ]
+            }
+        },
+        {
+            "362": {
+                "ind1": "0",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "a": "Vol. 1, no. 1 (Oct. 1966)-"
+                    }
+                ]
+            }
+        },
+        {
+            "500": {
+                "ind1": " ",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "a": "Title from cover."
+                    }
+                ]
+            }
+        },
+        {
+            "538": {
+                "ind1": " ",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "a": "Mode of access: Internet."
+                    }
+                ]
+            }
+        },
+        {
+            "596": {
+                "ind1": " ",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "a": "14"
+                    }
+                ]
+            }
+        },
+        {
+            "650": {
+                "ind1": " ",
+                "ind2": "0",
+                "subfields": [
+                    {
+                        "a": "Music"
+                    },
+                    {
+                        "v": "Periodicals."
+                    }
+                ]
+            }
+        },
+        {
+            "710": {
+                "ind1": "2",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "a": "Schools Music Association (London, England)"
+                    }
+                ]
+            }
+        },
+        {
+            "CID": {
+                "ind1": " ",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "a": "102090597"
+                    }
+                ]
+            }
+        },
+        {
+            "DAT": {
+                "ind1": "0",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "b": "20171212000000.0"
+                    }
+                ]
+            }
+        },
+        {
+            "DAT": {
+                "ind1": "1",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "a": "20171213123911.0"
+                    },
+                    {
+                        "b": "2020-12-18T18:50:24Z"
+                    }
+                ]
+            }
+        },
+        {
+            "CAT": {
+                "ind1": " ",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "a": "SDR-UVA"
+                    },
+                    {
+                        "d": "UNKNOWN"
+                    },
+                    {
+                        "l": "prepare.pl-004-007"
+                    }
+                ]
+            }
+        },
+        {
+            "FMT": {
+                "ind1": " ",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "a": "SE"
+                    }
+                ]
+            }
+        },
+        {
+            "HOL": {
+                "ind1": " ",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "0": "sdr-uva.u749109"
+                    },
+                    {
+                        "a": "uva"
+                    },
+                    {
+                        "b": "SDR"
+                    },
+                    {
+                        "c": "UVA"
+                    },
+                    {
+                        "p": "uva.x002057160"
+                    },
+                    {
+                        "s": "UVA"
+                    },
+                    {
+                        "z": "v.4:no.1-2 (1970)"
+                    },
+                    {
+                        "1": "u749109"
+                    }
+                ]
+            }
+        },
+        {
+            "974": {
+                "ind1": " ",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "b": "UVA"
+                    },
+                    {
+                        "c": "UVA"
+                    },
+                    {
+                        "d": "20201218"
+                    },
+                    {
+                        "s": "google"
+                    },
+                    {
+                        "u": "uva.x002057160"
+                    },
+                    {
+                        "z": "v.4:no.1-2 (1970)"
+                    },
+                    {
+                        "y": "1970"
+                    },
+                    {
+                        "r": "ic"
+                    },
+                    {
+                        "q": "bib"
+                    },
+                    {
+                        "t": "non-US serial item date >= 1926"
+                    }
+                ]
+            }
+        },
+        {
+            "974": {
+                "ind1": " ",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "b": "UVA"
+                    },
+                    {
+                        "c": "UVA"
+                    },
+                    {
+                        "d": "20201218"
+                    },
+                    {
+                        "s": "google"
+                    },
+                    {
+                        "u": "uva.x002057166"
+                    },
+                    {
+                        "z": "v.1 (1966:Oct.-1967:Aug.)"
+                    },
+                    {
+                        "y": "1967"
+                    },
+                    {
+                        "r": "ic"
+                    },
+                    {
+                        "q": "bib"
+                    },
+                    {
+                        "t": "non-US serial item date >= 1926"
+                    }
+                ]
+            }
+        },
+        {
+            "974": {
+                "ind1": " ",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "b": "UVA"
+                    },
+                    {
+                        "c": "UVA"
+                    },
+                    {
+                        "d": "20201218"
+                    },
+                    {
+                        "s": "google"
+                    },
+                    {
+                        "u": "uva.x002057164"
+                    },
+                    {
+                        "z": "v.2:no.1,3-4 (1967/1968)"
+                    },
+                    {
+                        "y": "1968"
+                    },
+                    {
+                        "r": "ic"
+                    },
+                    {
+                        "q": "bib"
+                    },
+                    {
+                        "t": "non-US serial item date >= 1926"
+                    }
+                ]
+            }
+        },
+        {
+            "974": {
+                "ind1": " ",
+                "ind2": " ",
+                "subfields": [
+                    {
+                        "b": "UVA"
+                    },
+                    {
+                        "c": "UVA"
+                    },
+                    {
+                        "d": "20201218"
+                    },
+                    {
+                        "s": "google"
+                    },
+                    {
+                        "u": "uva.x002057162"
+                    },
+                    {
+                        "z": "v.3 (1969/1970)"
+                    },
+                    {
+                        "y": "1970"
+                    },
+                    {
+                        "r": "ic"
+                    },
+                    {
+                        "q": "bib"
+                    },
+                    {
+                        "t": "non-US serial item date >= 1926"
+                    }
+                ]
+            }
+        }
+    ],
+    "leader": "01619cas a2200313 a 4500"
+}

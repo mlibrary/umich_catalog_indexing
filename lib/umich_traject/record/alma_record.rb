@@ -1,32 +1,40 @@
+require 'umich_traject/record/record'
+require 'ht_traject/ht_hathifiles.rb'
 module UMich
-  class AlmaRecord
+  class AlmaRecord < UMich::Record
     attr_reader :record
-    def initialize(record)
-      @record = record
-      @elec_items = get_electronic_items 
-      @other_electronic_items = get_other_electronic_items
-      @own_field = get_own_field
-      @summary_holdings = get_summary_holdings
-      @holdings = get_holdings
-      @items = get_items
-      @sys_control_numbers = get_sys_control_numbers
+    def initialize(record, 
+                   hathi_files_info_getter = lambda{|oclc_nums, bib_nums| HathiTrust::HathiFiles.get_hf_info(oclc_nums, bib_nums)}
+                  )
+      super
+      @hathi_files_info_getter = hathi_files_info_getter
     end
     def to_a
-      [electronic_items, holdings].flatten
+      [hathi_holdings, electronic_items, holdings].flatten
+    end
+    def record_source
+      'alma'
     end
     def aleph_id
       aleph_pattern = /^\(MiU\)\d{9}MIU01$/
-      alephnum = @sys_control_numbers.find{|x| x.match(aleph_pattern)}
+      alephnum = sys_control_numbers.find{|x| x.match(aleph_pattern)}
       alephnum[5,9] if alephnum
     end
     def electronic_items
-      output = @elec_items
+      output = elec_items
       output.push(finding_aid) if finding_aid?
-      output.push(not_finding_aid_other_electronic_items) if @elec_items.empty?
+      output.push(not_finding_aid_other_electronic_items) if elec_items.empty?
       output.flatten.map{|x| x.to_h }
     end
+    def hathi_holdings
+      return [] if hathi_items.empty?
+      {
+        library: 'HathiTrust Digital Library',
+        items: hathi_items
+      }
+    end
     def holdings
-      @holdings.map do |holding|
+      physical_holdings.map do |holding|
         output = holding.to_h
         output["summary_holdings"] = summary_holdings_for(holding.hol_mmsid)
         output["items"] = items_for(holding.hol_mmsid).map do |item|
@@ -39,85 +47,98 @@ module UMich
     end
     def availability
       output = Array.new
-      output.push('avail_circ') if @items.any?{|x| x.circulating?}
-      output.push('avail_online') if has_electronic_items?
+      output.push('avail_circ') if items.any?{|x| x.circulating?}
+      output.push('avail_online') if has_electronic_items? || has_available_ht_items?
+      output.push('avail_ht_fulltext') if has_available_ht_items?
+      #still need avail_etas??
       output
     end
     def institution_codes
       [
-        @own_field, 
-        @elec_items.map{|item| item.inistitution_codes } 
+        own_field, 
+        elec_items.map{|item| item.inistitution_codes } 
       ]
     end
     def locations
       output = [  
-        @own_field,
-        @items.map{|x| x.locations},
-        @holdings.map{|x| x.locations},
+        own_field,
+        items.map{|x| x.locations},
+        physical_holdings.map{|x| x.locations},
       ].flatten 
       output.push('ELEC') if has_electronic_items? 
       output.uniq
     end
     def has_electronic_items?
-      !@elec_items.empty? or !@other_electronic_items.empty?
+      !elec_items.empty? or !other_electronic_items.empty?
+    end
+    def has_available_ht_items?
+      hathi_items.any?{|x| x[:access] != 0 }
     end
     def summary_holdings_for(hol_mmsid)
-      @summary_holdings.select{|x| x.hol_mmsid == hol_mmsid }.map{|x| x.text}.join(' : ')
+      summary_holdings.select{|x| x.hol_mmsid == hol_mmsid }.map{|x| x.text}.join(' : ')
     end
     def items_for(hol_mmsid)
-      @items.select{|x| x.hol_mmsid == hol_mmsid }
+      items.select{|x| x.hol_mmsid == hol_mmsid }
     end
     def finding_aid
-      @other_electronic_items.find{|x| x.class.name =~ /FindingAidItem/}
+      other_electronic_items.find{|x| x.class.name =~ /FindingAidItem/}
     end
     def not_finding_aid_other_electronic_items
-      @other_electronic_items.select{|x| x.class.name !~ /FindingAidItem/}
+      other_electronic_items.select{|x| x.class.name !~ /FindingAidItem/}
     end
     def finding_aid?
       !finding_aid.nil?
     end
+    def oclc_numbers
+      sys_control_numbers.map do |value|
+        oclc_pattern.match(value){|m| m[1] }
+      end.compact
+    end
     private
-    def get_sys_control_numbers
-      process_tag(['035']) do |f, output|
+    def sys_control_numbers
+      @sys_control_numbers ||= process_tag(['035']) do |f, output|
         output.push(f['a'])
       end
     end
-    def get_own_field
-      own_field = nil
-      @record.each_by_tag(['958', 'OWN']) do |f|
-        own_field = f['a']&.upcase
+    def own_field
+      my_own_field = lamda do
+        ouptut = nil
+        @record.each_by_tag(['958', 'OWN']) do |f|
+          output = f['a']&.upcase
+        end
+        output
       end
-      own_field
+      @own_field ||= my_own_field.call()
     end
-    def get_electronic_items
-      process_tag('E56') do |f, output|
+    def elec_items
+      @elec_items ||= process_tag('E56') do |f, output|
         next if f['u'].nil?
         output.push(ElectronicItem.for(f))
       end
     end
-    def get_other_electronic_items 
-      process_tag('856') do |f, output|
+    def other_electronic_items 
+      @other_electronic_items  ||= process_tag('856') do |f, output|
         next if f['u'].nil?
         output.push(OtherElectronicItem.for(f))
       end
     end
 
-    def get_summary_holdings
-      process_tag('866') do |f, output|
+    def summary_holdings
+      @summary_holdings ||= process_tag('866') do |f, output|
         next if f['8'].nil?
         output.push(SummaryHolding.new(f))
       end
     end
-    def get_items
-      process_tag('974') do |f, output|
+    def items
+      @items ||= process_tag('974') do |f, output|
         next if f['8'].nil?
         next if f['b'] == 'ELEC'  # ELEC is mistakenly migrated from ALEPH
         next if f['y']&.match?(/Process Status: (EO|SD|CA|WN|WD|MG|CS)/)
         output.push(AlmaItem.new(f))
       end
     end
-    def get_holdings
-      process_tag('852') do |f, output|
+    def physical_holdings
+      @physical_holdings ||= process_tag('852') do |f, output|
         next if f['8'].nil?
         next if f['b'] == 'ELEC'
         output.push(AlmaHolding.new(f))
@@ -129,6 +150,31 @@ module UMich
         yield(f, output)
       end
       output
+    end
+    def hathi_items
+      @hathi_items ||= @hathi_files_info_getter.call(oclc_numbers, [id, aleph_id].compact).map do |item|
+        #hardcoding etas status for now
+        item[:status] = statusFromRights(item[:rights], false)
+        item
+      end
+    end
+    def statusFromRights(rights, etas = false)
+
+      if rights =~ /^(pd|world|cc|und-world|ic-world)/
+        status = "Full text";
+      elsif etas
+        status = "Full text available, simultaneous access is limited (HathiTrust log in required)"
+      else
+        status = "Search only (no full text)"
+      end
+    end
+    def oclc_pattern
+      /
+      \A\s*
+      (?:(?:\(OCoLC\)) |
+         (?:\(OCoLC\))?(?:(?:ocm)|(?:ocn)|(?:on))
+         )(\d+)
+         /x
     end
 
     class SummaryHolding 

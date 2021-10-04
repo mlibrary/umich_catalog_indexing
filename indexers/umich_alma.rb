@@ -97,34 +97,6 @@ each_record do |r, context|
     end
   else
     record = UMich::AlmaRecord.new(r)
-
-    # add hol for HT volumes
-    bib_nums = Array.new()
-    bib_nums << context.output_hash['aleph_id'].first if context.output_hash['aleph_id']
-    bib_nums << context.output_hash['id'].first
-    oclc_nums = context.output_hash['oclc']
-    etas_status = context.clipboard[:ht][:overlap][:count_etas] > 0
-    #hf_item_list = HathiTrust::Hathifiles.get_hf_info(oclc_nums, bib_nums, etas_status)
-    hf_item_list = HathiFiles.get_hf_info(oclc_nums, bib_nums)
-    if hf_item_list.any?
-      hf_item_list = sortItems(hf_item_list)
-      hf_item_list.each do |r|
-        r[:status] = statusFromRights(r[:rights], etas_status)
-      end
-      hol = Hash.new()
-      hol[:library] = 'HathiTrust Digital Library'
-      hol[:items] = hf_item_list
-      hol_list << hol
-
-      # get ht-related availability values
-      availability << 'avail_ht'
-      hol[:items].each do |item|
-        availability << 'avail_ht_fulltext' if item[:access]
-        availability << 'avail_online' if item[:access]
-      end
-      availability << 'avail_ht_etas' if context.clipboard[:ht][:overlap][:count_etas] > 0
-    end
-
   end
 
   context.clipboard[:ht][:hol_list] = record.holdings

@@ -5,6 +5,12 @@ module UMich
       @items = get_items
       @etas_active = etas_active
     end
+    def holding
+      {
+        "library" => library,
+        "items" => @items.map{|x| x.to_h}
+      }
+    end
     private
     def get_items
       process_tag('974') do |f, output|
@@ -18,6 +24,12 @@ module UMich
         yield(f, output)
       end
       output
+    end
+    def id
+      '11' + @record['001'].value
+    end
+    def record_source
+      'zephir'
     end
     def library
       'HathiTrust Digital Library'
@@ -36,12 +48,6 @@ module UMich
     end
     def has_items?
       !@items.empty?
-    end
-    def holding
-      {
-        "library" => library
-        "items" => @items.map{|x| x.to_h}
-      }
     end
 
     class Item
