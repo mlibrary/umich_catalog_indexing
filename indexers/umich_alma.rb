@@ -283,6 +283,7 @@ each_record do |r, context|
       # get ht-related availability values
       availability << 'avail_ht'
       hol[:items].each do |item|
+        item[:access] = (item[:access] == 1) 	# make access a boolean
         availability << 'avail_ht_fulltext' if item[:access]
         availability << 'avail_online' if item[:access]
       end
