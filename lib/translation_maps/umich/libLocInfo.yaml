@@ -14,7 +14,7 @@ AAEL CAR:
 AAEL DISP:
   description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
-  name: Art Architecture & Engineering
+  name: Art Architecture & Engineering AAEL Display Cases
 AAEL ERES:
   description: ''
   info_link: http://lib.umich.edu/locations-and-hours/art-architecture-engineering-library
@@ -174,7 +174,7 @@ CLEM OVFL:
 CLEM RBR:
   description: ''
   info_link: https://clements.umich.edu/
-  name: William L. Clements RBR
+  name: William L. Clements
 CLEM RSTO:
   description: ''
   info_link: https://clements.umich.edu/
@@ -459,66 +459,6 @@ FLINT UNASSIGNED:
   description: ''
   info_link: https://libguides.umflint.edu/library
   name: Flint Frances Willson Thompson Library
-FVL 13460354630006381:
-  description: ''
-  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
-  name: Askwith Media Library
-FVL 13463245270006381:
-  description: ''
-  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
-  name: Askwith Media Library
-FVL 13478761680006381:
-  description: ''
-  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
-  name: Askwith Media Library
-FVL 13488104990006381:
-  description: ''
-  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
-  name: Askwith Media Library
-FVL 13494105180006381:
-  description: ''
-  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
-  name: Askwith Media Library
-FVL 13496798000006381:
-  description: ''
-  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
-  name: Askwith Media Library
-FVL 13497013940006381:
-  description: ''
-  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
-  name: Askwith Media Library
-FVL 13505406710006381:
-  description: ''
-  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
-  name: Askwith Media Library
-FVL 13508588850006381:
-  description: ''
-  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
-  name: Askwith Media Library
-FVL 13510378150006381:
-  description: ''
-  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
-  name: Askwith Media Library
-FVL 13511602850006381:
-  description: ''
-  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
-  name: Askwith Media Library
-FVL 2759070770006381:
-  description: ''
-  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
-  name: Askwith Media Library
-FVL 2764070900006381:
-  description: ''
-  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
-  name: Askwith Media Library
-FVL 2769362980006381:
-  description: ''
-  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
-  name: Askwith Media Library
-FVL 2771772180006381:
-  description: ''
-  info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
-  name: Askwith Media Library
 FVL BUH:
   description: ''
   info_link: http://lib.umich.edu/locations-and-hours/askwith-media-library
@@ -1030,11 +970,11 @@ MUSMO UNASSIGNED:
 OFFS ELLS:
   description: ~
   info_link: ''
-  name: Offsite Shelving ELLS
+  name: Offsite Shelving
 OFFS STATE:
   description: ~
   info_link: ''
-  name: Offsite Shelving STATE
+  name: Offsite Shelving
 OFFS UNASSIGNED:
   description: ~
   info_link: ''
@@ -1042,11 +982,11 @@ OFFS UNASSIGNED:
 RES_SHARE IN_RS_REQ:
   description: ''
   info_link: ''
-  name: Resource Sharing Library
+  name: Resource Sharing Library Lending Resource Sharing Requests
 RES_SHARE OUT_RS_REQ:
   description: ''
   info_link: ''
-  name: Resource Sharing Library
+  name: Resource Sharing Library Borrowing Resource Sharing Requests
 SDR GWLA:
   description: ~
   info_link: ''
@@ -1154,7 +1094,7 @@ SPEC AMSHW:
 SPEC AMSNB:
   description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
-  name: Special Collections
+  name: Special Collections Archival and Manuscript Collections (AMSNB)
 SPEC AMSNC:
   description: ''
   info_link: http://lib.umich.edu/locations-and-hours/special-collections-research-center
@@ -1470,7 +1410,7 @@ SPEC WORO:
 STAFF AAEL:
   description: ~
   info_link: ''
-  name: Staff AAEL
+  name: Staff
 STAFF ADMIN:
   description: ~
   info_link: ''
@@ -1478,19 +1418,19 @@ STAFF ADMIN:
 STAFF ASIA:
   description: ~
   info_link: ''
-  name: Staff ASIA
+  name: Staff
 STAFF BSTA:
   description: ~
   info_link: ''
-  name: Staff BSTA
+  name: Staff
 STAFF BUHR:
   description: ~
   info_link: ''
-  name: Staff BUHR
+  name: Staff
 STAFF CLARK:
   description: ~
   info_link: ''
-  name: Staff CLARK
+  name: Staff
 STAFF COPYR:
   description: ~
   info_link: ''
@@ -1502,15 +1442,15 @@ STAFF DEV:
 STAFF FINE:
   description: ~
   info_link: ''
-  name: Staff FINE
+  name: Staff
 STAFF FVL:
   description: ~
   info_link: ''
-  name: Staff FVL
+  name: Staff
 STAFF HERB:
   description: ~
   info_link: ''
-  name: Staff HERB
+  name: Staff
 STAFF ILL:
   description: ~
   info_link: ''
@@ -1522,19 +1462,19 @@ STAFF IS:
 STAFF LIT:
   description: ~
   info_link: ''
-  name: Staff LIT
+  name: Staff
 STAFF MUSIC:
   description: ~
   info_link: ''
-  name: Staff MUSIC
+  name: Staff
 STAFF MUSM:
   description: ~
   info_link: ''
-  name: Staff MUSM
+  name: Staff
 STAFF NCRC:
   description: ~
   info_link: ''
-  name: Staff NCRC
+  name: Staff
 STAFF NONE:
   description: ~
   info_link: ''
@@ -1554,27 +1494,27 @@ STAFF PRESS:
 STAFF PRESV:
   description: ~
   info_link: ''
-  name: Staff PRESV
+  name: Staff
 STAFF SCI:
   description: ~
   info_link: ''
-  name: Staff SCI
+  name: Staff
 STAFF SPEC:
   description: ~
   info_link: ''
-  name: Staff SPEC
+  name: Staff
 STAFF TAUB:
   description: ~
   info_link: ''
-  name: Staff TAUB
+  name: Staff
 STAFF TSACQ:
   description: ~
   info_link: ''
-  name: Staff TSACQ
+  name: Staff
 STAFF TSCAT:
   description: ~
   info_link: ''
-  name: Staff TSCAT
+  name: Staff
 STAFF TSMDU:
   description: ~
   info_link: ''
@@ -1582,7 +1522,7 @@ STAFF TSMDU:
 STAFF UGL:
   description: ~
   info_link: ''
-  name: Staff UGL
+  name: Staff
 STAFF UNASSIGNED:
   description: ~
   info_link: ''
