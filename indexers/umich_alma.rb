@@ -35,6 +35,7 @@ to_field 'aleph_id' do |record, acc, context|
     aleph_spec = Traject::MarcExtractor.cached('035a')
     aleph_spec.extract(record).grep(aleph_pattern).each { |alephnum|
       acc << alephnum[5, 9]
+      break		# single-valued field, some alma records have multiple occurrences, so only use first
     }
   end
 end
