@@ -217,7 +217,7 @@ each_record do |r, context|
         else
           hol[:finding_aid] = false
         end
-        availability << 'avail_online'
+        availability << 'avail_online' if ['0', '1'].include?(f.indicator2)
         hol_list << hol
 
       end
