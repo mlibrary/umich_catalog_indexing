@@ -7,20 +7,33 @@ require 'umich_traject'
 #end
 
 
+LC_CALLNUMBER_ISH = /\A\s*[A-Za-z]{1,3}\s*\d+\b/
+def lc_callnumber_ish(str)
+  LC_CALLNUMBER_ISH.match?(str)
+end
+  
+
 # callnumber from the items
-to_field 'callnumber', extract_marc('852hij')
+to_field 'callnumber', extract_marc('852hij') do |rec, acc|
+  acc.select! {|x| x =~ /\S/}
+end
+
+# Need the first one to look like a callnumber. Don't know how to do it on the solr end
+to_field 'callnosort' do |record, acc, context|
+  if context.output_hash['callnumber']
+    acc << context.output_hash['callnumber'].select {|x| lc_callnumber_ish(x) }.first
+  end
+end
+
+
 to_field 'callnoletters', extract_marc('852hij:050ab:090ab', :first => true) do |rec, acc|
+  acc.select! {|x| x=~ /\S/}
   unless acc.empty?
     m = /\A([A-Za-z]+)/.match(acc[0])
     acc[0] = m[1].upcase if m
   end
 end
 
-to_field 'callnosort' do |record, acc, context|
-  if context.output_hash['callnumber']
-    acc << context.output_hash['callnumber'].first
-  end
-end
 
 
 ### Last time the record was changed ####
