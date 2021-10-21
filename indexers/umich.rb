@@ -30,21 +30,22 @@ to_field 'lc_callnumber' do |rec, acc|
     next unless f.indicator1 == '0'
     inst = f['b']
     cn = f['h']
+    next unless /\S/.match(cn)
     if SECOND_TIER_CALLNUMBER_INST.include? inst
       callnumbers[1] << cn
-    elsif THIRD_TIER_CALLNUMBER_INST.include inst
+    elsif THIRD_TIER_CALLNUMBER_INST.include? inst
       callnumbers[2] << cn
     else
       callnumbers[0] << cn
     end
-    acc.replace! callnumbers.flatten
+    acc.replace callnumbers.flatten.compact.uniq
   end
 end
 
 
 to_field 'callnosort' do |record, acc, context|
   if context.output_hash['lc_callnumber']
-    acc << context.output_hash['lc_callnumber'].first
+    acc <<  context.output_hash['lc_callnumber'].first
   end
 end
 
