@@ -18,6 +18,9 @@ to_field 'callnumber', extract_marc('852hij') do |rec, acc|
   acc.select! {|x| x =~ /\S/}
 end
 
+lc_050_extractor =  Traject::MarcExtractor.cached('050ab')
+
+
 # Get LC Callnumbers just from the 852|0*|h. We also want to prioritize
 # some callnumbers over others, so we sort them as we go
 
@@ -38,8 +41,18 @@ to_field 'lc_callnumber' do |rec, acc|
     else
       callnumbers[0] << cn
     end
-    acc.replace callnumbers.flatten.compact.uniq
   end
+
+  callnumbers.flatten!
+  callnumbers.compact!
+  callnumbers.uniq!
+
+  if callnumbers.empty? and  rec['050'] and rec['050'] =~ /\S/
+    callnumbers << lc_050_extractor.extract(r).first
+  end
+
+  acc.replace callnumbers unless callnumbers.empty?
+
 end
 
 
