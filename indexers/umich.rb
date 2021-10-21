@@ -18,10 +18,33 @@ to_field 'callnumber', extract_marc('852hij') do |rec, acc|
   acc.select! {|x| x =~ /\S/}
 end
 
-# Need the first one to look like a callnumber. Don't know how to do it on the solr end
+# Get LC Callnumbers just from the 852|0*|h. We also want to prioritize
+# some callnumbers over others, so we sort them as we go
+
+SECOND_TIER_CALLNUMBER_INST = ['FLINT']
+THIRD_TIER_CALLNUMBER_INST = ['PAPY', 'SPEC']
+
+to_field 'lc_callnumber' do |rec, acc|
+  callnumbers = [ [], [], []]
+  rec.each_by_tag('852') do |f|
+    next unless f.indicator1 == '0'
+    inst = f['b']
+    cn = f['h']
+    if SECOND_TIER_CALLNUMBER_INST.include? inst
+      callnumbers[1] << cn
+    elsif THIRD_TIER_CALLNUMBER_INST.include inst
+      callnumbers[2] << cn
+    else
+      callnumbers[0] << cn
+    end
+    acc.replace! callnumbers.flatten
+  end
+end
+
+
 to_field 'callnosort' do |record, acc, context|
-  if context.output_hash['callnumber']
-    acc << context.output_hash['callnumber'].select {|x| lc_callnumber_ish(x) }.first
+  if context.output_hash['lc_callnumber']
+    acc << context.output_hash['lc_callnumber'].first
   end
 end
 
