@@ -3,3 +3,4 @@ logs
 overlap/overlap_umich.tsv
 tmp/
 lib/translation_maps/hlb.json.gz
+.env

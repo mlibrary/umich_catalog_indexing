@@ -19,6 +19,8 @@ services:
       - HATHI_OVERLAP_PASSWORD=pass
         #- JRUBY_OPTS=--debug
         #- NODB=1
+    env_file:
+      - .env
 
   solr:
     image: ghcr.io/mlibrary/library-solr:latest 
