@@ -43,6 +43,12 @@ RSpec.describe UmichUtilities::LibraryLocationList, "#list" do
     @output["AAEL DISP"]["name"] = "Art Architecture & Engineering"
     expect(subject).to eq(@output)
   end
+  it "doesn't print location code if it's the internal name and not upcased" do 
+    @locations["location"][0]["external_name"] = ""
+    @locations["location"][0]["name"] = "DiSp"
+    @output["AAEL DISP"]["name"] = "Art Architecture & Engineering"
+    expect(subject).to eq(@output)
+  end
   it "skips numerical locations" do
     @locations["location"][0]["code"] = '9999'
     expect(subject.keys.count).to eq(1)

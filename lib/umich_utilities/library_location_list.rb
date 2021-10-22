@@ -18,7 +18,7 @@ module UmichUtilities
       end
     end
     def list
-      @library_locations
+      @library_locations.sort.to_h
     end
     class Location
       def initialize(library, location)
@@ -32,12 +32,13 @@ module UmichUtilities
         @location["code"].upcase
       end
       def info_link
-        @library[:info_link]
+        @library[:info_link] || ''
       end
       def display_text
         name = @location["external_name"] 
         name = @location["name"] if name.empty?
         name = '' if ["NONE","UNASSIGNED location", location_code].include?(name)
+        name = '' if location_code.upcase == name.upcase
   
         [@library[:name], name].reject{|x| x.nil? or x == ''}.join(' ').strip
       end
