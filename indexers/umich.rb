@@ -31,6 +31,12 @@ to_field 'cat_date', extract_marc('972c') do |rec, acc, context|
   acc.replace [acc.max]
 end
 
+### Date added the first time the record was changed ###
+# date_added -- the minimum value in a 972c
+to_field 'date_added', extract_marc('972c') do |rec, acc, context|
+  acc << '99999999'
+  acc.replace [acc.min]
+end
 
 #### Fund that was used to pay for it ####
 
