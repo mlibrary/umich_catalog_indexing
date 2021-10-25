@@ -3,7 +3,7 @@ module UmichUtilities
     def initialize
       libraries = Libraries.new
       @library_locations = {} 
-      libraries.to_a.each do |lib|
+      libraries.to_a&.each do |lib|
         resp = AlmaRestClient.client.get("/conf/libraries/#{lib[:code]}/locations")
         if resp.code == 200
           resp.parsed_response["location"]&.each do |loc|
@@ -18,7 +18,7 @@ module UmichUtilities
       end
     end
     def list
-      @library_locations.sort.to_h
+      @library_locations&.sort&.to_h
     end
     class Location
       def initialize(library, location)

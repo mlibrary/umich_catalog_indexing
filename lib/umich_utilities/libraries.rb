@@ -9,7 +9,7 @@ module UmichUtilities
       end
     end
     def to_a
-      @data["library"].map{|x| Library.new(x).to_h}
+      @data["library"]&.map{|x| Library.new(x).to_h}
     end
     def to_json
       to_a.to_json
