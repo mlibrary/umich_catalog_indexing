@@ -67,10 +67,10 @@ These are low-level files called by the above
 Lots of dead code in here, vestiges of when the umich/ht indexing was unified
 
 ## Docker startup
-* Need to get high level browse file `hlb.json.gz` into `lib/translation_maps`
 * Need to get a copy of the HathiTrust overlap file (named `overlap_umich.tsv)` into `overlap/`
 
 Then:
 `docker-compose build`
+`docker-compose run --rm web bundle exec fetch_new_hlb ./lib/translation_maps`
 `docker-compose up`
 
