@@ -18,7 +18,7 @@ end.parse!
 
 if force or !File.exists?(path) or File.stat(path).mtime < Time.now - (60*60*24) #is file older than one day?
   temporary_path = "#{path}.temporary"
-  File.open(temporary_path, 'w'){|f| f.write UmichUtilities::LibraryLocationList.new.list.to_yaml }
+  File.open(temporary_path, 'w'){|f| f.write UmichUtilities::LibraryLocationList.new.list.to_yaml(line_width: 1000 ) }
   if !File.exists?(temporary_path) || File.size?(temporary_path) < 15
     puts "Error: Did not update. Failed to load file"
   else

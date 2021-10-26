@@ -62,9 +62,13 @@ source $SCRIPTDIR/utils.sh
 
 export SOLR_URL=`solr_url`
 
+JRUBY=`which ruby`
 jruby_path=`jruby_bin_dir`
-export PATH=$jruby_path:$PATH
-JRUBY="${jruby_path}/jruby"
+if [ ${jruby_path} ] # this has a value when not using docker
+then
+  export PATH=$jruby_path:$PATH
+  JRUBY="${jruby_path}/jruby"
+fi
 
 
 
@@ -89,8 +93,13 @@ log "Getting collection map" $logfile
 # $JRUBY -S bundle exec $SCRIPTDIR/get_collection_map.rb
 
 #update libLocInfo.yaml
+#load environment variables
+if [ -f .env ]
+then
+  export $(cat .env | sed 's/#.*//g' | xargs)
+fi
 log "Updating libLocInfo.yaml"
-output=$(bundle exec ruby bin/lib_loc_info.rb --path ./lib/translation_maps/umich/libLocInfo.yaml)
+output=$(bundle exec $JRUBY bin/lib_loc_info.rb --path ./lib/translation_maps/umich/libLocInfo.yaml)
 log "${output}"
 
 log "Indexing from ${filename_glob} with reader $READER into $WRITER ($SOLR_URL)" $logfile
