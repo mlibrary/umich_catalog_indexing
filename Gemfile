@@ -1,9 +1,11 @@
 source 'https://rubygems.org'
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 group :development do
   gem "bundler"
   gem 'rake'
-  gem 'minitest'
+  gem 'rspec'
+  gem 'webmock'
 end
 
 gem 'yell'
@@ -29,4 +31,9 @@ gem 'marc-fastxmlwriter'
 gem 'high_level_browse'
 
 gem 'pry'
+gem 'pry-debugger-jruby'
 
+#For liblocyaml
+gem 'alma_rest_client',
+  git: 'https://github.com/mlibrary/alma_rest_client', 
+  tag: '1.1.0'
