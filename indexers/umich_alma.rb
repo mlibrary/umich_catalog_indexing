@@ -62,7 +62,7 @@ each_record do |r, context|
     #cc_to_of = Traject::TranslationMap.new('ht/collection_code_to_original_from')
     # add hol for HT volumes
     items = Array.new()
-    etas_status = context.clipboard[:ht][:overlap][:count_etas] > 0 # make it a boolean
+    #etas_status = context.clipboard[:ht][:overlap][:count_etas] > 0 # make it a boolean
     r.each_by_tag('974') do |f|
       next unless f['u']
       item = Hash.new()
@@ -72,7 +72,8 @@ each_record do |r, context|
       item[:collection_code] = f['c']
       item[:source] = cc_to_of[f['c'].downcase]
       item[:access] = !!(item[:rights] =~ /^(pd|world|ic-world|cc|und-world)/)
-      item[:status] = statusFromRights(item[:rights], etas_status)
+      #item[:status] = statusFromRights(item[:rights], etas_status)
+      item[:status] = statusFromRights(item[:rights])
       items << item
     end
     if items.any?
@@ -89,7 +90,7 @@ each_record do |r, context|
         availability << 'avail_ht_fulltext' if item[:access]
         availability << 'avail_online' if item[:access]
       end
-      availability << 'avail_ht_etas' if context.clipboard[:ht][:overlap][:count_etas] > 0
+      #availability << 'avail_ht_etas' if context.clipboard[:ht][:overlap][:count_etas] > 0
     end
   else
     record_has_finding_aid = false
@@ -265,16 +266,17 @@ each_record do |r, context|
 
     # add hol for HT volumes
     bib_nums = Array.new()
+    bib_nums << '.' + context.output_hash['id'].first
     bib_nums << context.output_hash['aleph_id'].first if context.output_hash['aleph_id']
-    bib_nums << context.output_hash['id'].first
     oclc_nums = context.output_hash['oclc']
-    etas_status = context.clipboard[:ht][:overlap][:count_etas] > 0
+    #etas_status = context.clipboard[:ht][:overlap][:count_etas] > 0
     #hf_item_list = HathiTrust::Hathifiles.get_hf_info(oclc_nums, bib_nums, etas_status)
     hf_item_list = HathiFiles.get_hf_info(oclc_nums, bib_nums)
     if hf_item_list.any?
       hf_item_list = sortItems(hf_item_list)
       hf_item_list.each do |r|
-        r[:status] = statusFromRights(r[:rights], etas_status)
+        #r[:status] = statusFromRights(r[:rights], etas_status)
+        r[:status] = statusFromRights(r[:rights])
       end
       hol = Hash.new()
       hol[:library] = 'HathiTrust Digital Library'
@@ -288,7 +290,7 @@ each_record do |r, context|
         availability << 'avail_ht_fulltext' if item[:access]
         availability << 'avail_online' if item[:access]
       end
-      availability << 'avail_ht_etas' if context.clipboard[:ht][:overlap][:count_etas] > 0
+      #availability << 'avail_ht_etas' if context.clipboard[:ht][:overlap][:count_etas] > 0
     end
 
   end
