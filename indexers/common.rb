@@ -56,18 +56,31 @@ to_field 'oclc', oclcnum('035a:035z')
 to_field 'record_source', record_source 	# set to alma or zephir, based on record id
 
 
-# for zephir records, check umich print holdings overlap file--skip is oclc number is found in file
+# for zephir records, check umich print holdings overlap file--skip if oclc number is found in file
 each_record do |rec, context|
+  id = context.output_hash['id']
   oclc_nums = context.output_hash['oclc']
-  context.clipboard[:ht][:overlap] = UmichOverlap.get_overlap(oclc_nums) 	# returns count of all records found (:count_all), and access=deny records (:count_etas)
+  #context.clipboard[:ht][:overlap] = UmichOverlap.get_overlap(oclc_nums) 	# returns count of all records found (:count_all), and access=deny records (:count_etas)
   if context.clipboard[:ht][:record_source] == 'zephir'
-    if context.clipboard[:ht][:overlap][:count_all] > 0
-      id = context.output_hash['id']
-      context.skip!("#{context.output_hash['id']} : zephir record skipped")
+    if record_is_umich(rec)
+      context.skip!("#{id} : zephir record skipped, HOL")
+    else 
+      # Since ETAS is not in effect, following only needed for zephir records 
+      context.clipboard[:ht][:overlap] = UmichOverlap.get_overlap(oclc_nums) 	# returns count of all records found (:count_all), and access=deny records (:count_etas)
+      if context.clipboard[:ht][:overlap][:count_all] > 0
+        context.skip!("#{id} : zephir record skipped, overlap")
+        logger.info("#{id} : zephir record skipped, overlap")
+      end
     end
   end
 end
   
+def record_is_umich(r)
+  return false unless r['HOL'] and r['HOL']['c']	# shouldn't occur
+  return true if r['HOL']['c'] == 'MIU'	
+  return false
+end
+
 to_field "allfields", extract_all_marc_values(to: '850') do |r, acc|
   acc.replace [acc.join(' ')] # turn it into a single string
 end
