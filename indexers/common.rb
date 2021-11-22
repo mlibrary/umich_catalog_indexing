@@ -53,31 +53,38 @@ each_record HathiTrust::Traject::Macros.setup
 to_field "id", record_id
 to_field 'oclc', oclcnum('035a:035z')
 
+sdr_pattern = /^sdr-/
+to_field 'sdrnum' do |record, acc|
+  oh35a_spec = Traject::MarcExtractor.cached('035a')
+  acc.concat oh35a_spec.extract(record).grep(sdr_pattern)
+end
+
 to_field 'record_source', record_source 	# set to alma or zephir, based on record id
 
 
 # for zephir records, check umich print holdings overlap file--skip if oclc number is found in file
 each_record do |rec, context|
-  id = context.output_hash['id']
-  oclc_nums = context.output_hash['oclc']
   #context.clipboard[:ht][:overlap] = UmichOverlap.get_overlap(oclc_nums) 	# returns count of all records found (:count_all), and access=deny records (:count_etas)
   if context.clipboard[:ht][:record_source] == 'zephir'
-    if record_is_umich(rec)
+    id = context.output_hash['id']
+    if record_is_umich(rec, context)
       context.skip!("#{id} : zephir record skipped, HOL")
     else 
       # Since ETAS is not in effect, following only needed for zephir records 
+      oclc_nums = context.output_hash['oclc']
       context.clipboard[:ht][:overlap] = UmichOverlap.get_overlap(oclc_nums) 	# returns count of all records found (:count_all), and access=deny records (:count_etas)
       if context.clipboard[:ht][:overlap][:count_all] > 0
         context.skip!("#{id} : zephir record skipped, overlap")
-        logger.info("#{id} : zephir record skipped, overlap")
       end
     end
   end
 end
   
-def record_is_umich(r)
-  return false unless r['HOL'] and r['HOL']['c']	# shouldn't occur
-  return true if r['HOL']['c'] == 'MIU'	
+def record_is_umich(r, context)
+  return true if r['HOL']['c'] == 'MIU'			# umich record is preferred record
+  context.output_hash['sdrnum'].each do |num|		# check for umich sdrnum
+    return true if num.match?(/^sdr-miu/i) 
+  end
   return false
 end
 
@@ -102,13 +109,6 @@ to_field 'format', umich_format_and_types
 ################################
 ######## IDENTIFIERS ###########
 ################################
-
-
-sdr_pattern = /^sdr-/
-to_field 'sdrnum' do |record, acc|
-  oh35a_spec = Traject::MarcExtractor.cached('035a')
-  acc.concat oh35a_spec.extract(record).grep(sdr_pattern)
-end
 
 
 to_field 'isbn', extract_marc('020az', :separator => nil) do |rec, acc|
