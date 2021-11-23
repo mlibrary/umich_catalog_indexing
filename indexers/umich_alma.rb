@@ -110,8 +110,8 @@ each_record do |r, context|
       # not sure how these will manifest in the Alma extract
       #if f['y'] and f['y'] =~ /Process Status: EO/ 
       next if f['b'] == 'ELEC'		# ELEC is mistakenly migrated from ALEPH
+      next if f['b'] == 'SDR'		# SDR items will be loaded from Zephir
       if f['y'] and f['y'] =~ /Process Status: (EO|SD|CA|WN|WD|MG|CS)/
-        #logger.info "#{id} : EO item skipped"
         next
       end
       item = Hash.new()
@@ -229,6 +229,7 @@ each_record do |r, context|
       hol_mmsid = f['8']
       next if hol_mmsid == nil
       next if f['b'] == 'ELEC'		# ELEC is mistakenly migrated from ALEPH
+      next if f['b'] == 'SDR'		# SDR holdings will be loaded from Zephir
       next unless items[hol_mmsid] # might also have to check for linked records
       hol = Hash.new()
       hol[:hol_mmsid] = hol_mmsid
