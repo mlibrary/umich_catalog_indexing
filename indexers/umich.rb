@@ -48,7 +48,7 @@ to_field 'lc_callnumber' do |rec, acc|
   callnumbers.uniq!
 
   if callnumbers.empty? and  rec['050'] and rec['050'] =~ /\S/
-    callnumbers << lc_050_extractor.extract(r).first
+    callnumbers << lc_050_extractor.extract(rec).first
   end
 
   acc.replace callnumbers unless callnumbers.empty?
