@@ -176,21 +176,20 @@ each_record do |r, context|
       hol_list << hol
       availability << 'avail_online'
       locations << hol[:library]
-      if f['c']
-        campus = f['c']
-        if campus == 'UMAA'
-          inst_codes << 'MIU'
-          hol[:link].sub!("openurl", "openurl-UMAA") 
-        elsif campus == 'UMFL'
-          inst_codes << 'MIFLIC'
-          hol[:link].sub!("openurl", "openurl-UMFL") 
-        else	# should not occur
-          logger.info "#{id} : unknown campus for E56 subfield c (#{campus})"
-        end
-      else	# no campus, add both inst codes and add default -UMAA suffix
+      sub_c_list = f.find_all {|subfield| subfield.code == 'c'}
+      if sub_c_list.count == 0 or sub_c_list.count == 2 
+        # no campus or both in E56--add both institutions, add UMAA to url
         inst_codes << 'MIU'
         inst_codes << 'MIFLIC'
         hol[:link].sub!("openurl", "openurl-UMAA") 
+      elsif sub_c_list.count == 1 and sub_c_list.first.value == 'UMAA'
+        inst_codes << 'MIU'
+        hol[:link].sub!("openurl", "openurl-UMAA") 
+      elsif sub_c_list.count == 1 and sub_c_list.first.value == 'UMFL'
+        inst_codes << 'MIFLIC'
+        hol[:link].sub!("openurl", "openurl-UMFL") 
+      else 	# should't occur
+        logger.info "#{id} : can't process campus info for E56 (#{sub_c_list})"
       end
       has_e56 = true
     end
