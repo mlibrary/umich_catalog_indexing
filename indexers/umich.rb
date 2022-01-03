@@ -1,58 +1,33 @@
 require 'umich_traject'
 
-## OK, so one weird thing we need to do is have different ht_json docs for mirlyn vs hathitrust, since they have differently-formatted 974s. Pass in the :mirlyn symbol and the to_json will do the Right Thing.
-
-#to_field 'ht_json' do |record, acc, context|
-#  acc << context.clipboard[:ht][:items].to_json(:mirlyn) if context.clipboard[:ht][:has_items]
-#end
-
-
-LC_CALLNUMBER_ISH = /\A\s*[A-Za-z]{1,3}\s*\d+\b/
-def lc_callnumber_ish(str)
-  LC_CALLNUMBER_ISH.match?(str)
-end
-  
-
-# callnumber from the items
+# whatever crazy callnumber from the items; unrestricted
 to_field 'callnumber', extract_marc('852hij') do |rec, acc|
   acc.select! {|x| x =~ /\S/}
 end
 
-lc_050_extractor =  Traject::MarcExtractor.cached('050ab')
+# Get any/all LC Callnumbers just from the 852|0*|h.
 
+to_field 'lc_callnumber', extract_marc("852|0*|h") do |rec, acc|
+  acc.flatten!
+  acc.compact!
+  acc.uniq!
+end
 
-# Get LC Callnumbers just from the 852|0*|h. We also want to prioritize
-# some callnumbers over others, so we sort them as we go
-
-SECOND_TIER_CALLNUMBER_INST = ['FLINT']
-THIRD_TIER_CALLNUMBER_INST = ['PAPY', 'SPEC']
-
-to_field 'lc_callnumber' do |rec, acc|
-  callnumbers = [ [], [], []]
-  rec.each_by_tag('852') do |f|
-    next unless f.indicator1 == '0'
-    inst = f['b']
-    cn = f['h']
-    next unless /\S/.match(cn)
-    if SECOND_TIER_CALLNUMBER_INST.include? inst
-      callnumbers[1] << cn
-    elsif THIRD_TIER_CALLNUMBER_INST.include? inst
-      callnumbers[2] << cn
-    else
-      callnumbers[0] << cn
-    end
+# If we didn't find an LC in an 852, check out the 050
+to_field 'lc_callnumber', extract_marc('050ab') do |rec, acc, context|
+  if !context.output_hash['lc_callnumber'].nil?
+    acc.replace []
   end
+end
 
-  callnumbers.flatten!
-  callnumbers.compact!
-  callnumbers.uniq!
+# How about dewey?
+to_field 'dewey_callnumber', extract_marc('852|1*|h')
 
-  if callnumbers.empty? and  rec['050'] and rec['050'] =~ /\S/
-    callnumbers << lc_050_extractor.extract(rec).first
-  end
-
-  acc.replace callnumbers unless callnumbers.empty?
-
+# How about anything we can browse?
+to_field 'browse_callnumber' do |rec, acc, context|
+  lc = Array(context.output_hash['lc_callnumber'])
+  dewey = Array(context.output_hash['dewey_callnumber'])
+  acc.replace lc + dewey
 end
 
 
