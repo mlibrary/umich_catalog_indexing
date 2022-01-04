@@ -17,12 +17,13 @@ gem 'traject_alephsequential_reader'
 gem 'sequel'
 gem 'httpclient'
 gem 'library_stdnums'
-gem "traject-marc4j_reader", "~> 1.0"
 
 if defined? JRUBY_VERSION
   gem 'naconormalizer'
   gem 'jdbc-mysql'
   gem 'psych'
+  gem "traject-marc4j_reader", "~> 1.0"
+  gem 'pry-debugger-jruby'
 else
   gem 'mysql2'
 end
@@ -31,7 +32,6 @@ gem 'marc-fastxmlwriter'
 gem 'high_level_browse'
 
 gem 'pry'
-gem 'pry-debugger-jruby'
 
 #For liblocyaml
 gem 'alma_rest_client',
