@@ -12,6 +12,8 @@ RUN useradd -m -d /app -u ${UID} -g ${GID} -o -s /bin/bash ${UNAME}
 RUN mkdir -p /gems && chown ${UID}:${GID} /gems
 
 
+RUN gem install bundler:2.0.2
+
 COPY --chown=${UID}:${GID} Gemfile* /app/
 USER $UNAME
 
