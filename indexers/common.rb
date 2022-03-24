@@ -45,6 +45,39 @@ each_record HathiTrust::Traject::Macros.setup
 #######  COMMON STUFF BETWEEN UMICH AND HT ########
 #######  INDEXING                          ########
 
+################################
+###### BOOKKEEPING #############
+################################
+
+filename_matcher = /\A.*?search_(?<file_date>\d{8})/
+today = DateTime.now.strftime '%Y%m%d'
+
+def file_date(name)
+  m = filename_matcher.match(name)
+  if m
+    m[:file_date]
+  else nil
+  end
+end
+
+# Add the base fielname and the date extracted from that filename
+to_field 'input_file_name' do |rec, acc|
+  mf = ENV['multifile.filename']
+  acc << Pathname.new(mf).basename if mf
+end
+
+to_field 'input_file_date' do |rec, acc|
+  mf = ENV['multifile.filename']
+  if mf
+    m = filename_matcher.match(mf)
+    acc << m[:file_date] if m
+  end
+end
+
+# what day was it actually indexed?
+to_field 'indexing_date' do |rec, acc|
+  acc << today
+end
 
 ################################
 ###### CORE FIELDS #############
@@ -261,6 +294,10 @@ to_field "title_rest", extract_marc("210ab:222ab:242abnpy:243adfgklmnoprs:246abd
 to_field "series", extract_marc("440ap:800abcdfpqt:830ap")
 to_field "series2", extract_marc("490avx")
 
+def atoz
+  ("a".."z").to_a.join('')
+end
+to_field "series_statement", extract_marc(["440","800","810","811","830"].map{|x| "#{x}#{atoz}"})
 # Serial titles count on the format alreayd being set and having the string 'Serial' in it.
 
 each_record do |rec, context|
